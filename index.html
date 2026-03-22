@@ -879,6 +879,36 @@ body.cursor-active *{cursor:none!important}
   .sidebar-content{padding:28px 32px;}
 }
 
+/* ══════════════════════════════
+   HOSPITAL NETWORK CHAT
+══════════════════════════════ */
+.chat-msg{
+  max-width:78%;padding:10px 14px;border-radius:16px;
+  font-size:14px;line-height:1.5;margin-bottom:4px;
+  animation:fadeUp .2s;word-break:break-word;
+}
+.chat-msg.mine{
+  background:linear-gradient(135deg,rgba(6,182,212,.2),rgba(59,130,246,.2));
+  border:1px solid rgba(6,182,212,.3);align-self:flex-end;margin-left:auto;
+  border-bottom-right-radius:4px;
+}
+.chat-msg.theirs{
+  background:var(--card);border:1px solid var(--card-border);
+  align-self:flex-start;border-bottom-left-radius:4px;
+}
+.chat-msg.admin-broadcast{
+  background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(245,158,11,.08));
+  border:1px solid rgba(239,68,68,.25);border-left:3px solid var(--red);
+  align-self:stretch;max-width:100%;border-radius:12px;
+}
+.chat-msg-sender{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;}
+.chat-msg.admin-broadcast .chat-msg-sender{color:var(--red);}
+.chat-msg-text{font-size:14px;color:var(--text);}
+.chat-msg-time{font-size:10px;color:var(--text3);margin-top:4px;text-align:right;}
+.chat-msg.theirs .chat-msg-time{text-align:left;}
+.chat-channel-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-bottom:4px;}
+.chat-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;margin-left:4px;animation:pulse 1.5s infinite;}
+
 </style>
 </head>
 <body>
@@ -1000,13 +1030,49 @@ body.cursor-active *{cursor:none!important}
 <!-- ═══ HOSPITAL SCREEN ═══ -->
 <div id="screen-hospital" class="screen" style="padding:76px 20px 30px"><div style="max-width:950px;margin:0 auto">
 <div style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(59,130,246,.1));border:1px solid rgba(6,182,212,.2);border-radius:var(--radius);padding:24px;margin-bottom:24px"><div class="flex-between"><div><div class="flex-row mb-16" style="margin-bottom:8px"><div class="verified">✓ VERIFIED NODE</div><div class="dot" id="hosp-dot"></div></div><div style="font-size:24px;font-weight:900;letter-spacing:-.5px" id="hosp-name">Hospital</div><div style="font-size:13px;color:var(--text2);margin-top:3px" id="hosp-addr">—</div></div><div style="text-align:right"><div class="text-xs text-muted">Emergency Contact</div><div style="font-size:17px;font-weight:700;color:var(--accent);margin-top:3px" id="hosp-contact">—</div></div></div></div>
-<div class="dash-tabs"><div class="dtab active" onclick="hTab('avail')">📊 Availability</div><div class="dtab" onclick="hTab('blood')">🩸 Blood Bank</div><div class="dtab" onclick="hTab('req')">🚨 Requests</div><div class="dtab" onclick="hTab('admit')">🛏️ Admissions</div><div class="dtab" onclick="hTab('spec')">👨‍⚕️ Specialists</div><div class="dtab" onclick="hTab('hist')">📋 History</div><div class="dtab" onclick="hTab('hprof')">👤 Profile</div></div>
+<div class="dash-tabs"><div class="dtab active" onclick="hTab('avail')">📊 Availability</div><div class="dtab" onclick="hTab('blood')">🩸 Blood Bank</div><div class="dtab" onclick="hTab('req')">🚨 Requests</div><div class="dtab" onclick="hTab('admit')">🛏️ Admissions</div><div class="dtab" onclick="hTab('spec')">👨‍⚕️ Specialists</div><div class="dtab" onclick="hTab('hist')">📋 History</div><div class="dtab" onclick="hTab('chat')" id="htab-chat">💬 Network Chat</div><div class="dtab" onclick="hTab('hprof')">👤 Profile</div></div>
 <div id="h-avail" class="dpanel active"><div class="grid-3" style="margin-bottom:16px"><div class="avail-block"><div class="avail-label">🛏️ ICU Beds Available</div><div class="avail-num text-accent" id="h-icu-big">0</div><div class="text-xs text-muted">of <span id="h-icu-tot">0</span> total</div><div class="flex-row" style="margin-top:12px"><button class="cnt-btn" onclick="adj('icu',-1)">−</button><input type="number" id="h-icu-in" class="form-input" style="text-align:center;font-weight:800;font-family:'DM Mono',monospace;font-size:18px" value="0" oninput="syncField('icu',this.value)"><button class="cnt-btn" onclick="adj('icu',1)">+</button></div></div><div class="avail-block"><div class="avail-label">💨 Ventilators Available</div><div class="avail-num" style="color:var(--blue)" id="h-vent-big">0</div><div class="text-xs text-muted">of <span id="h-vent-tot">0</span> total</div><div class="flex-row" style="margin-top:12px"><button class="cnt-btn" onclick="adj('vent',-1)">−</button><input type="number" id="h-vent-in" class="form-input" style="text-align:center;font-weight:800;font-family:'DM Mono',monospace;font-size:18px" value="0" oninput="syncField('vent',this.value)"><button class="cnt-btn" onclick="adj('vent',1)">+</button></div></div><div class="avail-block flex-center" style="flex-direction:column;gap:10px"><div class="ring-wrap"><svg width="110" height="110" class="ring-svg"><circle class="ring-bg" cx="55" cy="55" r="46"/><circle id="h-ring" class="ring-fill" cx="55" cy="55" r="46" stroke="var(--accent)" stroke-dasharray="289" stroke-dashoffset="0"/></svg><div class="ring-inner"><div class="ring-pct" id="h-ring-pct">100%</div><div class="ring-sub">FREE</div></div></div><button class="btn btn-primary" onclick="saveAvail()">💾 Save Changes</button></div></div><div class="card flex-between" style="padding:16px 20px"><div><div style="font-weight:700">Accepting Emergency Patients</div><div class="text-sm text-muted mt-8" style="margin-top:4px">Toggle to pause or resume emergency intake</div></div><label class="toggle-wrap"><input type="checkbox" id="h-accepting" checked onchange="toggleAccept()"><span class="toggle-slider"><span class="tk"></span></span></label></div></div>
 <div id="h-blood" class="dpanel"><div class="flex-between mb-16" style="margin-bottom:16px"><div class="section-title" style="margin-bottom:0">🩸 Blood Bank Inventory</div><button class="btn btn-danger btn-sm" onclick="saveBlood()">💾 Save Blood Bank</button></div><div class="grid-4" id="blood-grid" style="margin-bottom:24px"></div><div class="sep"></div><div class="section-title mt-16" style="margin-top:16px">🔔 Incoming Blood Requests</div><div id="h-blood-req-list"><div style="text-align:center;padding:30px;color:var(--text3)">No blood requests yet</div></div></div>
 <div id="h-req" class="dpanel"><div class="section-title">🚨 Incoming Emergency Requests</div><div id="h-req-list"><div style="text-align:center;padding:50px;color:var(--text3)">No requests yet</div></div></div>
 <div id="h-admit" class="dpanel"><div class="flex-between mb-16" style="margin-bottom:16px"><div class="section-title" style="margin-bottom:0">🛏️ Currently Admitted</div><div class="badge bg-blue" id="admit-count-badge">0 Admitted</div></div><div id="h-admit-list"><div style="text-align:center;padding:50px;color:var(--text3)">No patients currently admitted</div></div></div>
 <div id="h-spec" class="dpanel"><div class="flex-between mb-16" style="margin-bottom:16px"><div class="section-title" style="margin-bottom:0">👨‍⚕️ Specialists &amp; Appointments</div><button class="btn btn-primary btn-sm" onclick="openAddSpecialistModal()">+ Add Specialist</button></div><div id="h-spec-list"><div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">👨‍⚕️</div>No specialists added yet. Add your first specialist.</div></div><div class="section-title" style="margin-top:24px">📅 Appointment Requests</div><div id="h-appt-list"><div style="text-align:center;padding:30px;color:var(--text3)">No appointment requests</div></div></div>
 <div id="h-hist" class="dpanel"><div class="section-title">📋 Discharge History</div><div id="h-hist-list"><div style="text-align:center;padding:50px;color:var(--text3)">No discharge records yet</div></div></div>
+<div id="h-chat" class="dpanel">
+<div class="flex-between mb-16" style="margin-bottom:16px">
+  <div>
+    <div class="section-title" style="margin-bottom:4px">💬 Network Chat</div>
+    <div style="font-size:13px;color:var(--text2)">Communicate with nearby hospitals and receive admin alerts</div>
+  </div>
+  <span class="badge bg-cyan" id="chat-online-count">Loading...</span>
+</div>
+
+<!-- Channel selector -->
+<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+  <button class="filter-chip active" id="ch-broadcast" onclick="switchChatChannel('broadcast')">📡 Admin Alerts</button>
+  <button class="filter-chip" id="ch-network" onclick="switchChatChannel('network')">🏥 Hospital Network</button>
+  <button class="filter-chip" id="ch-transfer" onclick="switchChatChannel('transfer')">🚑 Patient Transfers</button>
+</div>
+
+<!-- Messages -->
+<div class="card" style="padding:0;overflow:hidden;margin-bottom:12px">
+  <div id="h-chat-messages" style="display:flex;flex-direction:column;gap:4px;padding:16px;height:340px;overflow-y:auto;scroll-behavior:smooth">
+    <div style="text-align:center;padding:40px;color:var(--text3)">
+      <div style="font-size:32px;margin-bottom:8px">💬</div>
+      Loading messages...
+    </div>
+  </div>
+</div>
+
+<!-- Compose -->
+<div style="display:flex;gap:10px;align-items:flex-end">
+  <textarea id="h-chat-input" class="form-input" placeholder="Type a message to the network..." 
+    style="height:60px;resize:none;flex:1"
+    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChatMessage();}"></textarea>
+  <button class="btn btn-primary" style="height:60px;padding:0 20px" onclick="sendChatMessage()">Send →</button>
+</div>
+<div style="font-size:11px;color:var(--text3);margin-top:6px">Press Enter to send · Shift+Enter for new line</div>
+</div>
+
 <div id="h-hprof" class="dpanel"><div class="section-title">👤 Hospital Profile</div><div class="card card-p"><div class="form-group"><label class="form-label">Hospital Name</label><input id="hprof-name" type="text" class="form-input" placeholder="Hospital Name"></div><div class="form-group"><label class="form-label">Full Address</label><input id="hprof-addr" type="text" class="form-input" placeholder="Full address"></div><div class="form-group"><label class="form-label">Emergency Contact</label><input id="hprof-contact" type="text" class="form-input" placeholder="Phone number"></div><div class="grid-2"><div class="form-group"><label class="form-label">Total ICU Capacity</label><input id="hprof-icu" type="number" class="form-input"></div><div class="form-group"><label class="form-label">Total Ventilators</label><input id="hprof-vent" type="number" class="form-input"></div></div><button class="btn btn-primary btn-full" onclick="saveHospProfile()">💾 Save Profile</button></div></div>
 </div></div>
 
@@ -1521,112 +1587,10 @@ async function sendEmail(toEmail,toName,subject,htmlBody){
   try{const r=await fetch("https://api.brevo.com/v3/smtp/email",{method:"POST",headers:{"api-key":BREVO_KEY,"Content-Type":"application/json"},body:JSON.stringify({sender:BREVO_SENDER,to:[{email:toEmail,name:toName}],subject,htmlContent:htmlBody})});return r.ok;}catch(e){return false;}
 }
 function otpEmailHTML(name,otp){return `<!DOCTYPE html><html><body style="margin:0;padding:40px 20px;background:#f0f4ff;font-family:'Segoe UI',sans-serif"><table width="580" style="margin:0 auto;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 40px rgba(0,0,0,.1)"><tr><td style="background:linear-gradient(135deg,#06B6D4,#3B82F6);padding:40px;text-align:center"><h1 style="color:#fff;margin:0;font-size:26px">Medlink</h1></td></tr><tr><td style="padding:40px"><h2 style="color:#0F172A;margin:0 0 8px">Email Verification</h2><p style="color:#64748B">Dear <strong>${name}</strong>, use the code below:</p><div style="background:#F0F9FF;border:2px solid #BAE6FD;border-radius:16px;padding:32px;text-align:center;margin:20px 0"><div style="font-size:52px;font-weight:800;color:#06B6D4;letter-spacing:14px;font-family:'Courier New',monospace">${otp}</div></div></td></tr></table>
-<!-- NOTIFICATION PANEL -->
-<div class="notif-panel" id="notif-panel">
-  <div class="notif-header">
-    <span class="notif-header-title">🔔 Notifications</span>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button class="btn btn-ghost btn-sm" onclick="markAllNotifsRead()" style="font-size:11px;padding:4px 10px">Mark all read</button>
-      <button onclick="toggleNotifPanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--text2)">✕</button>
-    </div>
-  </div>
-  <div class="notif-list" id="notif-list">
-    <div class="notif-empty">🔔<br>No notifications yet</div>
-  </div>
-</div>
-
-<!-- MOBILE BOTTOM NAV (patient) -->
-<div class="mobile-bottom-nav" id="mobile-bottom-nav" style="display:none">
-  <div class="mbn-items">
-    <div class="mbn-item active" id="mbn-find" onclick="uTab('find');mbnActive('find')">
-      <span class="mbn-icon">🏥</span>Find
-    </div>
-    <div class="mbn-item" id="mbn-triage" onclick="uTab('triage');mbnActive('triage')">
-      <span class="mbn-icon">🧠</span>Triage
-    </div>
-    <div class="mbn-item" id="mbn-rx" onclick="uTab('rx');mbnActive('rx')">
-      <span class="mbn-icon">💊</span>Rx Scan
-    </div>
-    <div class="mbn-item" id="mbn-records" onclick="uTab('records');mbnActive('records')">
-      <span class="mbn-icon">📋</span>Records
-    </div>
-    <div class="mbn-item" id="mbn-more" onclick="uTab('uprof');mbnActive('more')">
-      <span class="mbn-icon">👤</span>More
-    </div>
-  </div>
-</div>
 </body></html>`;}
 function hospitalWelcomeEmailHTML(n,e,p){return `<!DOCTYPE html><html><body style="margin:0;padding:40px 20px;background:#f0f4ff;font-family:'Segoe UI',sans-serif"><table width="580" style="margin:0 auto;background:#fff;border-radius:20px;overflow:hidden"><tr><td style="background:linear-gradient(135deg,#10B981,#06B6D4);padding:40px;text-align:center"><h1 style="color:#fff;margin:0">✅ Hospital Node Activated</h1></td></tr><tr><td style="padding:40px"><h2>${n}</h2><div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:16px;padding:28px;margin:20px 0"><p style="font-family:monospace">Email: <strong>${e}</strong><br>Password: <strong>${p}</strong></p></div></td></tr></table>
-<!-- NOTIFICATION PANEL -->
-<div class="notif-panel" id="notif-panel">
-  <div class="notif-header">
-    <span class="notif-header-title">🔔 Notifications</span>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button class="btn btn-ghost btn-sm" onclick="markAllNotifsRead()" style="font-size:11px;padding:4px 10px">Mark all read</button>
-      <button onclick="toggleNotifPanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--text2)">✕</button>
-    </div>
-  </div>
-  <div class="notif-list" id="notif-list">
-    <div class="notif-empty">🔔<br>No notifications yet</div>
-  </div>
-</div>
-
-<!-- MOBILE BOTTOM NAV (patient) -->
-<div class="mobile-bottom-nav" id="mobile-bottom-nav" style="display:none">
-  <div class="mbn-items">
-    <div class="mbn-item active" id="mbn-find" onclick="uTab('find');mbnActive('find')">
-      <span class="mbn-icon">🏥</span>Find
-    </div>
-    <div class="mbn-item" id="mbn-triage" onclick="uTab('triage');mbnActive('triage')">
-      <span class="mbn-icon">🧠</span>Triage
-    </div>
-    <div class="mbn-item" id="mbn-rx" onclick="uTab('rx');mbnActive('rx')">
-      <span class="mbn-icon">💊</span>Rx Scan
-    </div>
-    <div class="mbn-item" id="mbn-records" onclick="uTab('records');mbnActive('records')">
-      <span class="mbn-icon">📋</span>Records
-    </div>
-    <div class="mbn-item" id="mbn-more" onclick="uTab('uprof');mbnActive('more')">
-      <span class="mbn-icon">👤</span>More
-    </div>
-  </div>
-</div>
 </body></html>`;}
 function bloodRequestEmailHTML(h,p,bt){return `<!DOCTYPE html><html><body style="margin:0;padding:40px 20px;background:#f0f4ff;font-family:'Segoe UI',sans-serif"><table width="580" style="margin:0 auto;background:#fff;border-radius:20px;overflow:hidden"><tr><td style="background:linear-gradient(135deg,#EF4444,#DC2626);padding:36px;text-align:center"><div style="font-size:40px">🩸</div><h1 style="color:#fff">Blood Request</h1></td></tr><tr><td style="padding:40px"><p>Dear ${h} Blood Bank,<br>Patient <strong>${p}</strong> requires <strong>${bt}</strong> urgently.</p></td></tr></table>
-<!-- NOTIFICATION PANEL -->
-<div class="notif-panel" id="notif-panel">
-  <div class="notif-header">
-    <span class="notif-header-title">🔔 Notifications</span>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button class="btn btn-ghost btn-sm" onclick="markAllNotifsRead()" style="font-size:11px;padding:4px 10px">Mark all read</button>
-      <button onclick="toggleNotifPanel()" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--text2)">✕</button>
-    </div>
-  </div>
-  <div class="notif-list" id="notif-list">
-    <div class="notif-empty">🔔<br>No notifications yet</div>
-  </div>
-</div>
-
-<!-- MOBILE BOTTOM NAV (patient) -->
-<div class="mobile-bottom-nav" id="mobile-bottom-nav" style="display:none">
-  <div class="mbn-items">
-    <div class="mbn-item active" id="mbn-find" onclick="uTab('find');mbnActive('find')">
-      <span class="mbn-icon">🏥</span>Find
-    </div>
-    <div class="mbn-item" id="mbn-triage" onclick="uTab('triage');mbnActive('triage')">
-      <span class="mbn-icon">🧠</span>Triage
-    </div>
-    <div class="mbn-item" id="mbn-rx" onclick="uTab('rx');mbnActive('rx')">
-      <span class="mbn-icon">💊</span>Rx Scan
-    </div>
-    <div class="mbn-item" id="mbn-records" onclick="uTab('records');mbnActive('records')">
-      <span class="mbn-icon">📋</span>Records
-    </div>
-    <div class="mbn-item" id="mbn-more" onclick="uTab('uprof');mbnActive('more')">
-      <span class="mbn-icon">👤</span>More
-    </div>
-  </div>
-</div>
 </body></html>`;}
 
 // ─── TAB SWITCHING ───
@@ -1643,11 +1607,12 @@ window.aTab=n=>{
   if(n==='pharma')setTimeout(renderPharmacyOverview,250);
 };
 window.hTab=n=>{
-  const map={avail:0,blood:1,req:2,admit:3,spec:4,hist:5,hprof:6};
-  const panels=['h-avail','h-blood','h-req','h-admit','h-spec','h-hist','h-hprof'];
+  const map={avail:0,blood:1,req:2,admit:3,spec:4,hist:5,chat:6,hprof:7};
+  const panels=['h-avail','h-blood','h-req','h-admit','h-spec','h-hist','h-chat','h-hprof'];
   document.querySelectorAll('#screen-hospital .dtab').forEach((t,i)=>t.classList.toggle('active',i===map[n]));
   panels.forEach((p,i)=>document.getElementById(p).classList.toggle('active',i===map[n]));
   if(n==='spec')loadHospSpecialists();
+  if(n==='chat'){initHospChat();updateChatOnlineCount();}
 };
 window.uTab=n=>{
   const map={find:0,triage:1,appt:2,blood:3,medicine:4,rx:5,records:6,uprof:7,emg:8};
@@ -1974,31 +1939,37 @@ async function loadHospSpecialists(){
   const el=document.getElementById('h-spec-list');
   const apptEl=document.getElementById('h-appt-list');
   if(!el)return;
-  el.innerHTML='';// clear
-  el.innerHTML='<div class="skel" style="height:80px;margin-bottom:10px"></div>'.repeat(3);
+  if(!curHospId){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Session error — please re-login</div>';return;}
+  el.innerHTML='<div class="skel" style="height:80px;margin-bottom:10px"></div>'.repeat(2);
   try{
+    // No orderBy — avoids needing a composite index
     const snap=await getDocs(query(collection(db,'specialists'),where('hospitalId','==',curHospId)));
-    if(snap.empty){el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">👨‍⚕️</div>No specialists added yet. Add your first specialist.</div>';return;}
+    if(snap.empty){
+      el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">👨‍⚕️</div>No specialists added yet. Add your first specialist.</div>';
+      if(apptEl)apptEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">No appointment requests</div>';
+      return;
+    }
     const today=new Date().toDateString();
     const updates=[];
     let html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">';
+    let idx=0; // fix: define idx before forEach
     snap.forEach(d=>{
       const s={id:d.id,...d.data()};
-      const st=SPECIALIST_TYPES.find(x=>x.type===s.type)||{icon:'👨‍⚕️'};
+      const st=SPECIALIST_TYPES.find(x=>x.type===s.type)||{icon:'👨‍⚕️',type:s.type||'Specialist'};
       if(s.lastResetDate!==today)updates.push(updateDoc(doc(db,'specialists',s.id),{tokensUsedToday:0,lastResetDate:today}));
       const used=s.lastResetDate!==today?0:(s.tokensUsedToday||0);
-      const avail=Math.max(0,s.tokenLimit-used);
-      const tokenColor=avail===0?'full':avail<=5?'':'avail';
+      const avail=Math.max(0,(s.tokenLimit||20)-used);
+      const tokenColor=avail===0?'full':avail<=3?'warn-token':'';
       html+=`<div class="spec-card-v2" style="animation-delay:${idx*.07}s">
   <div class="spec-avatar-v2">${st.icon}</div>
   <div class="spec-info">
-    <div class="spec-name">${s.name}</div>
-    <div class="spec-type">${s.type}</div>
+    <div class="spec-name">${s.name||'—'}</div>
+    <div class="spec-type">${s.type||'Specialist'}</div>
     <div class="spec-meta">
       ${s.qual?`<span class="badge bg-blue">${s.qual}</span>`:''}
       ${s.exp?`<span class="badge bg-gray">${s.exp} yrs exp</span>`:''}
-      <span class="badge bg-cyan">₹${s.fee}</span>
-      <span class="token-badge ${tokenColor}">🎫 ${avail}/${s.tokenLimit} tokens</span>
+      <span class="badge bg-cyan">₹${s.fee||0}</span>
+      <span class="token-badge ${tokenColor}">🎫 ${avail}/${s.tokenLimit||20} tokens</span>
       ${s.days?`<span class="badge" style="background:var(--card);border:1px solid var(--card-border)">${s.days}</span>`:''}
       ${s.time?`<span class="badge" style="background:var(--card);border:1px solid var(--card-border)">🕐 ${s.time}</span>`:''}
     </div>
@@ -2008,22 +1979,30 @@ async function loadHospSpecialists(){
     </div>
   </div>
 </div>`;
+      idx++;
     });
     html+='</div>';
     el.innerHTML=html;
     if(updates.length)await Promise.all(updates);
-    // Load appointment requests for this hospital
-    const apptSnap=await getDocs(query(collection(db,'appointments'),where('hospitalId','==',curHospId)));
-    if(apptSnap.empty){apptEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">No appointment requests</div>';return;}
-    let ahtml='';
-    apptSnap.forEach(d=>{
-      const a={id:d.id,...d.data()};
-      const statusClass=a.status==='confirmed'?'confirmed':a.status==='cancelled'?'cancelled':'pending';
-      const statusBadge=a.status==='confirmed'?'bg-green':a.status==='cancelled'?'bg-red':'bg-amber';
-      ahtml+=`<div class="appt-card ${statusClass}"><div class="flex-between"><div><div style="font-weight:700">${a.patientName} — Token #${a.tokenNumber}</div><div style="font-size:13px;color:var(--accent);margin-top:3px">${a.specialistName} · ${a.specialistType}</div><div style="font-size:12px;color:var(--text2);margin-top:2px">📅 ${a.date||'—'} · ${a.time||'—'}</div></div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><span class="badge ${statusBadge}">${a.status||'pending'}</span>${a.status==='pending'?`<button class="btn btn-success btn-sm" onclick="confirmAppt('${a.id}')">✅</button><button class="btn btn-danger btn-sm" onclick="cancelAppt('${a.id}')">✕</button>`:''}</div></div></div>`;
-    });
-    apptEl.innerHTML=ahtml;
-  }catch(e){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Error loading specialists</div>';}
+    // Load appointment requests
+    if(apptEl){
+      const apptSnap=await getDocs(query(collection(db,'appointments'),where('hospitalId','==',curHospId)));
+      if(apptSnap.empty){apptEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">No appointment requests</div>';}
+      else{
+        let ahtml='';
+        apptSnap.forEach(d=>{
+          const a={id:d.id,...d.data()};
+          const statusClass=a.status==='confirmed'?'confirmed':a.status==='cancelled'?'cancelled':'pending';
+          const statusBadge=a.status==='confirmed'?'bg-green':a.status==='cancelled'?'bg-red':'bg-amber';
+          ahtml+=`<div class="appt-card ${statusClass}"><div class="flex-between"><div><div style="font-weight:700">${a.patientName} — Token #${a.tokenNumber}</div><div style="font-size:13px;color:var(--accent);margin-top:3px">${a.specialistName||''} · ${a.specialistType||''}</div><div style="font-size:12px;color:var(--text2);margin-top:2px">📅 ${a.date||'—'} · ${a.time||'—'}</div></div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><span class="badge ${statusBadge}">${a.status||'pending'}</span>${a.status==='pending'?`<button class="btn btn-success btn-sm" onclick="confirmAppt('${a.id}')">✅</button><button class="btn btn-danger btn-sm" onclick="cancelAppt('${a.id}')">✕</button>`:''}</div></div></div>`;
+        });
+        apptEl.innerHTML=ahtml;
+      }
+    }
+  }catch(e){
+    console.error('loadHospSpecialists error:',e);
+    el.innerHTML=`<div style="text-align:center;padding:30px;color:var(--text3)">Error: ${e.message||e.code||'Unknown'}<br><button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="loadHospSpecialists()">🔄 Retry</button></div>`;
+  }
 }
 window.editSpecialist=async(sid)=>{
   const snap=await getDoc(doc(db,'specialists',sid));if(!snap.exists())return;
@@ -2051,7 +2030,7 @@ window.cancelAppt=async(aid)=>{
 // ─── SPECIALISTS (PATIENT SIDE) ───
 async function loadSpecialistsForHospital(hospitalId,hospitalName){
   const el=document.getElementById('u-specialist-list');
-  if(!el)return;
+  if(!el||!hospitalId)return;
   el.innerHTML='<div class="skel" style="height:80px;margin-bottom:10px"></div>'.repeat(3);
   const today=new Date().toDateString();
   try{
@@ -3135,13 +3114,15 @@ function initNotifications(uid, isHospital=false, hospId=null){
   // Listen to notifications for this user/hospital
   let q;
   if(isHospital&&hospId){
-    q=query(collection(db,'notifications'),where('hospitalId','==',hospId),orderBy('createdAt','desc'));
+    q=query(collection(db,'notifications'),where('hospitalId','==',hospId));
   } else {
-    q=query(collection(db,'notifications'),where('uid','==',uid),orderBy('createdAt','desc'));
+    q=query(collection(db,'notifications'),where('uid','==',uid));
   }
   _notifListener=onSnapshot(q,snap=>{
     const notifs=[];
     snap.forEach(d=>notifs.push({id:d.id,...d.data()}));
+    // Sort client-side since we removed orderBy to avoid composite index requirement
+    notifs.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
     renderNotifs(notifs);
   });
 }
@@ -3368,7 +3349,7 @@ window.adminRegisterPharmacy=async()=>{
       const el=document.getElementById(id);if(el)el.value='';
     });
     if(adminPharmaRegMarker){adminPharmaRegMap.removeLayer(adminPharmaRegMarker);adminPharmaRegMarker=null;}
-    loadAdminPharmacies();
+    renderPharmacyOverview();
   }catch(e){
     console.error('adminRegisterPharmacy:',e);
     const msg=e.code==='auth/email-already-in-use'?'This email is already registered':e.message.replace('Firebase: ','').substring(0,80);
@@ -3376,6 +3357,172 @@ window.adminRegisterPharmacy=async()=>{
   }finally{
     if(btn){btn.disabled=false;btn.textContent='✅ Deploy Pharmacy & Email Credentials';}
   }
+};
+
+
+// ═══════════════════════════════════════════════════════
+// HOSPITAL NETWORK CHAT
+// Channels: broadcast (admin alerts), network (all hospitals), transfer (patient transfers)
+// ═══════════════════════════════════════════════════════
+let _chatChannel = 'broadcast';
+let _chatListener = null;
+let _chatInitialized = false;
+
+function initHospChat(){
+  if(!curHospId)return;
+  switchChatChannel(_chatChannel);
+  updateChatOnlineCount();
+}
+
+window.switchChatChannel=function(channel){
+  _chatChannel=channel;
+  // Update filter chip UI
+  ['broadcast','network','transfer'].forEach(c=>{
+    const el=document.getElementById('ch-'+c);
+    if(el)el.classList.toggle('active',c===channel);
+  });
+  loadChatMessages(channel);
+};
+
+function loadChatMessages(channel){
+  const container=document.getElementById('h-chat-messages');
+  if(!container)return;
+  container.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)"><div class="rx-spinner" style="margin:0 auto 10px"></div>Loading...</div>';
+  
+  // Unsubscribe previous listener
+  if(_chatListener){_chatListener();_chatListener=null;}
+  
+  // Query for this channel's messages
+  const q=query(
+    collection(db,'hospitalChats'),
+    where('channel','==',channel)
+  );
+  
+  _chatListener=onSnapshot(q,snap=>{
+    if(!snap||snap.empty){
+      const emptyMsgs={
+        broadcast:'📡 No admin broadcasts yet. Admin alerts appear here automatically.',
+        network:'🏥 No messages yet. Start the conversation with the hospital network!',
+        transfer:'🚑 No transfer requests yet. Post here when you need to transfer a patient.'
+      };
+      container.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text3);font-size:13px">${emptyMsgs[channel]}</div>`;
+      return;
+    }
+    // Sort by createdAt client-side
+    const msgs=[];
+    snap.forEach(d=>msgs.push({id:d.id,...d.data()}));
+    msgs.sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+    
+    container.innerHTML='';
+    msgs.slice(-50).forEach(msg=>{ // show last 50
+      const isMe=msg.hospitalId===curHospId;
+      const isAdmin=msg.fromAdmin===true;
+      const div=document.createElement('div');
+      div.className='chat-msg '+(isAdmin?'admin-broadcast':isMe?'mine':'theirs');
+      
+      const time=msg.createdAt?.toDate?msg.createdAt.toDate().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):'';
+      const channelLabel={broadcast:'📡 Admin Alert',network:'🏥 Network',transfer:'🚑 Transfer'}[msg.channel]||'';
+      
+      div.innerHTML=`
+        ${isAdmin?`<div class="chat-msg-sender">📡 MedLink Admin</div>`
+          :isMe?'':`<div class="chat-msg-sender">🏥 ${msg.hospitalName||'Hospital'}</div>`}
+        <div class="chat-msg-text">${escapeHtml(msg.text||'')}</div>
+        <div class="chat-msg-time">${time}</div>`;
+      container.appendChild(div);
+    });
+    // Scroll to bottom
+    container.scrollTop=container.scrollHeight;
+  });
+}
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+window.sendChatMessage=async function(){
+  const input=document.getElementById('h-chat-input');
+  const text=input?.value.trim();
+  if(!text)return;
+  if(text.length>500)return toast('⚠️','Message too long (max 500 chars)','amber');
+  input.value='';
+  input.disabled=true;
+  try{
+    await addDoc(collection(db,'hospitalChats'),{
+      channel:_chatChannel,
+      hospitalId:curHospId,
+      hospitalName:curHospData?.name||'Hospital',
+      text,
+      fromAdmin:false,
+      createdAt:serverTimestamp(),
+    });
+    // Update online count
+    await updateDoc(doc(db,'hospitals',curHospId),{lastChatAt:serverTimestamp()});
+  }catch(e){
+    toast('❌','Failed to send: '+e.message.substring(0,50),'red');
+  }finally{
+    input.disabled=false;
+    input.focus();
+  }
+};
+
+async function updateChatOnlineCount(){
+  try{
+    const snap=await getDocs(collection(db,'hospitals'));
+    const now=Date.now();
+    let online=0;
+    snap.forEach(d=>{
+      const h=d.data();
+      // Consider online if lastChatAt or lastSeen within 5 minutes
+      const lastSeen=h.lastChatAt?.toDate?.()?.getTime()||0;
+      if(now-lastSeen<300000)online++;
+    });
+    const el=document.getElementById('chat-online-count');
+    if(el)el.textContent=online>0?`${online} hospital${online!==1?'s':''} active`:`${snap.size} hospitals on network`;
+  }catch(e){}
+}
+
+// ═══ HOOK ADMIN BROADCAST INTO CHAT ═══
+// When admin sends a broadcast, also post it to hospitalChats broadcast channel
+const _origSendBroadcast=window.sendBroadcast;
+window.sendBroadcast=async function(){
+  const subject=document.getElementById('broadcast-subject')?.value.trim();
+  const msg=document.getElementById('broadcast-msg')?.value.trim();
+  if(!subject||!msg)return toast('⚠️','Fill subject and message','amber');
+  
+  const snap=await getDocs(collection(db,'hospitals'));
+  let sent=0;const prom=[];
+  snap.forEach(d=>{
+    const h={id:d.id,...d.data()};
+    // Email
+    if(h.staffEmail)prom.push(
+      sendEmail(h.staffEmail,h.name||'Hospital',
+        `⚡ MedLink Alert: ${subject}`,
+        `<div style="font-family:sans-serif;padding:30px"><h1 style="color:#EF4444">⚡ MedLink Alert</h1><h2>${subject}</h2><p style="font-size:16px;line-height:1.8">${msg.replace(/\n/g,'<br>')}</p></div>`
+      ).then(ok=>{if(ok)sent++;})
+    );
+    // In-app notification
+    prom.push(addDoc(collection(db,'notifications'),{
+      hospitalId:h.id,type:'broadcast',icon:'📡',
+      iconBg:'rgba(239,68,68,.15)',
+      title:'Admin Alert: '+subject,
+      message:msg.substring(0,200),read:false,createdAt:serverTimestamp(),
+    }));
+  });
+  
+  // Also post to broadcast chat channel
+  prom.push(addDoc(collection(db,'hospitalChats'),{
+    channel:'broadcast',
+    hospitalId:'admin',
+    hospitalName:'MedLink Admin',
+    text:`📡 ${subject}\n\n${msg}`,
+    fromAdmin:true,
+    createdAt:serverTimestamp(),
+  }));
+  
+  await Promise.all(prom);
+  toast('📡',`Broadcast sent to ${sent} hospitals + chat!`,'green');
+  document.getElementById('broadcast-subject').value='';
+  document.getElementById('broadcast-msg').value='';
 };
 
 })();
