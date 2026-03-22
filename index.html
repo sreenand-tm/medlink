@@ -1167,7 +1167,7 @@ window._destroyThree=destroyThreeBackground;
 // ═══════════════════════════════════════════════
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import{getFirestore,collection,addDoc,getDocs,updateDoc,deleteDoc,doc,onSnapshot,query,where,serverTimestamp,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail,GoogleAuthProvider,signInWithPopup}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail,GoogleAuthProvider,signInWithPopup,fetchSignInMethodsForEmail}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // ✅ No secrets here — loaded from /api/config at runtime (safe for GitHub)
 let FIREBASE_CFG,GROQ_KEY,BREVO_KEY,BREVO_SENDER,db,auth,auth2;
@@ -1368,9 +1368,43 @@ window.verifyOTPAndRegister=async()=>{
 async function patientLogin(){
   const email=document.getElementById('pt-email').value.trim(),pass=document.getElementById('pt-pass').value;
   if(!email||!pass)return toast('⚠️','Enter email and password','amber');
-  try{const cred=await signInWithEmailAndPassword(auth,email,pass);const snap=await getDoc(doc(db,'users',cred.user.uid));const data=snap.exists()?snap.data():{name:email.split('@')[0],role:'patient',trustScore:5.0,bloodType:'Unknown'};
-  if(data.role!=='patient'){await signOut(auth);return toast('❌','Not a patient account','red');}sessionRestored=true;currentUser={id:cred.user.uid,...data};launchUser();}catch(e){
-    if(e.code==='auth/unauthorized-domain')return toast('❌','Open the app from your Vercel URL, not as a local file','red');
+  try{
+    const cred=await signInWithEmailAndPassword(auth,email,pass);
+    const snap=await getDoc(doc(db,'users',cred.user.uid));
+    const data=snap.exists()?snap.data():{name:email.split('@')[0],role:'patient',trustScore:5.0,bloodType:'Unknown'};
+    if(data.role!=='patient'){await signOut(auth);return toast('❌','Not a patient account','red');}
+    sessionRestored=true;currentUser={id:cred.user.uid,...data};launchUser();
+  }catch(e){
+    if(e.code==='auth/unauthorized-domain'){
+      return toast('❌','Open the app from your Vercel URL, not as a local file','red');
+    }
+    // Detect Google-only accounts — wrong-password or invalid-credential means
+    // they signed up with Google and have no password set
+    if(e.code==='auth/wrong-password'||e.code==='auth/invalid-credential'||e.code==='auth/user-not-found'){
+      // Check if this email exists with Google as provider
+      try{
+        const methods=await fetchSignInMethodsForEmail(auth,email);
+        if(methods.includes('google.com')){
+          // Show a clear message and auto-trigger Google login
+          openModal(`<div style="text-align:center;padding:16px">
+            <div style="font-size:52px;margin-bottom:14px">🔑</div>
+            <div style="font-size:20px;font-weight:900;margin-bottom:10px">Use Google Sign-In</div>
+            <div style="font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px">
+              <strong>${email}</strong> is registered with Google.<br>
+              This account has no password — please sign in with Google.
+            </div>
+            <button class="btn btn-primary btn-full btn-lg" onclick="closeModal();patientGoogleSignIn()">
+              <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+              Continue with Google →
+            </button>
+            <button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="closeModal()">Cancel</button>
+          </div>`);
+          return;
+        }
+      }catch(_){}
+      // Generic wrong password
+      return toast('❌','Wrong password. Use "Forgot password?" to reset it.','red');
+    }
     toast('❌','Login failed: '+e.message.replace('Firebase: ','').replace('Error (auth/)','').substring(0,70),'red');
   }
 }
@@ -1378,7 +1412,7 @@ window.patientLogin=patientLogin;
 async function hospitalLogin(){
   const email=document.getElementById('h-email').value.trim(),pass=document.getElementById('h-pass').value;if(!email||!pass)return toast('⚠️','Enter credentials','amber');
   try{const cred=await signInWithEmailAndPassword(auth,email,pass);const snap=await getDoc(doc(db,'users',cred.user.uid));const data=snap.exists()?snap.data():{};
-  if(data.role!=='hospital'){await signOut(auth);return toast('❌','Not hospital account','red');}
+  if(data.role!=='hospital'){await signOut(auth);return toast('❌','Not hospital account — use Patient login','red');}
   const q=query(collection(db,'hospitals'),where('staffEmail','==',email));const hs=await getDocs(q);
   if(hs.empty){await signOut(auth);return toast('❌','Hospital not found','red');}
   curHospId=hs.docs[0].id;curHospData=hs.docs[0].data();currentUser={id:cred.user.uid,...data};sessionRestored=true;launchHospital(curHospData);}catch(e){toast('❌','Login failed','red');}
@@ -1739,11 +1773,33 @@ function launchUser(){
   showScreen('screen-user');buildSymptoms();buildEmergencyContacts();loadMedicalRecord();startAmbulanceTracking();loadMyAppointments();
   // Always ask for location immediately for new users
   navigator.geolocation.getCurrentPosition(
-    p=>{myLoc={lat:p.coords.latitude,lng:p.coords.longitude};initUserMap();toast('📍','Location detected','green');},
-    ()=>{
+    p=>{
+      myLoc={lat:p.coords.latitude,lng:p.coords.longitude};
       initUserMap();
-      // If denied, show a prompt to enable
-      toast('⚠️','Location access denied — showing nearest based on default location','amber');
+      toast('📍','Location detected — showing hospitals near you','green');
+    },
+    (err)=>{
+      initUserMap();
+      // Show a friendly card instead of an ugly toast
+      const resultEl=document.getElementById('u-results');
+      resultEl.innerHTML=`
+        <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.25);border-radius:16px;padding:20px 22px;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <div style="font-size:32px">📍</div>
+            <div>
+              <div style="font-weight:800;font-size:15px">Location access denied</div>
+              <div style="font-size:13px;color:var(--text2);margin-top:3px">Enable location to find the nearest hospital to you</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6">
+            On <strong>Chrome/Android</strong>: tap the 🔒 lock icon in the address bar → Site settings → Location → Allow<br>
+            On <strong>Safari/iOS</strong>: Settings → Safari → Location → Allow
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="retryLocation()">📍 Try Again</button>
+            <button class="btn btn-ghost btn-sm" onclick="searchH()" style="flex:1">🔍 Search with Default Location</button>
+          </div>
+        </div>`;
     },
     {enableHighAccuracy:true,timeout:8000,maximumAge:0}
   );
@@ -1947,10 +2003,15 @@ function launchHospital(data){
   showScreen('screen-hospital');startHospitalListeners();
 }
 function updateRing(d){
-  // Show combined ICU+Vent capacity percentage
-  const totalAll=(d.totalICU||0)+(d.totalVent||0);
-  const availAll=(d.availICU||0)+(d.availVent||0);
-  const p=totalAll>0?Math.round((availAll/totalAll)*100):0;
+  // Cap avail at total — defensive against bad data
+  const totalICU=Math.max(0,d.totalICU||0);
+  const totalVent=Math.max(0,d.totalVent||0);
+  const availICU=Math.min(totalICU,Math.max(0,d.availICU||0));
+  const availVent=Math.min(totalVent,Math.max(0,d.availVent||0));
+  const totalAll=totalICU+totalVent;
+  const availAll=availICU+availVent;
+  // Always 0–100%
+  const p=totalAll>0?Math.min(100,Math.round((availAll/totalAll)*100)):0;
   const c=289-(289*p/100);
   document.getElementById('h-ring').style.strokeDashoffset=c;
   document.getElementById('h-ring').style.stroke=p<30?'var(--red)':p<60?'var(--amber)':'var(--accent)';
@@ -1959,9 +2020,62 @@ function updateRing(d){
 }
 function buildBloodGrid(d){const grid=document.getElementById('blood-grid');grid.innerHTML=BLOOD.map(type=>`<div class="blood-cell"><div class="blood-type">${type}</div><div style="display:flex;align-items:center;gap:6px;justify-content:center;margin-top:6px"><button class="cnt-btn" onclick="adj('blood_${bKey(type)}',-1)" style="width:28px;height:28px;font-size:14px">−</button><input type="number" id="b-${bKey(type)}" class="form-input" style="width:50px;text-align:center;padding:4px;font-weight:800;font-family:'DM Mono'" value="${(d.blood||{})[bKey(type)]||0}" min="0"><button class="cnt-btn" onclick="adj('blood_${bKey(type)}',1)" style="width:28px;height:28px;font-size:14px">+</button></div><div class="text-xs text-muted" style="margin-top:2px">units</div></div>`).join('');}
 
-window.adj=(field,delta)=>{if(field.startsWith('blood_')){const id='b-'+field.replace('blood_','');const el=document.getElementById(id);el.value=Math.max(0,parseInt(el.value||0)+delta);}else{const id='h-'+field+'-in';const el=document.getElementById(id);el.value=Math.max(0,parseInt(el.value||0)+delta);}};
-window.syncField=(f,v)=>{const n=Math.max(0,parseInt(v)||0);if(f==='icu'){document.getElementById('h-icu-big').textContent=n;curHospData.availICU=n;updateRing(curHospData);}else if(f==='vent'){document.getElementById('h-vent-big').textContent=n;curHospData.availVent=n;updateRing(curHospData);}};
-window.saveAvail=async()=>{const icu=Math.max(0,parseInt(document.getElementById('h-icu-in').value)||0);const vent=Math.max(0,parseInt(document.getElementById('h-vent-in').value)||0);try{await updateDoc(doc(db,'hospitals',curHospId),{availICU:icu,availVent:vent});curHospData.availICU=icu;curHospData.availVent=vent;document.getElementById('h-icu-big').textContent=icu;document.getElementById('h-vent-big').textContent=vent;updateRing(curHospData);toast('✅','Availability updated!','green');}catch(e){toast('❌','Save failed','red');}};
+window.adj=(field,delta)=>{
+  if(field.startsWith('blood_')){
+    const id='b-'+field.replace('blood_','');
+    const el=document.getElementById(id);
+    el.value=Math.max(0,parseInt(el.value||0)+delta);
+  }else{
+    const id='h-'+field+'-in';
+    const el=document.getElementById(id);
+    // Cap at total capacity — cannot have more available than total
+    const totId=field==='icu'?'h-icu-tot':'h-vent-tot';
+    const totEl=document.getElementById(totId);
+    const maxVal=totEl?parseInt(totEl.textContent||0):9999;
+    const newVal=Math.min(maxVal,Math.max(0,parseInt(el.value||0)+delta));
+    el.value=newVal;
+    // Live update the big number and ring
+    syncField(field,newVal);
+  }
+};
+window.syncField=(f,v)=>{
+  let n=Math.max(0,parseInt(v)||0);
+  if(f==='icu'){
+    // Cap at total ICU
+    const tot=parseInt(document.getElementById('h-icu-tot').textContent||0)||9999;
+    n=Math.min(n,tot);
+    document.getElementById('h-icu-in').value=n;
+    document.getElementById('h-icu-big').textContent=n;
+    curHospData.availICU=n;
+    updateRing(curHospData);
+  }else if(f==='vent'){
+    // Cap at total ventilators
+    const tot=parseInt(document.getElementById('h-vent-tot').textContent||0)||9999;
+    n=Math.min(n,tot);
+    document.getElementById('h-vent-in').value=n;
+    document.getElementById('h-vent-big').textContent=n;
+    curHospData.availVent=n;
+    updateRing(curHospData);
+  }
+};
+window.saveAvail=async()=>{
+  const totalICU=curHospData.totalICU||0;
+  const totalVent=curHospData.totalVent||0;
+  // Triple-clamp: floor at 0, ceil at total capacity
+  const icu=Math.min(totalICU,Math.max(0,parseInt(document.getElementById('h-icu-in').value)||0));
+  const vent=Math.min(totalVent,Math.max(0,parseInt(document.getElementById('h-vent-in').value)||0));
+  // Fix input display if clamped
+  document.getElementById('h-icu-in').value=icu;
+  document.getElementById('h-vent-in').value=vent;
+  try{
+    await updateDoc(doc(db,'hospitals',curHospId),{availICU:icu,availVent:vent});
+    curHospData.availICU=icu;curHospData.availVent=vent;
+    document.getElementById('h-icu-big').textContent=icu;
+    document.getElementById('h-vent-big').textContent=vent;
+    updateRing(curHospData);
+    toast('✅','Availability updated!','green');
+  }catch(e){toast('❌','Save failed','red');}
+};
 window.toggleAccept=async()=>{const v=document.getElementById('h-accepting').checked;try{await updateDoc(doc(db,'hospitals',curHospId),{accepting:v});curHospData.accepting=v;toast(v?'✅':'⚠️',v?'Accepting patients':'Intake paused',v?'green':'amber');}catch(e){toast('❌','Failed','red');}};
 window.saveBlood=async()=>{const blood={};BLOOD.forEach(t=>{blood[bKey(t)]=Math.max(0,parseInt(document.getElementById('b-'+bKey(t)).value)||0);});try{await updateDoc(doc(db,'hospitals',curHospId),{blood});curHospData.blood=blood;toast('🩸','Blood bank saved!','green');}catch(e){toast('❌','Failed','red');}};
 window.saveHospProfile=async()=>{const updates={name:document.getElementById('hprof-name').value.trim(),address:document.getElementById('hprof-addr').value.trim(),contact:document.getElementById('hprof-contact').value.trim(),totalICU:parseInt(document.getElementById('hprof-icu').value)||0,totalVent:parseInt(document.getElementById('hprof-vent').value)||0};if(!updates.name)return toast('⚠️','Name required','amber');try{await updateDoc(doc(db,'hospitals',curHospId),updates);Object.assign(curHospData,updates);document.getElementById('hosp-name').textContent=updates.name;document.getElementById('hosp-addr').textContent=updates.address;document.getElementById('hosp-contact').textContent=updates.contact;document.getElementById('h-icu-tot').textContent=updates.totalICU;document.getElementById('h-vent-tot').textContent=updates.totalVent;updateRing(curHospData);toast('✅','Profile saved!','green');}catch(e){toast('❌','Failed','red');}};
@@ -2106,6 +2220,10 @@ function rxOnPick(inp){
   if(f)rxLoadFile(f);
 }
 function rxLoadFile(f){
+  // Warn about very large files (>15MB)
+  if(f.size>15*1024*1024){
+    toast('⚠️','Image is very large ('+Math.round(f.size/1024/1024)+'MB). It will be compressed automatically.','amber');
+  }
   _rxChosen=f;
   const reader=new FileReader();
   reader.onload=e=>{
@@ -2149,55 +2267,145 @@ window.rxAnalyze=async function(){
   }catch(e){
     document.getElementById('rx-loading').style.display='none';
     const errEl=document.getElementById('rx-error');
-    errEl.textContent='❌ '+e.message;
+    // Show a helpful error with guidance
+    let errMsg=e.message||'Unknown error';
+    let helpText='';
+    if(errMsg.includes('API key')||errMsg.includes('401')||errMsg.includes('invalid_api_key')){
+      helpText=' — Check that GROQ_API_KEY is set in your Vercel environment variables.';
+    }else if(errMsg.includes('Rate limit')){
+      helpText=' — You hit the free tier limit. Wait 1 minute and try again.';
+    }else if(errMsg.includes('JSON')){
+      helpText=' — Try a clearer or higher-resolution photo.';
+    }else if(errMsg.includes('model')||errMsg.includes('404')){
+      helpText=' — Vision model unavailable. Check your Groq plan.';
+    }
+    errEl.innerHTML='❌ <strong>Scan failed:</strong> '+rxEsc(errMsg)+
+      (helpText?'<br><span style="font-size:12px;opacity:.8">'+helpText+'</span>':'');
     errEl.style.display='block';
-    toast('❌','Analysis failed: '+e.message.substring(0,60),'red');
+    toast('❌','Scan failed: '+errMsg.substring(0,50),'red');
   }finally{
     btn.disabled=false;btn.textContent='🔍 Analyze with AI';
   }
 };
 
+// Compress image to <4MB before sending to Groq
+async function rxCompressImage(b64,mimeType){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=1400; // max dimension
+      let w=img.width,h=img.height;
+      if(w>MAX||h>MAX){
+        if(w>h){h=Math.round(h*MAX/w);w=MAX;}
+        else{w=Math.round(w*MAX/h);h=MAX;}
+      }
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      // Use JPEG for compression
+      const compressed=canvas.toDataURL('image/jpeg',0.85).split(',')[1];
+      resolve({b64:compressed,mimeType:'image/jpeg'});
+    };
+    img.onerror=()=>resolve({b64,mimeType}); // fallback to original
+    img.src='data:'+mimeType+';base64,'+b64;
+  });
+}
+
 async function rxCallGroq(b64,mimeType){
-  const prompt=`You are a medical document analyzer. Read this medical document image carefully — including all handwriting.
+  // Compress image first to avoid payload size errors
+  const compressed=await rxCompressImage(b64,mimeType);
+  b64=compressed.b64;mimeType=compressed.mimeType;
+
+  const prompt=`You are a medical document analyzer. Carefully read this medical document image including all handwriting.
 
 Identify the document type: "prescription", "scan_report", "lab_report", or "unknown"
 
-Return ONLY valid JSON — no explanation, no markdown, no code blocks.
+Return ONLY a valid JSON object — no explanation, no markdown, no code blocks.
 
-For PRESCRIPTION:
-{"document_type":"prescription","doctor_name":"","patient_name":"","date":"","vitals":{"bp":"","fbs":"","ppbs":"","hba1c":""},"medications":[{"drug_name":"","dosage":"","timing":{"morning":0,"afternoon":0,"night":0},"frequency":"","duration":"","instructions":""}],"raw_text":""}
+For a PRESCRIPTION:
+{
+  "document_type": "prescription",
+  "doctor_name": "doctor name with Dr. prefix",
+  "patient_name": "patient full name e.g. Mr. Nagarajan",
+  "date": "date written on prescription",
+  "vitals": {
+    "bp": "e.g. 128/76 mmHg",
+    "fbs": "e.g. 112 mg/dL",
+    "ppbs": "e.g. 168 mg/dL",
+    "hba1c": "e.g. 7.2%"
+  },
+  "medications": [
+    {
+      "drug_name": "full drug name e.g. Glycomet Trio",
+      "dosage": "strength e.g. 500mg",
+      "timing": { "morning": 0, "afternoon": 0, "night": 1 },
+      "frequency": "raw notation e.g. 0-0-1",
+      "duration": "e.g. 30 days",
+      "instructions": "e.g. after food"
+    }
+  ],
+  "raw_text": "all readable text from the document"
+}
 
-CRITICAL — Indian prescription timing (M-A-N = Morning-Afternoon-Night):
-- 0-0-1 = night only, 1-0-1 = morning+night, 1-1-1 = three times daily
-- List ALL medications visible, even partially readable ones
+CRITICAL — Indian prescription timing notation (M-A-N = Morning-Afternoon-Night):
+- Numbers or circles after drug name like 0-0-1 mean: Morning=0, Afternoon=0, Night=1
+- 1-0-0 = take 1 tablet in morning only
+- 0-0-1 = take 1 tablet at night only
+- 1-0-1 = take 1 morning and 1 night
+- 1-1-1 = take 1 morning, afternoon, and night
 - T. = Tablet, C. = Capsule, S.C. = Subcutaneous injection
+- List ALL medications you can see, even partially readable ones
 
 For SCAN REPORT:
-{"document_type":"scan_report","patient_name":"","age":"","sex":"","date":"","report_type":"","referred_by":"","findings":[],"critical_findings":[],"impression":"","raw_text":""}
+{
+  "document_type": "scan_report",
+  "patient_name": "", "age": "", "sex": "", "date": "",
+  "report_type": "e.g. CT Whole Abdomen",
+  "referred_by": "",
+  "findings": ["finding 1", "finding 2"],
+  "critical_findings": ["only genuinely abnormal findings"],
+  "impression": "conclusion if present",
+  "raw_text": ""
+}
 
 For LAB REPORT:
-{"document_type":"lab_report","patient_name":"","date":"","tests":[{"test_name":"","value":"","unit":"","reference":"","status":"normal/high/low"}],"raw_text":""}`;
+{
+  "document_type": "lab_report",
+  "patient_name": "", "date": "",
+  "tests": [
+    {"test_name": "", "value": "", "unit": "", "reference": "", "status": "normal/high/low"}
+  ],
+  "raw_text": ""
+}`;
 
   const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
     body:JSON.stringify({
       model:'meta-llama/llama-4-scout-17b-16e-instruct',
-      temperature:0.1,max_tokens:1800,
+      temperature:0.1,
+      max_tokens:1500,
       messages:[{role:'user',content:[
         {type:'image_url',image_url:{url:'data:'+mimeType+';base64,'+b64}},
         {type:'text',text:prompt}
       ]}]
     })
   });
+
   if(!resp.ok){
     const err=await resp.json().catch(()=>({}));
     throw new Error(err.error?.message||'Groq API error '+resp.status);
   }
+
   const result=await resp.json();
   let text=result.choices[0].message.content.trim();
+  // Strip markdown fences if present
   text=text.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/i,'').trim();
-  return JSON.parse(text);
+  // Extract JSON block
+  const jsonMatch=text.match(/\{[\s\S]*\}/);
+  if(!jsonMatch)throw new Error('AI response was not valid JSON. Try a clearer image.');
+  return JSON.parse(jsonMatch[0]);
 }
 
 function rxEsc(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -2355,6 +2563,20 @@ window.rxAutoFill=function(dataAttr){
   }catch(e){toast('❌','Auto-fill failed','red');}
 };
 
+
+window.retryLocation=function(){
+  document.getElementById('u-results').innerHTML='<div style="text-align:center;padding:30px;color:var(--text2)"><div style="font-size:32px;margin-bottom:10px">📍</div>Requesting location...</div>';
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      myLoc={lat:p.coords.latitude,lng:p.coords.longitude};
+      if(userMap)userMap.setView([myLoc.lat,myLoc.lng],12);
+      toast('📍','Location detected!','green');
+      document.getElementById('u-results').innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">🔍</div><div>Location found! Now search for hospitals near you.</div></div>';
+    },
+    ()=>{toast('⚠️','Still denied. Please enable location in browser settings.','amber');},
+    {enableHighAccuracy:true,timeout:10000,maximumAge:0}
+  );
+};
 })();
 </script>
 </body>
