@@ -595,6 +595,143 @@ body.cursor-active *{cursor:none!important}
 
 }
 
+/* ═══ PRESCRIPTION SCANNER ═══ */
+.rx-drop-zone{
+  border:2.5px dashed var(--card-border);border-radius:20px;
+  padding:40px 24px;text-align:center;cursor:pointer;
+  transition:all .25s;background:var(--card);position:relative;
+  min-height:180px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;
+}
+.rx-drop-zone:hover,.rx-drop-zone.drag-over{
+  border-color:var(--accent);background:rgba(6,182,212,.06);
+  transform:scale(1.01);
+}
+.rx-drop-zone input[type=file]{
+  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+}
+.rx-preview-wrap{
+  position:relative;border-radius:16px;overflow:hidden;
+  border:2px solid var(--card-border);background:var(--card);
+  max-height:260px;display:flex;align-items:center;justify-content:center;
+}
+.rx-preview-wrap img{max-width:100%;max-height:260px;object-fit:contain;display:block;}
+.rx-remove-btn{
+  position:absolute;top:8px;right:8px;width:32px;height:32px;
+  border-radius:50%;background:rgba(0,0,0,.6);color:#fff;
+  border:none;cursor:pointer;font-size:16px;display:flex;
+  align-items:center;justify-content:center;transition:.2s;
+}
+.rx-remove-btn:hover{background:var(--red);}
+/* Med result cards */
+.rx-doc-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:7px 16px;border-radius:100px;font-size:13px;font-weight:700;
+  margin-bottom:18px;
+}
+.rx-doc-badge.prescription{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.3);}
+.rx-doc-badge.scan_report{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.3);}
+.rx-doc-badge.lab_report{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.3);}
+.rx-doc-badge.unknown{background:var(--card);color:var(--text2);border:1px solid var(--card-border);}
+.rx-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.rx-summary-card{background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:13px 15px;}
+.rx-summary-card .rx-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);margin-bottom:4px;}
+.rx-summary-card .rx-val{font-size:14px;font-weight:600;color:var(--text);}
+.rx-summary-card .rx-val.empty{color:var(--text3);font-style:italic;font-weight:400;}
+/* Med card */
+.rx-med-card{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:16px;overflow:hidden;margin-bottom:14px;
+  animation:slideUp .3s ease both;
+}
+.rx-med-head{
+  padding:15px 20px;display:flex;align-items:flex-start;
+  justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--card-border);
+}
+.rx-med-name{font-size:18px;font-weight:800;letter-spacing:-.3px;}
+.rx-med-dose-badge{
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#fff;font-size:12px;font-weight:700;
+  padding:4px 12px;border-radius:100px;white-space:nowrap;flex-shrink:0;
+}
+.rx-timing-row{padding:13px 20px;border-bottom:1px solid var(--card-border);display:flex;gap:8px;flex-wrap:wrap;}
+.rx-slot{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:10px 16px;border-radius:12px;border:1px solid var(--card-border);
+  background:var(--card);min-width:72px;transition:.2s;flex:1;
+}
+.rx-slot.active{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.4);}
+.rx-slot.inactive{opacity:.35;}
+.rx-slot-icon{font-size:18px;}
+.rx-slot-label{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--text3);}
+.rx-slot-count{font-size:13px;font-weight:700;color:var(--green);}
+.rx-slot.inactive .rx-slot-count{color:var(--text3);}
+.rx-med-info{padding:14px 20px;}
+.rx-info-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:4px;margin-top:10px;}
+.rx-info-label:first-child{margin-top:0;}
+.rx-info-text{font-size:14px;line-height:1.6;color:var(--text2);}
+/* Finding cards */
+.rx-finding{
+  background:var(--card);border:1px solid var(--card-border);
+  border-radius:12px;padding:12px 15px;margin-bottom:8px;
+  font-size:14px;line-height:1.6;color:var(--text2);
+  animation:slideUp .3s ease both;
+}
+.rx-finding.critical{border-left:4px solid var(--red);background:rgba(239,68,68,.04);}
+.rx-finding-crit-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--red);margin-bottom:4px;}
+/* Lab table */
+.rx-lab-table{width:100%;border-collapse:collapse;border-radius:12px;overflow:hidden;border:1px solid var(--card-border);margin-bottom:20px;}
+.rx-lab-table th{background:linear-gradient(135deg,var(--accent),var(--blue));color:#fff;text-align:left;padding:10px 13px;font-size:12px;font-weight:700;}
+.rx-lab-table td{padding:10px 13px;font-size:13px;border-bottom:1px solid var(--card-border);color:var(--text2);}
+.rx-lab-table tr:last-child td{border-bottom:none;}
+.rx-lab-table tr:hover td{background:var(--card);}
+.rx-status-badge{display:inline-block;padding:2px 8px;border-radius:100px;font-size:11px;font-weight:700;}
+.rx-status-badge.normal{background:rgba(16,185,129,.12);color:var(--green);}
+.rx-status-badge.high{background:rgba(239,68,68,.12);color:var(--red);}
+.rx-status-badge.low{background:rgba(245,158,11,.12);color:var(--amber);}
+.rx-disclaimer{
+  background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);
+  border-left:4px solid var(--amber);border-radius:12px;
+  padding:12px 16px;font-size:13px;color:var(--amber);
+  line-height:1.6;display:flex;gap:10px;align-items:flex-start;margin-top:20px;
+}
+/* Camera button on mobile */
+.rx-camera-btn{
+  display:none;background:linear-gradient(135deg,var(--purple),var(--accent));
+  color:#fff;border:none;border-radius:12px;padding:12px 20px;
+  font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;
+  cursor:pointer;width:100%;margin-top:10px;transition:.2s;
+}
+.rx-camera-btn:hover{opacity:.9;}
+/* Auto-fill banner */
+.rx-autofill-bar{
+  background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(6,182,212,.1));
+  border:1px solid rgba(16,185,129,.3);border-radius:14px;
+  padding:14px 18px;margin-top:16px;display:flex;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+}
+/* Spinner */
+.rx-spinner{width:36px;height:36px;border:3px solid var(--card-border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* Vitals row */
+.rx-vitals-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.rx-vital-chip{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:10px 14px;}
+.rx-vital-chip .rx-lbl{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--blue);margin-bottom:2px;}
+.rx-vital-chip .rx-val{font-size:15px;font-weight:800;color:var(--blue);}
+/* Mobile */
+@media(max-width:768px){
+  .rx-summary-grid{grid-template-columns:1fr 1fr;}
+  .rx-camera-btn{display:block;}
+  .rx-slot{min-width:60px;padding:8px 10px;}
+  .rx-med-name{font-size:16px;}
+  .rx-lab-table{font-size:12px;}
+  .rx-lab-table th,.rx-lab-table td{padding:8px 10px;}
+}
+@media(max-width:400px){
+  .rx-summary-grid{grid-template-columns:1fr;}
+}
+
 </style>
 </head>
 <body>
@@ -672,12 +809,63 @@ body.cursor-active *{cursor:none!important}
 
 <!-- PATIENT SCREEN -->
 <div id="screen-user" class="screen" style="padding:76px 20px 30px"><div style="max-width:1000px;margin:0 auto">
-<div class="dash-tabs"><div class="dtab active" onclick="uTab('find')">🏥 Find Care</div><div class="dtab" onclick="uTab('triage')">🧠 AI Triage</div><div class="dtab" onclick="uTab('appt')">📅 Appointments</div><div class="dtab" onclick="uTab('blood')">🩸 Blood</div><div class="dtab" onclick="uTab('medicine')">💊 Medicine</div><div class="dtab" onclick="uTab('records')">📋 Records</div><div class="dtab" onclick="uTab('uprof')">👤 Profile</div><div class="dtab" onclick="uTab('emg')">📞 Emergency</div></div>
+<div class="dash-tabs"><div class="dtab active" onclick="uTab('find')">🏥 Find Care</div><div class="dtab" onclick="uTab('triage')">🧠 AI Triage</div><div class="dtab" onclick="uTab('appt')">📅 Appointments</div><div class="dtab" onclick="uTab('blood')">🩸 Blood</div><div class="dtab" onclick="uTab('medicine')">💊 Medicine</div><div class="dtab" onclick="uTab('rx')">💊 Rx Scanner</div><div class="dtab" onclick="uTab('records')">📋 Records</div><div class="dtab" onclick="uTab('uprof')">👤 Profile</div><div class="dtab" onclick="uTab('emg')">📞 Emergency</div></div>
 <div id="u-find" class="dpanel active"><div style="text-align:center;padding:24px 0 20px"><div style="font-size:32px;font-weight:900;letter-spacing:-1px" id="u-greeting">Find Emergency Care</div><div style="color:var(--text2);margin-top:6px;font-size:15px">Real-time verified bed availability near you</div><div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px"><div class="filter-chip active" id="fc-all" onclick="setF('all')">🏥 All</div><div class="filter-chip" id="fc-icu" onclick="setF('icu')">🛏️ ICU</div><div class="filter-chip" id="fc-vent" onclick="setF('vent')">💨 Ventilator</div><div class="filter-chip" id="fc-blood" onclick="setF('blood')">🩸 Blood Bank</div></div><button class="btn btn-primary btn-lg mt-20" style="margin-top:16px" onclick="searchH()">🔍 Search Nearby Hospitals</button></div><div class="route-info-bar" id="route-info-bar"><div class="flex-between"><div class="flex-row" style="flex-wrap:wrap;gap:8px" id="route-info-content"><span style="color:var(--text2);font-size:14px">Calculating route...</span></div><div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" onclick="clearRoute()">✕ Clear</button></div></div><div class="route-progress" id="route-progress"></div></div><div id="user-map" style="margin-bottom:20px;border-radius:var(--radius);height:320px;border:1px solid var(--card-border)"></div><div id="u-results"><div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">🔍</div><div>Search to see verified hospitals near you</div></div></div></div>
 <div id="u-triage" class="dpanel"><div class="card card-p-lg card-glow"><div class="flex-row mb-16" style="margin-bottom:16px"><div style="font-size:28px">🧠</div><div><div style="font-size:20px;font-weight:800">AI Triage <span style="font-size:13px;color:var(--accent);font-weight:600">Powered by Groq · Llama 3</span></div><div class="text-sm text-muted">Select symptoms & describe how you feel for instant AI assessment</div></div></div><div class="voice-panel"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div style="font-size:22px">🎙️</div><div><div style="font-size:15px;font-weight:800">Voice Triage <span style="font-size:12px;color:var(--purple);font-weight:600">Regional Language AI</span></div><div style="font-size:12px;color:var(--text2)">Speak symptoms in your language</div></div></div><div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Select Language</div><div class="voice-lang-grid" id="voice-lang-grid"><button class="lang-btn active" onclick="setVoiceLang(this,'en-IN','English')">🇮🇳 English</button><button class="lang-btn" onclick="setVoiceLang(this,'ta-IN','Tamil')">தமிழ்</button><button class="lang-btn" onclick="setVoiceLang(this,'hi-IN','Hindi')">हिन्दी</button><button class="lang-btn" onclick="setVoiceLang(this,'ml-IN','Malayalam')">മലയാളം</button><button class="lang-btn" onclick="setVoiceLang(this,'te-IN','Telugu')">తెలుగు</button><button class="lang-btn" onclick="setVoiceLang(this,'kn-IN','Kannada')">ಕನ್ನಡ</button><button class="lang-btn" onclick="setVoiceLang(this,'mr-IN','Marathi')">मराठी</button><button class="lang-btn" onclick="setVoiceLang(this,'bn-IN','Bengali')">বাংলা</button></div><div style="text-align:center;margin-top:6px"><button class="mic-btn" id="mic-btn" onclick="toggleVoice()">🎙️</button><div class="voice-wave" id="voice-wave" style="display:none"><span></span><span></span><span></span><span></span><span></span></div><div class="voice-status" id="voice-status">Tap mic to speak your symptoms</div></div><div class="voice-transcript" id="voice-transcript"></div></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><div style="flex:1;height:1px;background:var(--card-border)"></div><div style="font-size:12px;color:var(--text3);font-weight:600">OR SELECT MANUALLY</div><div style="flex:1;height:1px;background:var(--card-border)"></div></div><div id="symptom-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:8px;margin-bottom:20px"></div><div class="form-group mt-16" style="margin-top:16px"><label class="form-label">Describe your condition (optional)</label><textarea id="u-triage-notes" class="form-input" style="height:90px" placeholder="e.g. chest pain for 30 minutes, started after exercise..."></textarea></div><button class="btn btn-primary btn-full" onclick="runTriage()">🧠 Analyze with AI →</button><div id="triage-out" style="display:none;margin-top:20px"></div></div></div>
 <div id="u-appt" class="dpanel"><div style="margin-bottom:20px"><div style="font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px">📅 Book Appointments</div><div style="font-size:14px;color:var(--text2)">Find specialists at nearby hospitals and book a token appointment.</div></div><div class="card card-p" style="margin-bottom:20px;background:rgba(139,92,246,.06);border-color:rgba(139,92,246,.2)"><div style="font-size:14px;font-weight:700;color:var(--purple);margin-bottom:10px">🧠 AI Specialist Finder</div><div style="font-size:13px;color:var(--text2);margin-bottom:12px">Describe your symptoms — AI will match you to the right specialist.</div><textarea id="appt-symptom-input" class="form-input" style="height:80px" placeholder="e.g. I have persistent chest pain and shortness of breath..."></textarea><button class="btn btn-primary btn-full mt-8" style="margin-top:10px" onclick="findSpecialistByAI()">🧠 Find My Specialist →</button><div id="ai-specialist-result" style="display:none;margin-top:14px"></div></div><div class="section-title">🏥 Browse Specialists by Hospital</div><div id="u-specialist-list"><div style="text-align:center;padding:30px;color:var(--text3)"><div style="font-size:32px;margin-bottom:10px">👨‍⚕️</div>Search hospitals first, or use AI finder above.</div></div><div class="section-title" style="margin-top:24px">📋 My Appointments</div><div id="u-my-appts"><div style="text-align:center;padding:30px;color:var(--text3)">No appointments yet</div></div></div>
 <div id="u-medicine" class="dpanel"><div style="margin-bottom:20px"><div style="font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px">💊 Find Medicine Nearby</div><div style="font-size:14px;color:var(--text2)">Search any medicine — see nearest pharmacies, availability & price.</div></div><div class="card card-p" style="margin-bottom:20px"><div style="display:flex;gap:10px;align-items:center"><input id="med-search-input" type="text" class="form-input" placeholder="e.g. Paracetamol, Metformin..." style="flex:1" onkeydown="if(event.key==='Enter')searchMedicine()"><button class="btn btn-primary" onclick="searchMedicine()">🔍</button></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px" id="med-quick-tags"><span onclick="quickMedSearch('Paracetamol')" style="cursor:pointer;padding:5px 13px;background:var(--card);border:1px solid var(--card-border);border-radius:100px;font-size:12px;font-weight:600;transition:.2s">Paracetamol</span><span onclick="quickMedSearch('Metformin')" style="cursor:pointer;padding:5px 13px;background:var(--card);border:1px solid var(--card-border);border-radius:100px;font-size:12px;font-weight:600;transition:.2s">Metformin</span><span onclick="quickMedSearch('Amoxicillin')" style="cursor:pointer;padding:5px 13px;background:var(--card);border:1px solid var(--card-border);border-radius:100px;font-size:12px;font-weight:600;transition:.2s">Amoxicillin</span><span onclick="quickMedSearch('Aspirin')" style="cursor:pointer;padding:5px 13px;background:var(--card);border:1px solid var(--card-border);border-radius:100px;font-size:12px;font-weight:600;transition:.2s">Aspirin</span></div></div><div id="med-search-map" style="display:none"></div><div id="med-search-results"><div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">💊</div><div>Search a medicine to find nearby pharmacies</div></div></div></div>
 <div id="u-blood" class="dpanel"><div class="card card-p" style="margin-bottom:20px"><div style="font-size:18px;font-weight:800;margin-bottom:8px">🩸 Your Blood Type</div><div style="font-size:13px;color:var(--text2);margin-bottom:16px">Hospitals can prepare in advance when you send an SOS.</div><div class="blood-type-select" id="bt-selector"><div class="bt-option" onclick="selectBT(this,'A+')">A+</div><div class="bt-option" onclick="selectBT(this,'A-')">A−</div><div class="bt-option" onclick="selectBT(this,'B+')">B+</div><div class="bt-option" onclick="selectBT(this,'B-')">B−</div><div class="bt-option" onclick="selectBT(this,'AB+')">AB+</div><div class="bt-option" onclick="selectBT(this,'AB-')">AB−</div><div class="bt-option" onclick="selectBT(this,'O+')">O+</div><div class="bt-option" onclick="selectBT(this,'O-')">O−</div><div class="bt-option" onclick="selectBT(this,'Unknown')" style="grid-column:span 4;font-size:13px">❓ Unknown</div></div><button class="btn btn-primary btn-full" onclick="saveBloodType()">💾 Save Blood Type</button></div><div class="section-title">Request Blood from a Hospital</div><div class="card card-p"><div class="text-sm text-muted mb-16" style="margin-bottom:12px">Blood bank team notified immediately via email.</div><div id="u-blood-hosps"><div style="text-align:center;padding:30px;color:var(--text3)">Run hospital search first from Find Care tab</div></div></div></div>
+<div id="u-rx" class="dpanel">
+<div style="margin-bottom:20px">
+  <div style="font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px">💊 Prescription Scanner</div>
+  <div style="font-size:14px;color:var(--text2);line-height:1.6">Upload or photograph a prescription, scan report, or lab report — AI reads it instantly.</div>
+</div>
+
+<!-- Upload zone -->
+<div class="rx-drop-zone card" id="rx-drop-zone"
+  ondragover="rxDragOver(event)"
+  ondragleave="rxDragLeave(event)"
+  ondrop="rxDrop(event)">
+  <input type="file" id="rx-file-input" accept="image/*" onchange="rxOnPick(this)" capture="">
+  <div style="font-size:52px;margin-bottom:8px">📋</div>
+  <div style="font-size:17px;font-weight:800;margin-bottom:4px">Drop image here</div>
+  <div style="font-size:13px;color:var(--text2)">or click to choose file</div>
+  <div style="display:flex;gap:6px;justify-content:center;margin-top:12px;flex-wrap:wrap">
+    <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">JPG</span>
+    <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">PNG</span>
+    <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">WEBP</span>
+    <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">HEIC</span>
+  </div>
+</div>
+<!-- Mobile camera capture -->
+<button class="rx-camera-btn" onclick="document.getElementById('rx-camera-input').click()">📷 Take Photo with Camera</button>
+<input type="file" id="rx-camera-input" accept="image/*" capture="environment" style="display:none" onchange="rxOnPick(this)">
+
+<!-- Preview -->
+<div id="rx-preview-wrap" class="rx-preview-wrap card" style="display:none;margin-top:14px">
+  <img id="rx-preview-img" src="" alt="Preview">
+  <button class="rx-remove-btn" onclick="rxReset()" title="Remove">✕</button>
+</div>
+
+<!-- Analyze button -->
+<button id="rx-analyze-btn" class="btn btn-primary btn-full btn-lg" style="display:none;margin-top:14px" onclick="rxAnalyze()">
+  🔍 Analyze with AI
+</button>
+
+<!-- Loading -->
+<div id="rx-loading" style="display:none;text-align:center;padding:40px 0">
+  <div class="rx-spinner" style="margin:0 auto 14px"></div>
+  <div style="font-size:15px;font-weight:600;color:var(--text2)">Reading document with Groq AI (Llama 4 Vision)…</div>
+  <div style="font-size:12px;color:var(--text3);margin-top:6px">Works on handwritten & printed prescriptions</div>
+</div>
+
+<!-- Error -->
+<div id="rx-error" style="display:none;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-left:4px solid var(--red);border-radius:14px;padding:14px 18px;margin-top:14px;font-size:14px;color:var(--red)"></div>
+
+<!-- Results -->
+<div id="rx-results" style="display:none;margin-top:24px"></div>
+
+</div>
 <div id="u-records" class="dpanel"><div style="margin-bottom:20px"><div style="font-size:26px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px">📋 Medical Records</div><div style="font-size:14px;color:var(--text2);line-height:1.6">Records shared with hospital staff on SOS — helping them prepare before you arrive.</div></div><div class="rec-summary" id="rec-summary" style="display:none"><div style="font-size:12px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px">📊 Records Overview</div><div id="rec-summary-content" style="display:flex;flex-wrap:wrap;gap:6px"></div></div><div class="rec-block"><div class="rec-block-title"><span style="color:var(--red)">⚠️</span><span style="color:var(--red)">Allergies</span></div><textarea id="rec-allergies" class="form-input" placeholder="e.g. Penicillin, Aspirin, Shellfish..." style="height:90px"></textarea></div><div class="rec-block"><div class="rec-block-title"><span style="color:var(--amber)">🩺</span><span style="color:var(--amber)">Chronic Conditions</span></div><textarea id="rec-conditions" class="form-input" placeholder="e.g. Type 2 Diabetes, Hypertension..." style="height:90px"></textarea></div><div class="rec-block"><div class="rec-block-title"><span style="color:var(--blue)">💊</span><span style="color:var(--blue)">Current Medications</span></div><textarea id="rec-medications" class="form-input" placeholder="e.g. Metformin 500mg twice daily..." style="height:90px"></textarea></div><div class="rec-block"><div class="rec-block-title"><span style="color:var(--purple)">🔬</span><span style="color:var(--purple)">Past Surgeries</span></div><textarea id="rec-surgeries" class="form-input" placeholder="e.g. Appendectomy (2018)..." style="height:80px"></textarea></div><div class="rec-block"><div class="rec-block-title"><span style="color:var(--accent)">📝</span><span style="color:var(--accent)">Emergency Notes</span></div><textarea id="rec-notes" class="form-input" placeholder="Critical info for first responders..." style="height:80px"></textarea></div><div class="rec-block"><div class="rec-block-title"><span style="color:var(--green)">📞</span><span style="color:var(--green)">Emergency Contact</span></div><div class="grid-2"><div class="form-group mb-0"><input id="rec-emg-contact" type="text" class="form-input" placeholder="Contact name"></div><div class="form-group mb-0"><input id="rec-emg-phone" type="tel" class="form-input" placeholder="Phone number"></div></div><div class="form-group" style="margin-top:10px;margin-bottom:0"><input id="rec-emg-relation" type="text" class="form-input" placeholder="Relationship"></div></div><button class="btn btn-primary btn-full btn-lg" style="margin-top:8px" onclick="saveMedicalRecord()">💾 Save Medical Records</button><div style="font-size:11px;color:var(--text3);text-align:center;margin-top:12px">🔒 Only shared with verified hospitals on SOS</div></div>
 <div id="u-uprof" class="dpanel"><div class="card card-p"><div class="profile-avatar">👤</div><div style="text-align:center;margin-bottom:24px"><div style="font-size:22px;font-weight:800" id="prof-name-display">—</div><div class="badge bg-green mt-8" id="prof-trust-badge" style="margin-top:8px">Trust Score: 5.0</div></div><div class="sep"></div><div class="form-group mt-16" style="margin-top:16px"><label class="form-label">Full Name</label><input id="prof-name" type="text" class="form-input"></div><div class="form-group"><label class="form-label">Mobile</label><input id="prof-phone" type="tel" class="form-input"></div><div class="form-group"><label class="form-label">Email</label><input id="prof-email" type="text" class="form-input" readonly style="opacity:.6;cursor:not-allowed"></div><div class="form-group"><label class="form-label">Blood Type</label><input id="prof-blood" type="text" class="form-input" readonly style="opacity:.6;cursor:not-allowed"></div><button class="btn btn-primary btn-full" onclick="saveUserProfile()">💾 Save Changes</button></div></div>
 <div id="u-emg" class="dpanel"><div class="section-title">📞 Emergency Contacts</div><div class="card" id="emg-contacts"></div></div>
@@ -1084,13 +1272,16 @@ function showScreen(id){
 }
 window.showScreen=showScreen;
 window.goBack=function(){
-  if(_screenHistory.length>1){
-    _screenHistory.pop();
-    const prev=_screenHistory[_screenHistory.length-1];
-    _suppressPush=true;
-    showScreen(prev);
-    _suppressPush=false;
+  // Always safe: if no history, go to landing
+  if(typeof _screenHistory==='undefined'||_screenHistory.length<=1){
+    showScreen('screen-landing');
+    return;
   }
+  _screenHistory.pop();
+  const prev=_screenHistory[_screenHistory.length-1]||'screen-landing';
+  _suppressPush=true;
+  showScreen(prev);
+  _suppressPush=false;
 };
 window.addEventListener('popstate',(e)=>{
   if(e.state&&e.state.screen){
@@ -1098,12 +1289,8 @@ window.addEventListener('popstate',(e)=>{
     if(_screenHistory.length>1)_screenHistory.pop();
     showScreen(e.state.screen);
     _suppressPush=false;
-  }else if(_screenHistory.length>1){
-    _screenHistory.pop();
-    const prev=_screenHistory[_screenHistory.length-1];
-    _suppressPush=true;
-    showScreen(prev);
-    _suppressPush=false;
+  }else{
+    showScreen('screen-landing');
   }
 });
 async function sendEmail(toEmail,toName,subject,htmlBody){
@@ -1133,8 +1320,8 @@ window.hTab=n=>{
   if(n==='spec')loadHospSpecialists();
 };
 window.uTab=n=>{
-  const map={find:0,triage:1,appt:2,blood:3,medicine:4,records:5,uprof:6,emg:7};
-  const panels=['u-find','u-triage','u-appt','u-blood','u-medicine','u-records','u-uprof','u-emg'];
+  const map={find:0,triage:1,appt:2,blood:3,medicine:4,rx:5,records:6,uprof:7,emg:8};
+  const panels=['u-find','u-triage','u-appt','u-blood','u-medicine','u-rx','u-records','u-uprof','u-emg'];
   document.querySelectorAll('#screen-user .dtab').forEach((t,i)=>t.classList.toggle('active',i===map[n]));
   panels.forEach((p,i)=>document.getElementById(p).classList.toggle('active',i===map[n]));
   if(n==='find'&&userMap)setTimeout(()=>userMap.invalidateSize(),200);
@@ -1182,7 +1369,10 @@ async function patientLogin(){
   const email=document.getElementById('pt-email').value.trim(),pass=document.getElementById('pt-pass').value;
   if(!email||!pass)return toast('⚠️','Enter email and password','amber');
   try{const cred=await signInWithEmailAndPassword(auth,email,pass);const snap=await getDoc(doc(db,'users',cred.user.uid));const data=snap.exists()?snap.data():{name:email.split('@')[0],role:'patient',trustScore:5.0,bloodType:'Unknown'};
-  if(data.role!=='patient'){await signOut(auth);return toast('❌','Not a patient account','red');}sessionRestored=true;currentUser={id:cred.user.uid,...data};launchUser();}catch(e){toast('❌','Login failed: '+e.message.replace('Firebase: ','').substring(0,60),'red');}
+  if(data.role!=='patient'){await signOut(auth);return toast('❌','Not a patient account','red');}sessionRestored=true;currentUser={id:cred.user.uid,...data};launchUser();}catch(e){
+    if(e.code==='auth/unauthorized-domain')return toast('❌','Open the app from your Vercel URL, not as a local file','red');
+    toast('❌','Login failed: '+e.message.replace('Firebase: ','').replace('Error (auth/)','').substring(0,70),'red');
+  }
 }
 window.patientLogin=patientLogin;
 async function hospitalLogin(){
@@ -1547,8 +1737,17 @@ function launchUser(){
   selectedBT=currentUser.bloodType||null;
   if(selectedBT)document.querySelectorAll('.bt-option').forEach(o=>o.classList.toggle('selected',o.textContent.replace('−','-')===selectedBT));
   showScreen('screen-user');buildSymptoms();buildEmergencyContacts();loadMedicalRecord();startAmbulanceTracking();loadMyAppointments();
-  if(!currentUser.bloodType||currentUser.bloodType==='Unknown')setTimeout(showOnboarding,600);
-  navigator.geolocation.getCurrentPosition(p=>{myLoc={lat:p.coords.latitude,lng:p.coords.longitude};initUserMap();toast('📍','Location detected','green');},()=>{initUserMap();toast('⚠️','Using default location','amber');});
+  // Always ask for location immediately for new users
+  navigator.geolocation.getCurrentPosition(
+    p=>{myLoc={lat:p.coords.latitude,lng:p.coords.longitude};initUserMap();toast('📍','Location detected','green');},
+    ()=>{
+      initUserMap();
+      // If denied, show a prompt to enable
+      toast('⚠️','Location access denied — showing nearest based on default location','amber');
+    },
+    {enableHighAccuracy:true,timeout:8000,maximumAge:0}
+  );
+  if(!currentUser.bloodType||currentUser.bloodType==='Unknown')setTimeout(showOnboarding,800);
 }
 function initUserMap(){
   if(userMap){userMap.setView([myLoc.lat,myLoc.lng],12);userMap.invalidateSize();return;}
@@ -1567,13 +1766,28 @@ window.setF=f=>{curFilter=f;document.querySelectorAll('.filter-chip').forEach(c=
 window.searchH=async()=>{
   const el=document.getElementById('u-results');el.innerHTML='<div class="card skel" style="height:100px;margin-bottom:12px"></div>'.repeat(3);
   const snap=await getDocs(collection(db,'hospitals'));let list=[];
-  snap.forEach(d=>{const h={id:d.id,...d.data()};if(!h.verified||h.accepting===false)return;if(curFilter==='icu'&&h.availICU<=0)return;if(curFilter==='vent'&&h.availVent<=0)return;if(curFilter==='blood'&&!(h.blood&&Object.values(h.blood).some(v=>v>0)))return;list.push({...h,distance:haversine(myLoc.lat,myLoc.lng,h.lat,h.lng)});});
-  list.sort((a,b)=>a.distance-b.distance);allHospitals=list;
+  snap.forEach(d=>{const h={id:d.id,...d.data()};if(!h.verified||h.accepting===false)return;if(curFilter==='icu'&&h.availICU<=0)return;if(curFilter==='vent'&&h.availVent<=0)return;if(curFilter==='blood'&&!(h.blood&&Object.values(h.blood).some(v=>v>0)))return;list.push({...h,distance:haversine(myLoc.lat,myLoc.lng,h.lat,h.lng),roadDist:null,roadDur:null});});
+  list.sort((a,b)=>a.distance-b.distance);
+  // Fetch real road distances via OSRM for top 10 hospitals
+  el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text2);font-size:13px">🗺️ Calculating road distances...</div>';
+  const top=list.slice(0,10);
+  await Promise.all(top.map(async h=>{
+    try{
+      const url=`https://router.project-osrm.org/route/v1/driving/${myLoc.lng},${myLoc.lat};${h.lng},${h.lat}?overview=false`;
+      const r=await fetch(url);const data=await r.json();
+      if(data.code==='Ok'&&data.routes?.[0]){h.roadDist=data.routes[0].distance/1000;h.roadDur=Math.round(data.routes[0].duration/60);}
+    }catch(e){/* keep haversine fallback */}
+  }));
+  // Sort by road distance for those that have it
+  top.sort((a,b)=>(a.roadDist??a.distance)-(b.roadDist??b.distance));
+  const rest=list.slice(10);
+  const sorted=[...top,...rest];
+  allHospitals=sorted;
   uMarkers.forEach(m=>userMap.removeLayer(m));uMarkers=[];
-  list.forEach(h=>{const c=h.availICU===0?'#EF4444':h.availICU<=3?'#F59E0B':'#10B981';const m=L.circleMarker([h.lat,h.lng],{radius:10,color:c,fillColor:c,fillOpacity:.8,weight:2}).addTo(userMap);m.bindPopup(`<b>${h.name}</b><br>ICU: ${h.availICU} | Vent: ${h.availVent}`);uMarkers.push(m);});
-  if(list.length>0)userMap.setView([list[0].lat,list[0].lng],12);
-  document.getElementById('u-blood-hosps').innerHTML=list.length?list.map(h=>`<div class="card hosp-card"><div><div style="font-weight:700">${h.name}</div><div class="text-xs text-muted">${h.distance.toFixed(1)} km</div></div><button class="btn btn-danger btn-sm" onclick="requestBlood('${h.id}','${h.name.replace(/'/g,"\\'")}','${h.staffEmail||''}')">🩸 Request</button></div>`).join(''):'<div style="text-align:center;padding:20px;color:var(--text3)">No hospitals found.</div>';
-  renderResults(list);
+  sorted.forEach(h=>{const c=h.availICU===0?'#EF4444':h.availICU<=3?'#F59E0B':'#10B981';const m=L.circleMarker([h.lat,h.lng],{radius:10,color:c,fillColor:c,fillOpacity:.8,weight:2}).addTo(userMap);m.bindPopup(`<b>${h.name}</b><br>ICU: ${h.availICU} | Vent: ${h.availVent}<br>${h.roadDist!=null?'🛣️ '+h.roadDist.toFixed(1)+' km by road':''}`);uMarkers.push(m);});
+  if(sorted.length>0)userMap.setView([sorted[0].lat,sorted[0].lng],12);
+  document.getElementById('u-blood-hosps').innerHTML=sorted.length?sorted.map(h=>`<div class="card hosp-card"><div><div style="font-weight:700">${h.name}</div><div class="text-xs text-muted">${h.roadDist!=null?'🛣️ '+h.roadDist.toFixed(1)+' km · ~'+h.roadDur+' min':'📍 '+h.distance.toFixed(1)+' km'}</div></div><button class="btn btn-danger btn-sm" onclick="requestBlood('${h.id}','${h.name.replace(/'/g,"\'")}','${h.staffEmail||''}')">🩸 Request</button></div>`).join(''):'<div style="text-align:center;padding:20px;color:var(--text3)">No hospitals found.</div>';
+  renderResults(sorted);
 };
 function renderResults(list){
   const el=document.getElementById('u-results');
@@ -1582,7 +1796,7 @@ function renderResults(list){
   list.forEach((h,i)=>{
     const cls=h.availICU===0?'bg-red badge-pulse':h.availICU<=3?'bg-amber':'bg-green';
     const sigBars=`<span class="signal-bars">${[6,11,16].map(ht=>`<span class="signal-bar${h.availICU>=(ht===6?1:ht===11?3:5)?(h.availICU<=2?' crit':h.availICU<=4?' warn':' active'):''}" style="height:${ht}px"></span>`).join('')}</span>`;
-    el.innerHTML+=`<div class="card card-glow hosp-card" style="animation-delay:${i*.06}s"><div style="flex:1"><div class="flex-row" style="margin-bottom:4px"><div class="dot ${h.availICU===0?'crit':h.availICU<=3?'warn':''}"></div><div style="font-size:18px;font-weight:800">${h.name}</div>${sigBars}</div><div style="font-size:13px;color:var(--accent);font-weight:600">📍 ${h.distance.toFixed(1)} km</div>${h.address?`<div style="font-size:12px;color:var(--text3);margin-top:2px">${h.address}</div>`:''}<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px"><span class="badge ${cls}">🛏️ ICU: ${h.availICU}</span><span class="badge bg-blue">💨 Vent: ${h.availVent}</span>${h.blood&&Object.values(h.blood).some(v=>v>0)?'<span class="badge bg-red">🩸 Blood</span>':''}${h.contact?`<span class="badge bg-cyan">📞 ${h.contact}</span>`:''}</div></div><div style="display:flex;flex-direction:column;gap:7px;min-width:120px"><button class="sos-btn" onclick="sendSOS('${h.id}','${h.name.replace(/'/g,"\\'")}')">🚨 SOS</button><button class="nav-btn" onclick="showRoute(${h.lat},${h.lng},'${h.name.replace(/'/g,"\\'")}')">🗺️ Navigate</button><button class="btn btn-ghost btn-sm w-full" onclick="uTab('appt');loadSpecialistsForHospital('${h.id}','${h.name.replace(/'/g,"\\'")}')">👨‍⚕️ Specialists</button>${h.contact?`<button class="btn btn-ghost btn-sm w-full" onclick="window.open('tel:${h.contact}')">📞 Call</button>`:''}</div></div>`;
+    el.innerHTML+=`<div class="card card-glow hosp-card" style="animation-delay:${i*.06}s"><div style="flex:1"><div class="flex-row" style="margin-bottom:4px"><div class="dot ${h.availICU===0?'crit':h.availICU<=3?'warn':''}"></div><div style="font-size:18px;font-weight:800">${h.name}</div>${sigBars}</div><div style="font-size:13px;color:var(--accent);font-weight:600">${h.roadDist!=null?'🛣️ '+h.roadDist.toFixed(1)+' km by road · ~'+h.roadDur+' min':'📍 '+h.distance.toFixed(1)+' km (approx)'}</div>${h.address?`<div style="font-size:12px;color:var(--text3);margin-top:2px">${h.address}</div>`:''}<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px"><span class="badge ${cls}">🛏️ ICU: ${h.availICU}</span><span class="badge bg-blue">💨 Vent: ${h.availVent}</span>${h.blood&&Object.values(h.blood).some(v=>v>0)?'<span class="badge bg-red">🩸 Blood</span>':''}${h.contact?`<span class="badge bg-cyan">📞 ${h.contact}</span>`:''}</div></div><div style="display:flex;flex-direction:column;gap:7px;min-width:120px"><button class="sos-btn" onclick="sendSOS('${h.id}','${h.name.replace(/'/g,"\\'")}')">🚨 SOS</button><button class="nav-btn" onclick="showRoute(${h.lat},${h.lng},'${h.name.replace(/'/g,"\\'")}')">🗺️ Navigate</button><button class="btn btn-ghost btn-sm w-full" onclick="uTab('appt');loadSpecialistsForHospital('${h.id}','${h.name.replace(/'/g,"\\'")}')">👨‍⚕️ Specialists</button>${h.contact?`<button class="btn btn-ghost btn-sm w-full" onclick="window.open('tel:${h.contact}')">📞 Call</button>`:''}</div></div>`;
   });
 }
 
@@ -1712,7 +1926,7 @@ window.callAmbulanceDriver=()=>{window.open('tel:108');};
 window.dismissAmbulanceWidget=()=>{document.getElementById('ambulance-widget').style.display='none';};
 
 // ═══ ONBOARDING ═══
-function showOnboarding(){const btOpts=['A+','A-','B+','B-','AB+','AB-','O+','O-'];openModal(`<div style="max-width:460px;margin:0 auto"><div style="text-align:center;margin-bottom:24px"><div style="font-size:48px;margin-bottom:10px">👋</div><div style="font-size:22px;font-weight:900">Welcome, ${(currentUser.name||'').split(' ')[0]}!</div></div><div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:14px;padding:20px;margin-bottom:20px"><div style="font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;margin-bottom:14px">🩸 Blood Type</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="ob-bt-grid">${btOpts.map(t=>`<div class="bt-option" onclick="obSelectBT(this,'${t}')">${t}</div>`).join('')}</div><div class="bt-option" onclick="obSelectBT(this,'Unknown')" style="text-align:center;font-size:13px;margin-top:8px">❓ Unknown</div></div><div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);border-radius:14px;padding:20px;margin-bottom:20px"><div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;margin-bottom:12px">📞 Phone</div><input id="ob-phone" type="tel" class="form-input" placeholder="10-digit number" value="${currentUser.phone||''}"></div><div style="display:flex;gap:10px"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Skip</button><button class="btn btn-primary btn-full btn-lg" onclick="saveOnboarding()">Save →</button></div></div>`);}
+function showOnboarding(){const btOpts=['A+','A-','B+','B-','AB+','AB-','O+','O-'];openModal(`<div style="max-width:460px;margin:0 auto"><div style="text-align:center;margin-bottom:24px"><div style="font-size:48px;margin-bottom:10px">👋</div><div style="font-size:22px;font-weight:900">Welcome, ${(currentUser.name||'').split(' ')[0]}!</div><div style="font-size:13px;color:var(--text2);margin-top:6px">Set up your emergency profile</div></div><div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:14px;padding:16px;margin-bottom:16px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="font-size:26px">📍</div><div><div style="font-weight:700;font-size:14px">Allow Location Access</div><div style="font-size:12px;color:var(--text2)">Required to find nearest hospital in an emergency</div></div></div><button class="btn btn-primary btn-full" onclick="navigator.geolocation.getCurrentPosition(p=>{myLoc={lat:p.coords.latitude,lng:p.coords.longitude};if(userMap)userMap.setView([myLoc.lat,myLoc.lng],13);document.getElementById('ob-loc-status').textContent='✅ Location saved!';document.getElementById('ob-loc-status').style.color='var(--green)';},{error:()=>{}},{enableHighAccuracy:true,timeout:8000})">📍 Enable My Location</button><div id="ob-loc-status" style="font-size:12px;color:var(--text2);text-align:center;margin-top:8px;min-height:18px"></div></div><div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:14px;padding:20px;margin-bottom:16px"><div style="font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;margin-bottom:14px">🩸 Blood Type</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="ob-bt-grid">${btOpts.map(t=>`<div class="bt-option" onclick="obSelectBT(this,'${t}')">${t}</div>`).join('')}</div><div class="bt-option" onclick="obSelectBT(this,'Unknown')" style="text-align:center;font-size:13px;margin-top:8px">❓ Unknown</div></div><div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);border-radius:14px;padding:20px;margin-bottom:20px"><div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;margin-bottom:12px">📞 Phone</div><input id="ob-phone" type="tel" class="form-input" placeholder="10-digit number" value="${currentUser.phone||''}"></div><div style="display:flex;gap:10px"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Skip</button><button class="btn btn-primary btn-full btn-lg" onclick="saveOnboarding()">Save & Continue →</button></div></div>`);}
 window.obSelectBT=(el,type)=>{document.querySelectorAll('#ob-bt-grid .bt-option,#modal-body .bt-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');selectedBT=type;};
 window.saveOnboarding=async()=>{const phone=document.getElementById('ob-phone')?.value.trim()||'';if(!selectedBT)return toast('⚠️','Select blood type','amber');const updates={};if(selectedBT)updates.bloodType=selectedBT;if(phone)updates.phone=phone;try{await updateDoc(doc(db,'users',currentUser.id),updates);if(selectedBT)currentUser.bloodType=selectedBT;if(phone)currentUser.phone=phone;document.getElementById('prof-blood').value=selectedBT||'';closeModal();toast('✅','Profile set up!','green');}catch(e){toast('❌','Failed','red');}};
 
@@ -1732,11 +1946,21 @@ function launchHospital(data){
   updateRing(data);buildBloodGrid(data);setBadge('🏥 '+(data.name||'Hospital').split(' ')[0],'bg-cyan');
   showScreen('screen-hospital');startHospitalListeners();
 }
-function updateRing(d){const p=d.totalICU>0?Math.round((d.availICU/d.totalICU)*100):0;const c=289-(289*p/100);document.getElementById('h-ring').style.strokeDashoffset=c;document.getElementById('h-ring').style.stroke=p<30?'var(--red)':p<60?'var(--amber)':'var(--accent)';document.getElementById('h-ring-pct').textContent=p+'%';document.getElementById('hosp-dot').className='dot'+(p<30?' crit':p<60?' warn':'');}
+function updateRing(d){
+  // Show combined ICU+Vent capacity percentage
+  const totalAll=(d.totalICU||0)+(d.totalVent||0);
+  const availAll=(d.availICU||0)+(d.availVent||0);
+  const p=totalAll>0?Math.round((availAll/totalAll)*100):0;
+  const c=289-(289*p/100);
+  document.getElementById('h-ring').style.strokeDashoffset=c;
+  document.getElementById('h-ring').style.stroke=p<30?'var(--red)':p<60?'var(--amber)':'var(--accent)';
+  document.getElementById('h-ring-pct').textContent=p+'%';
+  document.getElementById('hosp-dot').className='dot'+(p<30?' crit':p<60?' warn':'');
+}
 function buildBloodGrid(d){const grid=document.getElementById('blood-grid');grid.innerHTML=BLOOD.map(type=>`<div class="blood-cell"><div class="blood-type">${type}</div><div style="display:flex;align-items:center;gap:6px;justify-content:center;margin-top:6px"><button class="cnt-btn" onclick="adj('blood_${bKey(type)}',-1)" style="width:28px;height:28px;font-size:14px">−</button><input type="number" id="b-${bKey(type)}" class="form-input" style="width:50px;text-align:center;padding:4px;font-weight:800;font-family:'DM Mono'" value="${(d.blood||{})[bKey(type)]||0}" min="0"><button class="cnt-btn" onclick="adj('blood_${bKey(type)}',1)" style="width:28px;height:28px;font-size:14px">+</button></div><div class="text-xs text-muted" style="margin-top:2px">units</div></div>`).join('');}
 
 window.adj=(field,delta)=>{if(field.startsWith('blood_')){const id='b-'+field.replace('blood_','');const el=document.getElementById(id);el.value=Math.max(0,parseInt(el.value||0)+delta);}else{const id='h-'+field+'-in';const el=document.getElementById(id);el.value=Math.max(0,parseInt(el.value||0)+delta);}};
-window.syncField=(f,v)=>{const n=Math.max(0,parseInt(v)||0);if(f==='icu'){document.getElementById('h-icu-big').textContent=n;curHospData.availICU=n;updateRing(curHospData);}else if(f==='vent'){document.getElementById('h-vent-big').textContent=n;}};
+window.syncField=(f,v)=>{const n=Math.max(0,parseInt(v)||0);if(f==='icu'){document.getElementById('h-icu-big').textContent=n;curHospData.availICU=n;updateRing(curHospData);}else if(f==='vent'){document.getElementById('h-vent-big').textContent=n;curHospData.availVent=n;updateRing(curHospData);}};
 window.saveAvail=async()=>{const icu=Math.max(0,parseInt(document.getElementById('h-icu-in').value)||0);const vent=Math.max(0,parseInt(document.getElementById('h-vent-in').value)||0);try{await updateDoc(doc(db,'hospitals',curHospId),{availICU:icu,availVent:vent});curHospData.availICU=icu;curHospData.availVent=vent;document.getElementById('h-icu-big').textContent=icu;document.getElementById('h-vent-big').textContent=vent;updateRing(curHospData);toast('✅','Availability updated!','green');}catch(e){toast('❌','Save failed','red');}};
 window.toggleAccept=async()=>{const v=document.getElementById('h-accepting').checked;try{await updateDoc(doc(db,'hospitals',curHospId),{accepting:v});curHospData.accepting=v;toast(v?'✅':'⚠️',v?'Accepting patients':'Intake paused',v?'green':'amber');}catch(e){toast('❌','Failed','red');}};
 window.saveBlood=async()=>{const blood={};BLOOD.forEach(t=>{blood[bKey(t)]=Math.max(0,parseInt(document.getElementById('b-'+bKey(t)).value)||0);});try{await updateDoc(doc(db,'hospitals',curHospId),{blood});curHospData.blood=blood;toast('🩸','Blood bank saved!','green');}catch(e){toast('❌','Failed','red');}};
@@ -1752,7 +1976,19 @@ function renderHospRequests(snap){const el=document.getElementById('h-req-list')
 function renderBloodRequests(snap){const el=document.getElementById('h-blood-req-list');if(snap.empty){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">No blood requests</div>';return;}let html='';snap.forEach(d=>{const r={id:d.id,...d.data()};html+=`<div class="card req-card" style="border-left-color:var(--red);margin-bottom:10px"><div class="flex-between"><div><div style="font-weight:700">${r.patientName||'Patient'}</div><div class="text-sm text-muted">🩸 ${r.bloodType||'Unknown'} · 📞 ${r.patientPhone||'N/A'}</div></div><button class="btn btn-success btn-sm" onclick="fulfillBloodReq('${r.id}')">✅ Fulfill</button></div></div>`;});el.innerHTML=html;}
 function renderAdmissions(snap){const el=document.getElementById('h-admit-list');const admitted=[];snap.forEach(d=>{const r={id:d.id,...d.data()};if(r.status==='Admitted')admitted.push(r);});document.getElementById('admit-count-badge').textContent=admitted.length+' Admitted';if(!admitted.length){el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)">No admitted patients</div>';return;}el.innerHTML=admitted.map(r=>`<div class="card req-card" style="border-left-color:var(--green)"><div class="flex-between"><div><div style="font-weight:700">${r.patientName||'Patient'}</div><div class="text-sm text-muted">${r.bloodType?'🩸 '+r.bloodType+' · ':''}📞 ${r.patientPhone||'N/A'}</div></div><div style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="viewPatientRecords('${r.patientUid}')">📋</button><button class="btn btn-success btn-sm" onclick="dischargePatient('${r.id}')">🏠 Discharge</button></div></div></div>`).join('');}
 function renderHistory(snap){const el=document.getElementById('h-hist-list');const resolved=[];snap.forEach(d=>{const r={id:d.id,...d.data()};if(r.status==='Resolved')resolved.push(r);});if(!resolved.length){el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)">No history yet</div>';return;}el.innerHTML=resolved.map(r=>`<div class="card" style="padding:14px 18px;margin-bottom:8px;border-left:3px solid var(--text3);opacity:.7"><div class="flex-between"><div><div style="font-weight:600">${r.patientName||'Patient'} · ${r.type==='blood'?'🩸 Blood':'🚨 SOS'}</div><div class="text-xs text-muted">${r.resolvedAt?new Date(r.resolvedAt.toDate()).toLocaleDateString():''}</div></div><span class="badge bg-gray">${r.status}</span></div></div>`).join('');}
-window.resolveReq=async(id,puid)=>{try{await updateDoc(doc(db,'requests',id),{status:'Admitted',resolvedAt:serverTimestamp()});toast('✅','Patient accepted','green');}catch(e){toast('❌','Failed','red');}};
+window.resolveReq=async(id,puid)=>{
+  try{
+    // Check if patient already admitted at ANY hospital
+    const existQ=query(collection(db,'requests'),where('patientUid','==',puid),where('status','==','Admitted'));
+    const existSnap=await getDocs(existQ);
+    if(!existSnap.empty){
+      const existHosp=existSnap.docs[0].data().hospitalName||'another hospital';
+      return toast('🏥',`Patient already admitted at ${existHosp}. Discharge them first.`,'amber');
+    }
+    await updateDoc(doc(db,'requests',id),{status:'Admitted',resolvedAt:serverTimestamp()});
+    toast('✅','Patient admitted','green');
+  }catch(e){toast('❌','Failed','red');}
+};
 window.fulfillBloodReq=async id=>{try{await updateDoc(doc(db,'requests',id),{status:'Fulfilled',resolvedAt:serverTimestamp()});toast('✅','Blood request fulfilled','green');}catch(e){toast('❌','Failed','red');}};
 window.admitPatient=async id=>{try{await updateDoc(doc(db,'requests',id),{status:'Admitted'});toast('✅','Admitted','green');}catch(e){toast('❌','Failed','red');}};
 window.dischargePatient=async id=>{try{await updateDoc(doc(db,'requests',id),{status:'Resolved',resolvedAt:serverTimestamp()});toast('🏠','Discharged','green');}catch(e){toast('❌','Failed','red');}};
@@ -1842,6 +2078,282 @@ window.savePharmacyLocation=async()=>{const lat=parseFloat(document.getElementBy
 window.savePharmacyProfile=async()=>{const name=document.getElementById('phprof-name').value.trim(),address=document.getElementById('phprof-addr').value.trim(),phone=document.getElementById('phprof-phone').value.trim(),hours=document.getElementById('phprof-hours').value.trim();if(!name)return toast('⚠️','Name required','amber');await updateDoc(doc(db,'pharmacies',curPharmacyId),{name,address,phone,hours});document.getElementById('ph-name-display').textContent=name;document.getElementById('ph-addr-display').textContent=address||'Not set';document.getElementById('ph-contact-display').textContent=phone||'Not set';curPharmacyData={...curPharmacyData,name,address,phone,hours};toast('✅','Saved!','green');};
 window.searchMedicine=async()=>{const qry=document.getElementById('med-search-input').value.trim().toLowerCase();if(!qry)return toast('⚠️','Enter a name','amber');const el=document.getElementById('med-search-results');el.innerHTML='<div class="skel" style="height:80px;margin-bottom:12px"></div>'.repeat(2);document.getElementById('med-search-map').style.display='block';if(!medSearchMap){medSearchMap=L.map('med-search-map').setView([myLoc.lat,myLoc.lng],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(medSearchMap);}medSearchMarkers.forEach(m=>medSearchMap.removeLayer(m));medSearchMarkers=[];try{const phSnap=await getDocs(collection(db,'pharmacies'));const phMap={};phSnap.forEach(pd=>{const ph={id:pd.id,...pd.data()};if(ph.lat&&ph.lat!==0)phMap[pd.id]=ph;});const medSnap=await getDocs(collection(db,'medicines'));let results=[];medSnap.forEach(md=>{const med={id:md.id,...md.data()};const ph=phMap[med.pharmacyId];if(!ph)return;if((med.name||'').toLowerCase().includes(qry)||(med.generic||'').toLowerCase().includes(qry))results.push({...med,pharmacy:ph,distance:haversine(myLoc.lat,myLoc.lng,ph.lat,ph.lng)});});results.sort((a,b)=>a.distance-b.distance);if(!results.length){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--text3)">🔍 No results.</div>';return;}el.innerHTML=`<div style="font-weight:800;margin-bottom:14px">${results.length} result${results.length!==1?'s':''}</div>`;results.forEach((r,i)=>{const m=L.marker([r.pharmacy.lat,r.pharmacy.lng]).addTo(medSearchMap);m.bindPopup(`<b>${r.pharmacy.name}</b><br>${r.name} — ₹${r.price}`);medSearchMarkers.push(m);el.innerHTML+=`<div class="pharma-result-card" style="animation-delay:${i*0.06}s"><div class="flex-between"><div><div style="font-weight:800">${r.name}</div><div class="text-sm text-muted">${r.generic||''} · ${r.category||''} ${r.prescription==='yes'?'· <span style="color:var(--amber)">Rx</span>':''}</div><div style="margin-top:6px;font-size:13px;color:var(--accent);font-weight:600">💊 ${r.pharmacy.name} · 📍 ${r.distance.toFixed(1)} km</div></div><div style="text-align:right"><div class="med-price">₹${r.price}</div><div class="text-xs text-muted">${r.stock>0?r.stock+' in stock':'<span style="color:var(--red)">Out</span>'}</div></div></div></div>`;});if(results.length>0)medSearchMap.setView([results[0].pharmacy.lat,results[0].pharmacy.lng],12);}catch(e){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--text3)">Error searching.</div>';}};
 window.quickMedSearch=name=>{document.getElementById('med-search-input').value=name;searchMedicine();};
+
+
+
+// ═══════════════════════════════════════════════════════
+// PRESCRIPTION SCANNER — Groq Llama 4 Vision
+// Supports: drag & drop, file picker, camera (mobile)
+// ═══════════════════════════════════════════════════════
+let _rxChosen = null;
+
+function rxDragOver(e){
+  e.preventDefault();e.stopPropagation();
+  document.getElementById('rx-drop-zone').classList.add('drag-over');
+}
+function rxDragLeave(e){
+  document.getElementById('rx-drop-zone').classList.remove('drag-over');
+}
+function rxDrop(e){
+  e.preventDefault();e.stopPropagation();
+  document.getElementById('rx-drop-zone').classList.remove('drag-over');
+  const f=e.dataTransfer?.files?.[0];
+  if(f&&f.type.startsWith('image/'))rxLoadFile(f);
+  else toast('⚠️','Please drop an image file (JPG, PNG, etc.)','amber');
+}
+function rxOnPick(inp){
+  const f=inp?.files?.[0];
+  if(f)rxLoadFile(f);
+}
+function rxLoadFile(f){
+  _rxChosen=f;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('rx-preview-img').src=e.target.result;
+    document.getElementById('rx-preview-wrap').style.display='flex';
+    document.getElementById('rx-drop-zone').style.display='none';
+    document.getElementById('rx-analyze-btn').style.display='block';
+    document.getElementById('rx-error').style.display='none';
+    document.getElementById('rx-results').style.display='none';
+  };
+  reader.readAsDataURL(f);
+}
+window.rxReset=function(){
+  _rxChosen=null;
+  document.getElementById('rx-file-input').value='';
+  document.getElementById('rx-camera-input').value='';
+  document.getElementById('rx-preview-img').src='';
+  document.getElementById('rx-preview-wrap').style.display='none';
+  document.getElementById('rx-drop-zone').style.display='flex';
+  document.getElementById('rx-analyze-btn').style.display='none';
+  document.getElementById('rx-results').style.display='none';
+  document.getElementById('rx-error').style.display='none';
+};
+window.rxAnalyze=async function(){
+  if(!_rxChosen)return;
+  const btn=document.getElementById('rx-analyze-btn');
+  btn.disabled=true;btn.textContent='🔍 Analyzing…';
+  document.getElementById('rx-loading').style.display='block';
+  document.getElementById('rx-results').style.display='none';
+  document.getElementById('rx-error').style.display='none';
+  try{
+    const b64=await new Promise((res,rej)=>{
+      const r=new FileReader();
+      r.onload=e=>res(e.target.result.split(',')[1]);
+      r.onerror=rej;r.readAsDataURL(_rxChosen);
+    });
+    const mimeType=_rxChosen.type||'image/jpeg';
+    const data=await rxCallGroq(b64,mimeType);
+    document.getElementById('rx-loading').style.display='none';
+    rxRender(data);
+  }catch(e){
+    document.getElementById('rx-loading').style.display='none';
+    const errEl=document.getElementById('rx-error');
+    errEl.textContent='❌ '+e.message;
+    errEl.style.display='block';
+    toast('❌','Analysis failed: '+e.message.substring(0,60),'red');
+  }finally{
+    btn.disabled=false;btn.textContent='🔍 Analyze with AI';
+  }
+};
+
+async function rxCallGroq(b64,mimeType){
+  const prompt=`You are a medical document analyzer. Read this medical document image carefully — including all handwriting.
+
+Identify the document type: "prescription", "scan_report", "lab_report", or "unknown"
+
+Return ONLY valid JSON — no explanation, no markdown, no code blocks.
+
+For PRESCRIPTION:
+{"document_type":"prescription","doctor_name":"","patient_name":"","date":"","vitals":{"bp":"","fbs":"","ppbs":"","hba1c":""},"medications":[{"drug_name":"","dosage":"","timing":{"morning":0,"afternoon":0,"night":0},"frequency":"","duration":"","instructions":""}],"raw_text":""}
+
+CRITICAL — Indian prescription timing (M-A-N = Morning-Afternoon-Night):
+- 0-0-1 = night only, 1-0-1 = morning+night, 1-1-1 = three times daily
+- List ALL medications visible, even partially readable ones
+- T. = Tablet, C. = Capsule, S.C. = Subcutaneous injection
+
+For SCAN REPORT:
+{"document_type":"scan_report","patient_name":"","age":"","sex":"","date":"","report_type":"","referred_by":"","findings":[],"critical_findings":[],"impression":"","raw_text":""}
+
+For LAB REPORT:
+{"document_type":"lab_report","patient_name":"","date":"","tests":[{"test_name":"","value":"","unit":"","reference":"","status":"normal/high/low"}],"raw_text":""}`;
+
+  const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+GROQ_KEY},
+    body:JSON.stringify({
+      model:'meta-llama/llama-4-scout-17b-16e-instruct',
+      temperature:0.1,max_tokens:1800,
+      messages:[{role:'user',content:[
+        {type:'image_url',image_url:{url:'data:'+mimeType+';base64,'+b64}},
+        {type:'text',text:prompt}
+      ]}]
+    })
+  });
+  if(!resp.ok){
+    const err=await resp.json().catch(()=>({}));
+    throw new Error(err.error?.message||'Groq API error '+resp.status);
+  }
+  const result=await resp.json();
+  let text=result.choices[0].message.content.trim();
+  text=text.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/i,'').trim();
+  return JSON.parse(text);
+}
+
+function rxEsc(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function rxCap(s){return s?s[0].toUpperCase()+s.slice(1):s;}
+function rxSumCard(lbl,val){
+  return '<div class="rx-summary-card"><div class="rx-lbl">'+lbl+'</div><div class="rx-val'+(val?'':' empty')+'">'+(rxEsc(val)||'Not detected')+'</div></div>';
+}
+
+function rxRender(d){
+  const el=document.getElementById('rx-results');
+  el.innerHTML='';
+  const lblMap={prescription:'💊 Prescription',scan_report:'🩻 Scan Report',lab_report:'🧪 Lab Report',unknown:'📄 Unknown'};
+  const typeClass=d.document_type||'unknown';
+  let html='<div class="rx-doc-badge '+typeClass+'">'+(lblMap[typeClass]||'📄 Document')+'</div>';
+
+  if(d.document_type==='prescription')       html+=rxRenderRx(d);
+  else if(d.document_type==='scan_report')   html+=rxRenderScan(d);
+  else if(d.document_type==='lab_report')    html+=rxRenderLab(d);
+  else html+='<div class="rx-finding">'+rxEsc(d.raw_text||'Could not extract content.')+'</div>';
+
+  // Auto-fill option for prescriptions
+  if(d.document_type==='prescription'&&d.medications?.length){
+    html+=`<div class="rx-autofill-bar">
+      <div><div style="font-weight:700;font-size:14px">📋 Auto-fill Medical Records?</div>
+      <div style="font-size:12px;color:var(--text2)">Medications will be added to your Records tab</div></div>
+      <button class="btn btn-success btn-sm" onclick="rxAutoFill(${JSON.stringify(d).replace(/"/g,'&quot;')})">✅ Fill Records</button>
+    </div>`;
+  }
+
+  html+='<div class="rx-disclaimer"><span style="font-size:18px">⚠️</span><div style="font-size:13px;line-height:1.6">AI-generated reading. Always verify with your doctor before making any medical decisions.</div></div>';
+
+  // Raw text toggle
+  if(d.raw_text){
+    html+=`<details style="margin-top:12px"><summary style="cursor:pointer;font-size:13px;color:var(--text2);padding:10px 14px;background:var(--card);border:1px solid var(--card-border);border-radius:10px;user-select:none">🔤 View raw extracted text</summary>
+    <pre style="margin-top:6px;background:var(--surface);color:var(--text);border:1px solid var(--card-border);border-radius:10px;padding:14px;font-size:12px;white-space:pre-wrap;line-height:1.7;overflow-x:auto">${rxEsc(d.raw_text)}</pre></details>`;
+  }
+
+  el.innerHTML=html;
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function rxRenderRx(d){
+  let html='';
+  // Vitals
+  const vitals=d.vitals||{};
+  const vitLbls={bp:'Blood Pressure',fbs:'FBS',ppbs:'PPBS',hba1c:'HbA1c'};
+  const hasVitals=Object.values(vitals).some(v=>v);
+  if(hasVitals){
+    html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:10px">Vitals</div>';
+    html+='<div class="rx-vitals-row">';
+    Object.entries(vitals).filter(([,v])=>v).forEach(([k,v])=>{
+      html+=`<div class="rx-vital-chip"><div class="rx-lbl">${vitLbls[k]||k.toUpperCase()}</div><div class="rx-val">${rxEsc(v)}</div></div>`;
+    });
+    html+='</div>';
+  }
+  // Summary
+  html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:10px">Patient Summary</div>';
+  html+='<div class="rx-summary-grid">'+rxSumCard('Doctor',d.doctor_name)+rxSumCard('Patient',d.patient_name)+rxSumCard('Date',d.date)+'</div>';
+  // Meds
+  html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:12px">Medications</div>';
+  const meds=d.medications||[];
+  if(!meds.length)return html+'<div class="rx-finding">No medications detected. Check raw text below.</div>';
+  meds.forEach((m,i)=>{
+    const t=m.timing||{};
+    const slots=[
+      {icon:'🌅',lbl:'Morning',n:Number(t.morning)||0},
+      {icon:'☀️',lbl:'Afternoon',n:Number(t.afternoon)||0},
+      {icon:'🌙',lbl:'Night',n:Number(t.night)||0}
+    ];
+    const hasTimingObj=typeof t.morning!=='undefined';
+    html+=`<div class="rx-med-card" style="animation-delay:${i*.07}s">
+      <div class="rx-med-head">
+        <div>
+          <div class="rx-med-name">${rxEsc(rxCap(m.drug_name||'Unknown'))}</div>
+          ${m.dosage?'<div style="font-size:12px;color:var(--text2);margin-top:2px">'+rxEsc(m.dosage)+'</div>':''}
+        </div>
+        <span class="rx-med-dose-badge">${rxEsc(m.dosage||'Rx')}</span>
+      </div>`;
+    if(hasTimingObj){
+      html+='<div class="rx-timing-row">';
+      slots.forEach(s=>{
+        html+=`<div class="rx-slot ${s.n>0?'active':'inactive'}">
+          <span class="rx-slot-icon">${s.icon}</span>
+          <span class="rx-slot-label">${s.lbl}</span>
+          <span class="rx-slot-count">${s.n>0?s.n+' tab':'✕'}</span>
+        </div>`;
+      });
+      html+='</div>';
+    }else if(m.frequency){
+      html+=`<div style="padding:10px 20px;border-bottom:1px solid var(--card-border)"><span style="background:rgba(16,185,129,.1);color:var(--green);padding:4px 12px;border-radius:100px;font-size:13px;font-weight:700">🕐 ${rxEsc(m.frequency)}</span>${m.duration?' <span style="background:rgba(6,182,212,.1);color:var(--accent);padding:4px 12px;border-radius:100px;font-size:13px;font-weight:700;margin-left:6px">📅 '+rxEsc(m.duration)+'</span>':''}</div>`;
+    }
+    if(m.instructions||m.duration){
+      html+='<div class="rx-med-info">';
+      if(m.duration&&hasTimingObj)html+=`<div class="rx-info-label">Duration</div><div class="rx-info-text">📅 ${rxEsc(m.duration)}</div>`;
+      if(m.instructions)html+=`<div class="rx-info-label">Instructions</div><div class="rx-info-text">${rxEsc(m.instructions)}</div>`;
+      html+='</div>';
+    }
+    html+='</div>';
+  });
+  return html;
+}
+
+function rxRenderScan(d){
+  let html='<div class="rx-summary-grid">'+rxSumCard('Patient',d.patient_name)+rxSumCard('Age/Sex',[d.age,d.sex].filter(Boolean).join(' · '))+rxSumCard('Date',d.date)+(d.report_type?rxSumCard('Report',d.report_type):'')+(d.referred_by?rxSumCard('Referred By',d.referred_by):'')+'</div>';
+  if(d.impression)html+=`<div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:12px;padding:14px 18px;margin-bottom:18px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--blue);margin-bottom:6px">Impression / Conclusion</div><div style="font-size:14px;color:var(--text2);line-height:1.65">${rxEsc(d.impression)}</div></div>`;
+  const crits=d.critical_findings||[];
+  if(crits.length){
+    html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--red);margin-bottom:10px">⚠️ Notable Findings</div>';
+    crits.forEach((f,i)=>html+=`<div class="rx-finding critical" style="animation-delay:${i*.06}s"><div class="rx-finding-crit-label">Requires attention</div>${rxEsc(f)}</div>`);
+  }
+  const others=(d.findings||[]).filter(f=>!crits.includes(f));
+  if(others.length){
+    html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:10px;margin-top:16px">All Findings</div>';
+    others.forEach((f,i)=>html+=`<div class="rx-finding" style="animation-delay:${i*.04}s">${rxEsc(f)}</div>`);
+  }
+  return html;
+}
+
+function rxRenderLab(d){
+  let html='<div class="rx-summary-grid" style="grid-template-columns:1fr 1fr">'+rxSumCard('Patient',d.patient_name)+rxSumCard('Date',d.date)+'</div>';
+  const tests=d.tests||[];
+  if(tests.length){
+    html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:12px">Test Results</div>';
+    html+='<table class="rx-lab-table"><thead><tr><th>Test</th><th>Value</th><th>Reference</th><th>Status</th></tr></thead><tbody>';
+    tests.forEach(t=>{
+      html+=`<tr><td>${rxEsc(t.test_name)}</td><td><strong>${rxEsc(t.value)}</strong> ${rxEsc(t.unit)}</td><td>${rxEsc(t.reference)||'—'}</td><td><span class="rx-status-badge ${t.status||'normal'}">${(t.status||'').toUpperCase()}</span></td></tr>`;
+    });
+    html+='</tbody></table>';
+  }else{
+    html+='<div class="rx-finding">No test results detected. Check raw text below.</div>';
+  }
+  return html;
+}
+
+// Auto-fill medical records from prescription
+window.rxAutoFill=function(dataAttr){
+  try{
+    const d=typeof dataAttr==='string'?JSON.parse(dataAttr.replace(/&quot;/g,'"')):dataAttr;
+    const meds=d.medications||[];
+    if(!meds.length)return toast('⚠️','No medications found to fill','amber');
+    const medText=meds.map(m=>{
+      const t=m.timing||{};
+      const freq=typeof t.morning!=='undefined'?[t.morning?'M':'0',t.afternoon?'A':'0',t.night?'N':'0'].join('-'):(m.frequency||'');
+      return [m.drug_name,m.dosage,freq,m.duration,m.instructions].filter(Boolean).join(' — ');
+    }).join('\n');
+    const existMeds=document.getElementById('rec-medications').value.trim();
+    document.getElementById('rec-medications').value=(existMeds?existMeds+'\n\n':'')+'[From Rx Scanner]\n'+medText;
+    if(d.doctor_name){
+      const notes=document.getElementById('rec-notes').value.trim();
+      document.getElementById('rec-notes').value=(notes?notes+'\n\n':'')+`Prescribed by: ${d.doctor_name}`;
+    }
+    toast('✅','Medications added to Records tab!','green');
+    setTimeout(()=>uTab('records'),800);
+  }catch(e){toast('❌','Auto-fill failed','red');}
+};
 
 })();
 </script>
