@@ -928,7 +928,21 @@ body.cursor-active *{cursor:none!important}
 <div class="card card-p-lg card-glow">
 <div id="role-0" class="dpanel active"><div id="pt-login"><div class="form-group"><label class="form-label">Email</label><input id="pt-email" type="email" class="form-input" placeholder="you@example.com"></div><div class="form-group"><label class="form-label" style="display:flex;justify-content:space-between;align-items:center">Password <a class="forgot-link" onclick="showForgotPassword()">Forgot password?</a></label><input id="pt-pass" type="password" class="form-input" placeholder="••••••••"></div><button class="btn btn-primary btn-full btn-lg mt-8" onclick="patientLogin()">Sign In &amp; Find Care →</button><div class="divider-or">or</div><button class="google-btn" onclick="patientGoogleSignIn()"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>Continue with Google</button><p style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">No account? <a style="color:var(--accent);cursor:pointer;font-weight:600" onclick="ptToggle(true)">Register Free</a></p></div><div id="pt-reg" style="display:none"><div class="form-group"><label class="form-label">Full Name</label><input id="pt-rname" type="text" class="form-input" placeholder="Your full name"></div><div class="form-group"><label class="form-label">Mobile Number</label><input id="pt-rphone" type="tel" class="form-input" placeholder="10-digit number"></div><div class="form-group"><label class="form-label">Email</label><input id="pt-remail" type="email" class="form-input" placeholder="you@example.com"></div><div class="form-group"><label class="form-label">Password</label><input id="pt-rpass" type="password" class="form-input" placeholder="Min 6 characters"></div><div id="otp-section" style="display:none;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:12px;padding:16px;margin-top:14px;animation:fadeUp .3s"><div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">📧 Verification Code Sent</div><input id="pt-rotp" type="text" class="form-input otp-input" placeholder="000000" maxlength="6" style="margin-bottom:10px"><button class="btn btn-success btn-full" onclick="verifyOTPAndRegister()">✅ Verify &amp; Create Account</button></div><button id="btn-send-otp" class="btn btn-primary btn-full btn-lg mt-8" onclick="sendPatientOTP()">📧 Send Verification Code →</button><div class="divider-or">or</div><button class="google-btn" onclick="patientGoogleSignIn()"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>Sign up with Google</button><p style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">Have an account? <a style="color:var(--accent);cursor:pointer;font-weight:600" onclick="ptToggle(false)">Sign In</a></p></div></div>
 <div id="role-1" class="dpanel"><div style="background:rgba(6,182,212,.07);border:1px solid rgba(6,182,212,.2);border-radius:10px;padding:12px;font-size:13px;color:var(--text2);margin-bottom:16px">🔑 Use credentials assigned by your network administrator.</div><div class="form-group"><label class="form-label">Staff Email</label><input id="h-email" type="email" class="form-input" placeholder="staff@hospital.com"></div><div class="form-group"><label class="form-label">Password</label><input id="h-pass" type="password" class="form-input" placeholder="••••••••"></div><button class="btn btn-primary btn-full btn-lg mt-8" onclick="hospitalLogin()">Access Hospital Portal →</button><div class="divider-or">or</div><button class="google-btn" onclick="hospitalGoogleSignIn()"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>Sign in with Google</button></div>
-<div id="role-2" class="dpanel"><div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:12px;font-size:13px;color:var(--text2);margin-bottom:16px">💊 Pharmacy portal. Register or sign in below.</div><div id="ph-login-form"><div class="form-group"><label class="form-label">Pharmacy Email</label><input id="ph-email" type="email" class="form-input" placeholder="pharmacy@example.com"></div><div class="form-group"><label class="form-label">Password</label><input id="ph-pass" type="password" class="form-input" placeholder="••••••••"></div><button class="btn btn-success btn-full btn-lg mt-8" onclick="pharmacyLogin()">Access Pharmacy Portal →</button><p style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">New pharmacy? <a style="color:var(--green);cursor:pointer;font-weight:600" onclick="phToggle(true)">Register Free</a></p></div><div id="ph-reg-form" style="display:none"><div class="form-group"><label class="form-label">Pharmacy Name</label><input id="ph-rname" type="text" class="form-input" placeholder="e.g. Apollo Pharmacy, Ooty"></div><div class="form-group"><label class="form-label">Owner Name</label><input id="ph-rowner" type="text" class="form-input" placeholder="Owner full name"></div><div class="form-group"><label class="form-label">Phone</label><input id="ph-rphone" type="tel" class="form-input" placeholder="10-digit number"></div><div class="form-group"><label class="form-label">Email</label><input id="ph-remail" type="email" class="form-input" placeholder="pharmacy@example.com"></div><div class="form-group"><label class="form-label">Password</label><input id="ph-rpass" type="password" class="form-input" placeholder="Min 6 characters"></div><div id="ph-otp-section" style="display:none;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:12px;padding:16px;margin-top:14px;animation:fadeUp .3s"><div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">📧 Verification Code Sent</div><input id="ph-rotp" type="text" class="form-input otp-input" placeholder="000000" maxlength="6" style="margin-bottom:10px"><button class="btn btn-success btn-full" onclick="verifyPharmacyOTP()">✅ Verify &amp; Register</button></div><button id="btn-ph-otp" class="btn btn-success btn-full btn-lg mt-8" onclick="sendPharmacyOTP()">📧 Send Verification Code →</button><p style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">Have account? <a style="color:var(--green);cursor:pointer;font-weight:600" onclick="phToggle(false)">Sign In</a></p></div></div>
+<div id="role-2" class="dpanel">
+  <div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:1.6">
+    💊 Pharmacy credentials are issued by the <strong>MedLink Admin</strong>.<br>
+    If your pharmacy is not yet registered, contact the admin.
+  </div>
+  <div id="ph-login-form">
+    <div class="form-group"><label class="form-label">Pharmacy Email</label><input id="ph-email" type="email" class="form-input" placeholder="pharmacy@example.com" onkeydown="if(event.key==='Enter')pharmacyLogin()"></div>
+    <div class="form-group"><label class="form-label">Password</label><input id="ph-pass" type="password" class="form-input" placeholder="Use password from welcome email" onkeydown="if(event.key==='Enter')pharmacyLogin()"></div>
+    <button class="btn btn-success btn-full btn-lg mt-8" onclick="pharmacyLogin()">Access Pharmacy Portal →</button>
+    <div style="margin-top:16px;background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text2)">
+      <div style="font-weight:700;margin-bottom:4px;color:var(--accent)">📧 New to MedLink?</div>
+      Your pharmacy must be registered by the admin. Once registered, you will receive an email with your login credentials — similar to how hospitals are onboarded.
+    </div>
+  </div>
+</div>
 </div></div></div></div>
 
 <!-- ═══ ADMIN SCREEN ═══ -->
@@ -942,7 +956,44 @@ body.cursor-active *{cursor:none!important}
 <div id="adm-users" class="dpanel"><div class="section-title">👥 Registered Patients</div><div id="adm-users-list"><div style="text-align:center;padding:50px;color:var(--text3)">Loading...</div></div></div>
 <div id="adm-map" class="dpanel"><div class="section-title">🗺️ Network Map — Live Hospital Status</div><div id="admin-network-map" class="admin-full-map"></div></div>
 <div id="adm-analytics" class="dpanel"><div class="section-title">📊 Analytics Dashboard</div><div class="grid-2"><div class="chart-container"><div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px">🚨 SOS Requests (Last 7 Days)</div><canvas id="chart-sos"></canvas></div><div class="chart-container"><div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px">📊 Response Metrics</div><canvas id="chart-metrics"></canvas></div></div><div class="stats-grid" id="analytics-stats"></div></div>
-<div id="adm-pharma" class="dpanel"><div class="section-title">💊 Pharmacy Network</div><div id="admin-pharma-map" style="height:350px;border-radius:12px;border:1px solid var(--card-border);margin-bottom:16px"></div><div class="stats-grid" id="pharma-stats"></div><div id="pharma-list"></div></div>
+<div id="adm-pharma" class="dpanel">
+  <div class="section-title">💊 Pharmacy Network</div>
+
+  <!-- Register new pharmacy (admin only) -->
+  <div class="card card-p card-glow" style="margin-bottom:24px">
+    <div style="font-size:16px;font-weight:800;margin-bottom:16px">➕ Register New Pharmacy</div>
+    <div class="grid-2" style="gap:20px">
+      <div>
+        <div class="section-title" style="font-size:13px;margin-bottom:10px">📍 Pin Location on Map</div>
+        <div id="admin-pharma-reg-map" style="height:240px;border-radius:12px;border:1px solid var(--card-border);margin-bottom:10px"></div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:10px">Click the map to pin pharmacy location.</p>
+        <div class="grid-2">
+          <div><label class="form-label">Latitude</label><input id="phLat" type="text" class="form-input" readonly placeholder="Click map"></div>
+          <div><label class="form-label">Longitude</label><input id="phLng" type="text" class="form-input" readonly placeholder="Click map"></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-title" style="font-size:13px;margin-bottom:10px">🔧 Pharmacy Details</div>
+        <div class="form-group"><label class="form-label">Pharmacy Name *</label><input id="phName" type="text" class="form-input" placeholder="e.g. Apollo Pharmacy, Tambaram"></div>
+        <div class="form-group"><label class="form-label">Owner Name</label><input id="phOwner" type="text" class="form-input" placeholder="Owner full name"></div>
+        <div class="form-group"><label class="form-label">Phone Number</label><input id="phPhone" type="tel" class="form-input" placeholder="10-digit number"></div>
+        <div class="form-group"><label class="form-label">Full Address</label><input id="phAddr" type="text" class="form-input" placeholder="Full address with city"></div>
+        <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:12px;padding:16px;margin-bottom:16px">
+          <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase">🔑 Login Credentials (emailed to pharmacy)</div>
+          <div class="form-group"><label class="form-label">Email</label><input id="phEmail" type="email" class="form-input" placeholder="pharmacy@example.com"></div>
+          <div class="form-group mb-0"><label class="form-label">Password</label><input id="phPass" type="password" class="form-input" placeholder="Min 6 characters"></div>
+        </div>
+        <button class="btn btn-success btn-full btn-lg" onclick="adminRegisterPharmacy()">✅ Deploy Pharmacy & Email Credentials</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Existing pharmacies -->
+  <div class="section-title">🗺️ Pharmacy Network Map</div>
+  <div id="admin-pharma-map" style="height:300px;border-radius:12px;border:1px solid var(--card-border);margin-bottom:16px"></div>
+  <div class="stats-grid" id="pharma-stats"></div>
+  <div id="pharma-list"></div>
+</div>
 <div id="adm-system" class="dpanel"><div class="section-title">⚙️ System Management</div><div class="grid-2" style="margin-bottom:20px"><div class="card card-p card-glow"><div style="font-size:15px;font-weight:800;margin-bottom:14px">📤 Export Data</div><button class="btn btn-primary btn-sm btn-full mb-8" style="margin-bottom:8px" onclick="exportCSV('hospitals')">📥 Export Hospitals CSV</button><button class="btn btn-primary btn-sm btn-full mb-8" style="margin-bottom:8px" onclick="exportCSV('requests')">📥 Export Requests CSV</button><button class="btn btn-primary btn-sm btn-full mb-8" style="margin-bottom:8px" onclick="exportCSV('users')">📥 Export Users CSV</button><button class="btn btn-primary btn-sm btn-full" onclick="exportCSV('pharmacies')">📥 Export Pharmacies CSV</button></div><div class="card card-p card-glow"><div style="font-size:15px;font-weight:800;margin-bottom:14px">📡 Broadcast Alert</div><div class="form-group"><label class="form-label">Subject</label><input id="broadcast-subject" class="form-input" placeholder="Alert subject"></div><div class="form-group"><label class="form-label">Message</label><textarea id="broadcast-msg" class="form-input" placeholder="Alert message to all hospitals..." style="height:80px"></textarea></div><button class="btn btn-danger btn-full" onclick="sendBroadcast()">📡 Send to All Hospitals</button></div></div><div class="grid-2"><div class="card card-p card-glow"><div style="font-size:15px;font-weight:800;margin-bottom:14px">📂 Bulk Hospital Import</div><div style="font-size:13px;color:var(--text2);margin-bottom:12px">Upload CSV with columns: name, lat, lng, address, contact, totalICU, totalVent, staffEmail, staffPassword</div><input type="file" id="csv-upload" accept=".csv" class="form-input" style="padding:8px"><button class="btn btn-success btn-full mt-8" style="margin-top:10px" onclick="importCSV()">📂 Import Hospitals</button></div><div class="card card-p card-glow"><div style="font-size:15px;font-weight:800;margin-bottom:14px">🔧 System Health</div><div id="system-health"><div class="flex-between" style="margin-bottom:10px"><span class="text-sm text-muted">App Version</span><span class="badge bg-green">2.0.0</span></div><div class="flex-between" style="margin-bottom:10px"><span class="text-sm text-muted">Session Status</span><span class="badge bg-green">Active</span></div><div class="flex-between" style="margin-bottom:10px"><span class="text-sm text-muted">Active Listeners</span><span class="badge bg-cyan" id="sh-listeners">0</span></div><div class="flex-between"><span class="text-sm text-muted">Last Activity</span><span class="badge bg-blue" id="sh-activity">—</span></div></div></div></div></div>
 </div></div>
 
@@ -1581,6 +1632,7 @@ function bloodRequestEmailHTML(h,p,bt){return `<!DOCTYPE html><html><body style=
 // ─── TAB SWITCHING ───
 window.setRole=i=>{document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));document.querySelectorAll('#screen-login .dpanel').forEach((p,j)=>p.classList.toggle('active',i===j));};
 window.aTab=n=>{
+  if(n==='pharma')setTimeout(initAdminPharmaRegMap,200);
   const map={net:0,reg:1,log:2,users:3,map:4,analytics:5,pharma:6,system:7};
   const panels=['adm-net','adm-reg','adm-log','adm-users','adm-map','adm-analytics','adm-pharma','adm-system'];
   document.querySelectorAll('#screen-admin .dtab').forEach((t,i)=>t.classList.toggle('active',i===map[n]));
@@ -1644,71 +1696,131 @@ window.verifyOTPAndRegister=async()=>{
   try{const cred=await createUserWithEmailAndPassword(auth,email,pass);await setDoc(doc(db,'users',cred.user.uid),{name,phone,email,role:'patient',trustScore:5.0,bloodType:'Unknown',medicalRecord:{},createdAt:serverTimestamp()});toast('✅','Account created!','green');setTimeout(()=>location.reload(),1200);}catch(e){toast('❌',e.message.replace('Firebase: ','').substring(0,80),'red');}
 };
 async function patientLogin(){
-  const email=document.getElementById('pt-email').value.trim(),pass=document.getElementById('pt-pass').value;
+  const email=document.getElementById('pt-email').value.trim().toLowerCase();
+  const pass=document.getElementById('pt-pass').value;
   if(!email||!pass)return toast('⚠️','Enter email and password','amber');
+  // Show loading state
+  const btn=document.querySelector('#pt-login .btn-primary');
+  if(btn){btn.disabled=true;btn.textContent='Signing in...';}
   try{
     const cred=await signInWithEmailAndPassword(auth,email,pass);
     const snap=await getDoc(doc(db,'users',cred.user.uid));
     const data=snap.exists()?snap.data():{name:email.split('@')[0],role:'patient',trustScore:5.0,bloodType:'Unknown'};
-    if(data.role!=='patient'){await signOut(auth);return toast('❌','Not a patient account','red');}
+    if(data.role&&data.role!=='patient'){
+      await signOut(auth);
+      if(btn){btn.disabled=false;btn.textContent='Sign In & Find Care →';}
+      return toast('❌',`This is a ${data.role} account. Use the ${data.role} login tab.`,'red');
+    }
     sessionRestored=true;currentUser={id:cred.user.uid,...data};launchUser();
   }catch(e){
-    if(e.code==='auth/unauthorized-domain'){
+    if(btn){btn.disabled=false;btn.textContent='Sign In & Find Care →';}
+    const code=e.code||'';
+    if(code==='auth/unauthorized-domain'){
       return toast('❌','Open the app from your Vercel URL, not as a local file','red');
     }
-    // Detect Google-only accounts — wrong-password or invalid-credential means
-    // they signed up with Google and have no password set
-    if(e.code==='auth/wrong-password'||e.code==='auth/invalid-credential'||e.code==='auth/user-not-found'){
-      // Check if this email exists with Google as provider
-      try{
-        const methods=await fetchSignInMethodsForEmail(auth,email);
-        if(methods.includes('google.com')){
-          // Show a clear message and auto-trigger Google login
-          openModal(`<div style="text-align:center;padding:16px">
-            <div style="font-size:52px;margin-bottom:14px">🔑</div>
-            <div style="font-size:20px;font-weight:900;margin-bottom:10px">Use Google Sign-In</div>
-            <div style="font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px">
-              <strong>${email}</strong> is registered with Google.<br>
-              This account has no password — please sign in with Google.
-            </div>
-            <button class="btn btn-primary btn-full btn-lg" onclick="closeModal();patientGoogleSignIn()">
-              <svg width="18" height="18" viewBox="0 0 48 48" style="flex-shrink:0"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
-              Continue with Google →
-            </button>
-            <button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="closeModal()">Cancel</button>
-          </div>`);
-          return;
-        }
-      }catch(_){}
-      // Generic wrong password
-      return toast('❌','Wrong password. Use "Forgot password?" to reset it.','red');
+    // Firebase 10: auth/invalid-credential = wrong password OR google-only account
+    // auth/user-not-found = no account at all
+    // Show helpful options for all credential failures
+    if(code==='auth/invalid-credential'||code==='auth/wrong-password'||code==='auth/user-not-found'){
+      // For gmail addresses, always offer Google sign-in as an option
+      const isGmail=email.endsWith('@gmail.com')||email.endsWith('@googlemail.com');
+      openModal(`<div style="text-align:center;padding:20px">
+        <div style="font-size:48px;margin-bottom:14px">🔑</div>
+        <div style="font-size:19px;font-weight:900;margin-bottom:10px">Sign-in failed</div>
+        <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px">
+          Could not sign in as <strong>${email}</strong>.<br>
+          ${isGmail?'This looks like a Gmail — try Google Sign-In if you registered with Google.':'Check your password or reset it below.'}
+        </div>
+        ${isGmail?`<button class="btn btn-primary btn-full btn-lg" style="margin-bottom:10px" onclick="closeModal();patientGoogleSignIn()">
+          <svg width="16" height="16" viewBox="0 0 48 48" style="flex-shrink:0;margin-right:6px"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+          Try Google Sign-In
+        </button>`:''}
+        <button class="btn btn-ghost btn-full" style="margin-bottom:8px" onclick="closeModal();showForgotPassword()">🔑 Reset Password via Email</button>
+        <button class="btn btn-ghost btn-sm btn-full" onclick="closeModal()">Cancel</button>
+      </div>`);
+      return;
     }
-    toast('❌','Login failed: '+e.message.replace('Firebase: ','').replace('Error (auth/)','').substring(0,70),'red');
+    if(code==='auth/too-many-requests'){
+      return toast('⏳','Too many failed attempts. Try again in a few minutes or reset your password.','amber');
+    }
+    toast('❌','Login failed: '+(e.message||code).replace('Firebase: ','').replace('Error (auth/)','').substring(0,80),'red');
   }
 }
 window.patientLogin=patientLogin;
 async function hospitalLogin(){
-  const email=document.getElementById('h-email').value.trim(),pass=document.getElementById('h-pass').value;if(!email||!pass)return toast('⚠️','Enter credentials','amber');
-  try{const cred=await signInWithEmailAndPassword(auth,email,pass);const snap=await getDoc(doc(db,'users',cred.user.uid));const data=snap.exists()?snap.data():{};
-  if(data.role!=='hospital'){await signOut(auth);return toast('❌','Not hospital account — use Patient login','red');}
-  const q=query(collection(db,'hospitals'),where('staffEmail','==',email));const hs=await getDocs(q);
-  if(hs.empty){await signOut(auth);return toast('❌','Hospital not found','red');}
-  curHospId=hs.docs[0].id;curHospData=hs.docs[0].data();currentUser={id:cred.user.uid,...data};sessionRestored=true;launchHospital(curHospData);}catch(e){toast('❌','Login failed','red');}
+  const email=document.getElementById('h-email').value.trim().toLowerCase(),pass=document.getElementById('h-pass').value;
+  if(!email||!pass)return toast('⚠️','Enter credentials','amber');
+  const btn=document.querySelector('#role-1 .btn-primary');
+  if(btn){btn.disabled=true;btn.textContent='Signing in...';}
+  try{
+    const cred=await signInWithEmailAndPassword(auth,email,pass);
+    const snap=await getDoc(doc(db,'users',cred.user.uid));
+    const data=snap.exists()?snap.data():{};
+    if(data.role!=='hospital'){
+      await signOut(auth);
+      if(btn){btn.disabled=false;btn.textContent='Access Hospital Portal →';}
+      return toast('❌',`This is a ${data.role||'non-hospital'} account — use the correct login tab`,'red');
+    }
+    const q=query(collection(db,'hospitals'),where('staffEmail','==',email));
+    const hs=await getDocs(q);
+    if(hs.empty){await signOut(auth);if(btn){btn.disabled=false;btn.textContent='Access Hospital Portal →';}return toast('❌','No hospital linked to this account. Contact admin.','red');}
+    curHospId=hs.docs[0].id;curHospData=hs.docs[0].data();
+    currentUser={id:cred.user.uid,...data};sessionRestored=true;launchHospital(curHospData);
+  }catch(e){
+    if(btn){btn.disabled=false;btn.textContent='Access Hospital Portal →';}
+    const code=e.code||'';
+    if(code==='auth/invalid-credential'||code==='auth/wrong-password')return toast('❌','Wrong password. Use credentials emailed by admin.','red');
+    if(code==='auth/user-not-found')return toast('❌','No account found. Contact your admin to register the hospital.','red');
+    if(code==='auth/too-many-requests')return toast('⏳','Too many attempts. Try again later.','amber');
+    if(code==='auth/unauthorized-domain')return toast('❌','Open from your Vercel URL, not locally.','red');
+    toast('❌','Login failed: '+(e.message||code).replace('Firebase: ','').substring(0,70),'red');
+  }
 }
 window.hospitalLogin=hospitalLogin;
 async function adminLogin(){
-  const email=document.getElementById('adm-u').value.trim(),pass=document.getElementById('adm-p').value;if(!email||!pass)return toast('⚠️','Enter credentials','amber');
-  try{const cred=await signInWithEmailAndPassword(auth,email,pass);const snap=await getDoc(doc(db,'users',cred.user.uid));const data=snap.exists()?snap.data():{};
-  if(data.role!=='admin'){await signOut(auth);return toast('❌','Admin role required','red');}
-  currentUser={id:cred.user.uid,...data};sessionRestored=true;launchAdmin();}catch(e){toast('❌','Login failed','red');}
+  const email=document.getElementById('adm-u').value.trim().toLowerCase(),pass=document.getElementById('adm-p').value;
+  if(!email||!pass)return toast('⚠️','Enter credentials','amber');
+  try{
+    const cred=await signInWithEmailAndPassword(auth,email,pass);
+    const snap=await getDoc(doc(db,'users',cred.user.uid));
+    const data=snap.exists()?snap.data():{};
+    if(data.role!=='admin'){await signOut(auth);return toast('❌','Admin role required','red');}
+    currentUser={id:cred.user.uid,...data};sessionRestored=true;launchAdmin();
+  }catch(e){
+    const code=e.code||'';
+    if(code==='auth/invalid-credential'||code==='auth/wrong-password')return toast('❌','Wrong password','red');
+    if(code==='auth/user-not-found')return toast('❌','No admin account found','red');
+    toast('❌','Login failed: '+(e.message||'').replace('Firebase: ','').substring(0,60),'red');
+  }
 }
 window.adminLogin=adminLogin;
 async function pharmacyLogin(){
-  const email=document.getElementById('ph-email').value.trim(),pass=document.getElementById('ph-pass').value;if(!email||!pass)return toast('⚠️','Enter credentials','amber');
-  try{const cred=await signInWithEmailAndPassword(auth,email,pass);const snap=await getDoc(doc(db,'users',cred.user.uid));const data=snap.exists()?snap.data():{};
-  if(data.role!=='pharmacy'){await signOut(auth);return toast('❌','Not pharmacy account','red');}if(!data.pharmacyId)return toast('❌','Pharmacy not linked','red');
-  const phSnap=await getDoc(doc(db,'pharmacies',data.pharmacyId));if(!phSnap.exists())return toast('❌','Pharmacy not found','red');
-  curPharmacyId=data.pharmacyId;curPharmacyData={id:phSnap.id,...phSnap.data()};currentUser={id:cred.user.uid,...data};sessionRestored=true;launchPharmacy(curPharmacyData);}catch(e){toast('❌','Login failed','red');}
+  const email=document.getElementById('ph-email').value.trim().toLowerCase(),pass=document.getElementById('ph-pass').value;
+  if(!email||!pass)return toast('⚠️','Enter credentials','amber');
+  const btn=document.querySelector('#ph-login-form .btn-success');
+  if(btn){btn.disabled=true;btn.textContent='Signing in...';}
+  try{
+    const cred=await signInWithEmailAndPassword(auth,email,pass);
+    const snap=await getDoc(doc(db,'users',cred.user.uid));
+    const data=snap.exists()?snap.data():{};
+    if(data.role!=='pharmacy'){
+      await signOut(auth);
+      if(btn){btn.disabled=false;btn.textContent='Access Pharmacy Portal →';}
+      return toast('❌','Not a pharmacy account. Contact admin to register your pharmacy.','red');
+    }
+    if(!data.pharmacyId){if(btn){btn.disabled=false;btn.textContent='Access Pharmacy Portal →';}return toast('❌','Pharmacy not linked — contact admin','red');}
+    const phSnap=await getDoc(doc(db,'pharmacies',data.pharmacyId));
+    if(!phSnap.exists()){if(btn){btn.disabled=false;btn.textContent='Access Pharmacy Portal →';}return toast('❌','Pharmacy record not found','red');}
+    curPharmacyId=data.pharmacyId;curPharmacyData={id:phSnap.id,...phSnap.data()};
+    currentUser={id:cred.user.uid,...data};sessionRestored=true;launchPharmacy(curPharmacyData);
+  }catch(e){
+    if(btn){btn.disabled=false;btn.textContent='Access Pharmacy Portal →';}
+    const code=e.code||'';
+    if(code==='auth/invalid-credential'||code==='auth/wrong-password')return toast('❌','Wrong password. Use credentials emailed by admin.','red');
+    if(code==='auth/user-not-found')return toast('❌','No account found. Your pharmacy must be registered by admin first.','red');
+    if(code==='auth/too-many-requests')return toast('⏳','Too many attempts. Try again later.','amber');
+    toast('❌','Login failed: '+(e.message||'').replace('Firebase: ','').substring(0,60),'red');
+  }
 }
 window.pharmacyLogin=pharmacyLogin;
 window.sendPharmacyOTP=async()=>{
@@ -3176,6 +3288,95 @@ window.showScreen=function(id){
 // ═══ LAUNCH HOOKS: init notifications ═══
 const _origLaunchUser=window.launchUser;
 const _origLaunchHospital=window.launchHospital;
+
+
+
+// ── Pharmacy Welcome Email ──
+function pharmacyWelcomeEmailHTML(name,email,pass){
+  return `<!DOCTYPE html><html><body style="margin:0;padding:40px 20px;background:#f0fff8;font-family:'Segoe UI',sans-serif">
+  <table width="580" style="margin:0 auto;background:#fff;border-radius:20px;overflow:hidden">
+    <tr><td style="background:linear-gradient(135deg,#10B981,#059669);padding:40px;text-align:center">
+      <div style="font-size:48px;margin-bottom:12px">💊</div>
+      <h1 style="color:#fff;margin:0;font-size:26px">Pharmacy Node Activated</h1>
+      <p style="color:rgba(255,255,255,.8);margin:8px 0 0">Welcome to MedLink Network</p>
+    </td></tr>
+    <tr><td style="padding:40px">
+      <h2 style="margin:0 0 8px">${name}</h2>
+      <p style="color:#666;margin-bottom:24px">Your pharmacy has been registered on MedLink. Use the credentials below to log in.</p>
+      <div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:16px;padding:28px;margin:20px 0">
+        <p style="font-size:13px;color:#444;margin:0 0 8px">Login at: <a href="https://link-rouge.vercel.app" style="color:#10B981">link-rouge.vercel.app</a> → Pharmacy tab</p>
+        <p style="font-family:monospace;font-size:15px;margin:0">Email: <strong>${email}</strong><br>Password: <strong>${pass}</strong></p>
+      </div>
+      <p style="font-size:13px;color:#888;margin-top:20px">Change your password after first login. If you have any issues, contact the MedLink admin.</p>
+    </td></tr>
+  </table></body></html>`;
+}
+
+// ── Admin: Register Pharmacy (mirrors registerHospital) ──
+let adminPharmaRegMap=null,adminPharmaRegMarker=null;
+
+function initAdminPharmaRegMap(){
+  if(adminPharmaRegMap){adminPharmaRegMap.invalidateSize();return;}
+  const el=document.getElementById('admin-pharma-reg-map');
+  if(!el)return;
+  adminPharmaRegMap=L.map('admin-pharma-reg-map').setView([20.59,78.96],5);
+  const th=document.documentElement.getAttribute('data-theme');
+  L.tileLayer(th==='dark'?'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png':'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(adminPharmaRegMap);
+  adminPharmaRegMap.on('click',e=>{
+    if(adminPharmaRegMarker)adminPharmaRegMap.removeLayer(adminPharmaRegMarker);
+    adminPharmaRegMarker=L.marker([e.latlng.lat,e.latlng.lng]).addTo(adminPharmaRegMap);
+    document.getElementById('phLat').value=e.latlng.lat.toFixed(6);
+    document.getElementById('phLng').value=e.latlng.lng.toFixed(6);
+  });
+  setTimeout(()=>adminPharmaRegMap.invalidateSize(),400);
+}
+
+window.adminRegisterPharmacy=async()=>{
+  const name=document.getElementById('phName').value.trim();
+  const owner=document.getElementById('phOwner').value.trim();
+  const phone=document.getElementById('phPhone').value.trim();
+  const addr=document.getElementById('phAddr').value.trim();
+  const email=document.getElementById('phEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('phPass').value;
+  const lat=parseFloat(document.getElementById('phLat').value)||0;
+  const lng=parseFloat(document.getElementById('phLng').value)||0;
+  if(!name)return toast('⚠️','Pharmacy name required','amber');
+  if(!email||pass.length<6)return toast('⚠️','Email + password (min 6 chars) required','amber');
+  const btn=document.querySelector('#adm-pharma .btn-success');
+  if(btn){btn.disabled=true;btn.textContent='Registering...';}
+  try{
+    // Create Firebase Auth account using secondary app (doesn't affect admin session)
+    const cred=await createUserWithEmailAndPassword(auth2,email,pass);
+    // Create pharmacy doc
+    const phRef=await addDoc(collection(db,'pharmacies'),{
+      name,owner,phone,address:addr,email,lat,lng,
+      verified:true,hours:'',
+      createdAt:serverTimestamp()
+    });
+    // Create user doc linking to pharmacy
+    await setDoc(doc(db,'users',cred.user.uid),{
+      email,role:'pharmacy',pharmacyId:phRef.id,
+      name:owner||name,phone,
+      createdAt:serverTimestamp()
+    });
+    await signOut(auth2);
+    // Send welcome email with credentials
+    sendEmail(email,name,'Welcome to MedLink Pharmacy Network',pharmacyWelcomeEmailHTML(name,email,pass));
+    toast('✅',`${name} registered! Credentials emailed to ${email}`,'green');
+    // Clear form
+    ['phName','phOwner','phPhone','phAddr','phEmail','phPass','phLat','phLng'].forEach(id=>{
+      const el=document.getElementById(id);if(el)el.value='';
+    });
+    if(adminPharmaRegMarker){adminPharmaRegMap.removeLayer(adminPharmaRegMarker);adminPharmaRegMarker=null;}
+    loadAdminPharmacies();
+  }catch(e){
+    console.error('adminRegisterPharmacy:',e);
+    const msg=e.code==='auth/email-already-in-use'?'This email is already registered':e.message.replace('Firebase: ','').substring(0,80);
+    toast('❌',msg,'red');
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='✅ Deploy Pharmacy & Email Credentials';}
+  }
+};
 
 })();
 </script>
