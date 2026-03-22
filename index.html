@@ -697,13 +697,7 @@ body.cursor-active *{cursor:none!important}
   line-height:1.6;display:flex;gap:10px;align-items:flex-start;margin-top:20px;
 }
 /* Camera button on mobile */
-.rx-camera-btn{
-  display:none;background:linear-gradient(135deg,var(--purple),var(--accent));
-  color:#fff;border:none;border-radius:12px;padding:12px 20px;
-  font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;
-  cursor:pointer;width:100%;margin-top:10px;transition:.2s;
-}
-.rx-camera-btn:hover{opacity:.9;}
+/* rx-camera-btn replaced by two-button grid */
 /* Auto-fill banner */
 .rx-autofill-bar{
   background:linear-gradient(135deg,rgba(16,185,129,.1),rgba(6,182,212,.1));
@@ -722,7 +716,7 @@ body.cursor-active *{cursor:none!important}
 /* Mobile */
 @media(max-width:768px){
   .rx-summary-grid{grid-template-columns:1fr 1fr;}
-  .rx-camera-btn{display:block;}
+
   .rx-slot{min-width:60px;padding:8px 10px;}
   .rx-med-name{font-size:16px;}
   .rx-lab-table{font-size:12px;}
@@ -821,25 +815,38 @@ body.cursor-active *{cursor:none!important}
   <div style="font-size:14px;color:var(--text2);line-height:1.6">Upload or photograph a prescription, scan report, or lab report — AI reads it instantly.</div>
 </div>
 
-<!-- Upload zone -->
+<!-- Hidden file inputs — NO capture attribute so they always show file picker -->
+<input type="file" id="rx-file-input" accept="image/*,application/pdf" style="display:none" onchange="rxOnPick(this)">
+<!-- Separate camera input WITH capture -->
+<input type="file" id="rx-camera-input" accept="image/*" capture="environment" style="display:none" onchange="rxOnPick(this)">
+
+<!-- Upload zone — drag & drop on desktop -->
 <div class="rx-drop-zone card" id="rx-drop-zone"
   ondragover="rxDragOver(event)"
   ondragleave="rxDragLeave(event)"
-  ondrop="rxDrop(event)">
-  <input type="file" id="rx-file-input" accept="image/*" onchange="rxOnPick(this)" capture="">
-  <div style="font-size:52px;margin-bottom:8px">📋</div>
+  ondrop="rxDrop(event)"
+  onclick="document.getElementById('rx-file-input').click()">
+  <div style="font-size:48px;margin-bottom:10px">📋</div>
   <div style="font-size:17px;font-weight:800;margin-bottom:4px">Drop image here</div>
-  <div style="font-size:13px;color:var(--text2)">or click to choose file</div>
+  <div style="font-size:13px;color:var(--text2)">or use buttons below</div>
   <div style="display:flex;gap:6px;justify-content:center;margin-top:12px;flex-wrap:wrap">
     <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">JPG</span>
     <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">PNG</span>
     <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">WEBP</span>
     <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">HEIC</span>
+    <span style="background:var(--card-border);color:var(--text2);padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600">PDF</span>
   </div>
 </div>
-<!-- Mobile camera capture -->
-<button class="rx-camera-btn" onclick="document.getElementById('rx-camera-input').click()">📷 Take Photo with Camera</button>
-<input type="file" id="rx-camera-input" accept="image/*" capture="environment" style="display:none" onchange="rxOnPick(this)">
+
+<!-- Two clear action buttons — always visible on ALL devices -->
+<div id="rx-btn-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+  <button class="btn btn-primary btn-lg" onclick="document.getElementById('rx-file-input').click()" style="font-size:15px">
+    📁 Upload File
+  </button>
+  <button class="btn btn-primary btn-lg" onclick="document.getElementById('rx-camera-input').click()" style="background:linear-gradient(135deg,var(--purple),var(--accent));font-size:15px">
+    📷 Take Photo
+  </button>
+</div>
 
 <!-- Preview -->
 <div id="rx-preview-wrap" class="rx-preview-wrap card" style="display:none;margin-top:14px">
@@ -2220,9 +2227,10 @@ window.rxOnPick=function rxOnPick(inp){
   if(f)rxLoadFile(f);
 }
 window.rxLoadFile=function rxLoadFile(f){
+  if(!f)return;
   // Warn about very large files (>15MB)
   if(f.size>15*1024*1024){
-    toast('⚠️','Image is very large ('+Math.round(f.size/1024/1024)+'MB). It will be compressed automatically.','amber');
+    toast('⚠️','Image is very large ('+Math.round(f.size/1024/1024)+'MB). May be slow.','amber');
   }
   _rxChosen=f;
   const reader=new FileReader();
@@ -2230,6 +2238,9 @@ window.rxLoadFile=function rxLoadFile(f){
     document.getElementById('rx-preview-img').src=e.target.result;
     document.getElementById('rx-preview-wrap').style.display='flex';
     document.getElementById('rx-drop-zone').style.display='none';
+    // Hide the upload/camera buttons when preview shown
+    const btnRow=document.getElementById('rx-btn-row');
+    if(btnRow)btnRow.style.display='none';
     document.getElementById('rx-analyze-btn').style.display='block';
     document.getElementById('rx-error').style.display='none';
     document.getElementById('rx-results').style.display='none';
@@ -2243,6 +2254,9 @@ window.rxReset=function(){
   document.getElementById('rx-preview-img').src='';
   document.getElementById('rx-preview-wrap').style.display='none';
   document.getElementById('rx-drop-zone').style.display='flex';
+  // Show the upload/camera buttons again
+  const btnRow=document.getElementById('rx-btn-row');
+  if(btnRow)btnRow.style.display='grid';
   document.getElementById('rx-analyze-btn').style.display='none';
   document.getElementById('rx-results').style.display='none';
   document.getElementById('rx-error').style.display='none';
@@ -2290,26 +2304,9 @@ window.rxAnalyze=async function(){
 
 // Compress image to <4MB before sending to Groq
 async function rxCompressImage(b64,mimeType){
-  return new Promise(resolve=>{
-    const img=new Image();
-    img.onload=()=>{
-      const MAX=1400; // max dimension
-      let w=img.width,h=img.height;
-      if(w>MAX||h>MAX){
-        if(w>h){h=Math.round(h*MAX/w);w=MAX;}
-        else{w=Math.round(w*MAX/h);h=MAX;}
-      }
-      const canvas=document.createElement('canvas');
-      canvas.width=w;canvas.height=h;
-      const ctx=canvas.getContext('2d');
-      ctx.drawImage(img,0,0,w,h);
-      // Use JPEG for compression
-      const compressed=canvas.toDataURL('image/jpeg',0.85).split(',')[1];
-      resolve({b64:compressed,mimeType:'image/jpeg'});
-    };
-    img.onerror=()=>resolve({b64,mimeType}); // fallback to original
-    img.src='data:'+mimeType+';base64,'+b64;
-  });
+  // Return original — canvas compression causes black images on mobile.
+  // Groq handles up to ~20MB base64. Phone photos are 2-5MB — fine as-is.
+  return {b64,mimeType};
 }
 
 async function rxCallGroq(b64,mimeType){
