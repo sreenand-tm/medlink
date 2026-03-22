@@ -2201,25 +2201,25 @@ window.quickMedSearch=name=>{document.getElementById('med-search-input').value=n
 // ═══════════════════════════════════════════════════════
 let _rxChosen = null;
 
-function rxDragOver(e){
+window.rxDragOver=function rxDragOver(e){
   e.preventDefault();e.stopPropagation();
   document.getElementById('rx-drop-zone').classList.add('drag-over');
 }
-function rxDragLeave(e){
+window.rxDragLeave=function rxDragLeave(e){
   document.getElementById('rx-drop-zone').classList.remove('drag-over');
 }
-function rxDrop(e){
+window.rxDrop=function rxDrop(e){
   e.preventDefault();e.stopPropagation();
   document.getElementById('rx-drop-zone').classList.remove('drag-over');
   const f=e.dataTransfer?.files?.[0];
   if(f&&f.type.startsWith('image/'))rxLoadFile(f);
   else toast('⚠️','Please drop an image file (JPG, PNG, etc.)','amber');
 }
-function rxOnPick(inp){
+window.rxOnPick=function rxOnPick(inp){
   const f=inp?.files?.[0];
   if(f)rxLoadFile(f);
 }
-function rxLoadFile(f){
+window.rxLoadFile=function rxLoadFile(f){
   // Warn about very large files (>15MB)
   if(f.size>15*1024*1024){
     toast('⚠️','Image is very large ('+Math.round(f.size/1024/1024)+'MB). It will be compressed automatically.','amber');
