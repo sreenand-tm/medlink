@@ -549,7 +549,7 @@ body.cursor-active *{cursor:none!important}
   }
 
   /* SOS button positioning */
-  #sos-float{bottom:16px;right:16px;width:52px;height:52px;font-size:20px;}
+  #sos-float{display:none!important;}
 
   /* Login card */
   .login-card{max-width:100%;margin:0 8px;}
@@ -846,29 +846,33 @@ body.cursor-active *{cursor:none!important}
    MOBILE BOTTOM NAV (patient)
 ══════════════════════════════ */
 .mobile-bottom-nav{
-  display:none;position:fixed;bottom:0;left:0;right:0;
-  background:var(--surface);border-top:1px solid var(--card-border);
-  z-index:300;padding:8px 0 env(safe-area-inset-bottom,8px);
+  display:none;position:fixed;left:0;top:64px;bottom:0;
+  width:68px;
+  background:var(--surface);border-right:1px solid var(--card-border);
+  z-index:300;padding:12px 0;
+  flex-direction:column;
+  overflow:hidden;
 }
-.mbn-items{display:flex;justify-content:space-around;align-items:center;}
+.mbn-items{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;}
 .mbn-item{
   display:flex;flex-direction:column;align-items:center;gap:2px;
-  padding:4px 8px;border-radius:10px;cursor:pointer;
-  font-size:10px;font-weight:600;color:var(--text2);
-  min-width:52px;transition:.15s;
+  padding:10px 6px;border-radius:12px;cursor:pointer;
+  font-size:9px;font-weight:600;color:var(--text2);
+  width:56px;transition:.15s;
 }
-.mbn-item.active{color:var(--accent);}
-.mbn-item .mbn-icon{font-size:20px;}
+.mbn-item:hover{background:var(--card);}
+.mbn-item.active{color:var(--accent);background:rgba(6,182,212,.1);}
+.mbn-item .mbn-icon{font-size:22px;}
 
 @media(max-width:768px){
   .sidebar{display:none;}
   .sidebar-content{padding:16px 12px;}
   .sidebar-layout{flex-direction:column;}
-  /* Show mobile bottom nav */
-  .mobile-bottom-nav{display:block;}
-  /* Extra padding for bottom nav */
-  #screen-user{padding-bottom:80px!important;}
-  #screen-hospital{padding-bottom:80px!important;}
+  /* Show left side nav */
+  .mobile-bottom-nav{display:flex;}
+  /* Left padding for side nav */
+  #screen-user{padding-left:76px!important;padding-bottom:0!important;}
+  #screen-hospital{padding-left:76px!important;padding-bottom:0!important;}
   /* Spec card stacks on mobile */
   .spec-card-v2{flex-direction:column;gap:12px;}
   .spec-avatar-v2{width:44px;height:44px;font-size:20px;}
@@ -2095,20 +2099,27 @@ window.confirmBookToken=async(specId,specName,specType,hospitalId,hospitalName,f
   try{
     const selDate=document.getElementById('appt-date-select')?.value||new Date().toDateString();
     const today=new Date().toDateString();
-    // For future dates, get actual token count for that date
-    let finalToken=tokenNumber;
-    if(selDate!==today){
-      // Count existing appointments for that date
-      const dateAppts=await getDocs(query(collection(db,'appointments'),where('specialistId','==',specId),where('date','==',selDate)));
-      finalToken=dateAppts.size+1;
-    }
-    // Check duplicate for selected date
-    const dupCheck=await getDocs(query(collection(db,'appointments'),where('patientUid','==',currentUser.id),where('specialistId','==',specId),where('date','==',selDate)));
-    if(!dupCheck.empty)return toast('⚠️','You already have an appointment on this date','amber');
-    await addDoc(collection(db,'appointments'),{patientUid:currentUser.id,patientName:currentUser.name||'Patient',patientPhone:currentUser.phone||'',specialistId:specId,specialistName:specName,specialistType:specType,hospitalId,hospitalName,fee,tokenNumber:finalToken,date:selDate,time:'',status:'pending',createdAt:serverTimestamp()});
+    // Hard block: same patient, same specialist, same date
+    const dupCheck=await getDocs(query(collection(db,'appointments'),
+      where('patientUid','==',currentUser.id),
+      where('specialistId','==',specId),
+      where('date','==',selDate)
+    ));
+    if(!dupCheck.empty){closeModal();return toast('⚠️','You already have a token for this specialist on '+selDate,'amber');}
+    // Get real token number for selected date
+    const dateAppts=await getDocs(query(collection(db,'appointments'),where('specialistId','==',specId),where('date','==',selDate)));
+    const finalToken=dateAppts.size+1;
+    await addDoc(collection(db,'appointments'),{
+      patientUid:currentUser.id,patientName:currentUser.name||'Patient',
+      patientPhone:currentUser.phone||'',specialistId:specId,
+      specialistName:specName,specialistType:specType,
+      hospitalId,hospitalName,fee,tokenNumber:finalToken,
+      date:selDate,time:'',status:'pending',createdAt:serverTimestamp()
+    });
     if(selDate===today)await updateDoc(doc(db,'specialists',specId),{tokensUsedToday:finalToken,lastResetDate:today});
     closeModal();
-    toast('🎫',`Token #${finalToken} booked for ${specName} on ${selDate===today?'today':selDate}!`,'green');
+    const dateLabel=selDate===today?'today':new Date(selDate).toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'});
+    toast('🎫',`Token #${finalToken} booked for ${specName} on ${dateLabel}!`,'green');
     loadMyAppointments();
   }catch(e){toast('❌','Booking failed: '+e.message.substring(0,50),'red');}
 };
@@ -2657,7 +2668,7 @@ window.submitDischargeRating=async function(puid){
       const old=snap.data().trustScore||5;
       // Adjust trust: 5 stars = +0.2, 1 star = -0.3
       const delta=[0,-0.3,-0.15,0,0.1,0.2][rating];
-      await updateDoc(doc(db,'users',puid),{trustScore:Math.min(10,Math.max(0,old+delta))});
+      await updateDoc(doc(db,'users',puid),{trustScore:Math.min(5.0,Math.max(0,Math.round((old+delta)*10)/10))});
     }
     closeModal();toast('⭐','Rating submitted','green');
   }catch(e){closeModal();}
@@ -3294,9 +3305,15 @@ async function loadDischargeLogs(){
   if(!el)return;
   el.innerHTML='<div style="text-align:center;padding:30px"><div class="skel" style="height:80px;margin-bottom:10px"></div><div class="skel" style="height:80px"></div></div>';
   try{
-    const snap=await getDocs(query(collection(db,'dischargeLogs'),where('patientUid','==',currentUser.id),orderBy('dischargedAt','desc')));
+    const snap=await getDocs(query(collection(db,'dischargeLogs'),where('patientUid','==',currentUser.id)));
     if(snap.empty){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--text3)"><div style="font-size:36px;margin-bottom:10px">🏠</div>No discharge records yet</div>';return;}
-    el.innerHTML=snap.docs.map(d=>{
+    // Sort client-side by dischargedAt descending
+    const sortedDocs=[...snap.docs].sort((a,b)=>{
+      const at=a.data().dischargedAt?.seconds||0;
+      const bt=b.data().dischargedAt?.seconds||0;
+      return bt-at;
+    });
+    el.innerHTML=sortedDocs.map(d=>{
       const r=d.data();
       return `<div class="discharge-log-card">
         <div class="dl-header">
@@ -3312,7 +3329,10 @@ async function loadDischargeLogs(){
         </div>
       </div>`;
     }).join('');
-  }catch(e){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Could not load discharge logs</div>';}
+  }catch(e){
+    console.error('loadDischargeLogs:',e);
+    el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Could not load discharge logs: '+e.message+'</div>';
+  }
 }
 
 // ═══ MOBILE BOTTOM NAV ═══
@@ -3679,20 +3699,28 @@ window.browseSpecialistType=async function(specialistType){
 <!-- MOBILE BOTTOM NAV (patient) -->
 <div class="mobile-bottom-nav" id="mobile-bottom-nav" style="display:none">
   <div class="mbn-items">
-    <div class="mbn-item active" id="mbn-find" onclick="uTab('find');mbnActive('find')">
-      <span class="mbn-icon">🏥</span>Find
+    <div class="mbn-item active" id="mbn-find" onclick="uTab('find');mbnActive('find')" title="Find Care">
+      <span class="mbn-icon">🏥</span><span>Find</span>
     </div>
-    <div class="mbn-item" id="mbn-triage" onclick="uTab('triage');mbnActive('triage')">
-      <span class="mbn-icon">🧠</span>Triage
+    <div class="mbn-item" id="mbn-triage" onclick="uTab('triage');mbnActive('triage')" title="AI Triage">
+      <span class="mbn-icon">🧠</span><span>Triage</span>
     </div>
-    <div class="mbn-item" id="mbn-rx" onclick="uTab('rx');mbnActive('rx')">
-      <span class="mbn-icon">💊</span>Rx Scan
+    <div class="mbn-item" id="mbn-appt" onclick="uTab('appt');mbnActive('appt')" title="Appointments">
+      <span class="mbn-icon">📅</span><span>Appts</span>
     </div>
-    <div class="mbn-item" id="mbn-records" onclick="uTab('records');mbnActive('records')">
-      <span class="mbn-icon">📋</span>Records
+    <div class="mbn-item" id="mbn-rx" onclick="uTab('rx');mbnActive('rx')" title="Rx Scanner">
+      <span class="mbn-icon">💊</span><span>Rx</span>
     </div>
-    <div class="mbn-item" id="mbn-more" onclick="uTab('uprof');mbnActive('more')">
-      <span class="mbn-icon">👤</span>More
+    <div class="mbn-item" id="mbn-records" onclick="uTab('records');mbnActive('records')" title="Records">
+      <span class="mbn-icon">📋</span><span>Records</span>
+    </div>
+    <div class="mbn-item" id="mbn-more" onclick="uTab('uprof');mbnActive('more')" title="Profile">
+      <span class="mbn-icon">👤</span><span>More</span>
+    </div>
+    <!-- SOS shortcut in side nav -->
+    <div style="flex:1"></div>
+    <div class="mbn-item" onclick="quickSOS()" style="color:var(--red);margin-bottom:16px" title="Emergency SOS">
+      <span class="mbn-icon">🚨</span><span>SOS</span>
     </div>
   </div>
 </div>
