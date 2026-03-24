@@ -198,14 +198,12 @@ textarea.form-input{resize:vertical;min-height:90px}
 .hospital-admin-card{padding:22px;margin-bottom:14px;border-left:3px solid var(--green)}
 .hospital-admin-card.warn{border-left-color:var(--amber)}.hospital-admin-card.crit{border-left-color:var(--red)}
 
-/* ═══ SOS BUTTON ═══ */
+/* ═══ SOS BUTTON (ON HOSPITAL CARD) ═══ */
 .sos-btn{background:linear-gradient(135deg,var(--red),#DC2626);color:#fff;border:none;border-radius:12px;padding:12px 20px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:all .2s;box-shadow:0 4px 16px var(--red-glow);white-space:nowrap;position:relative}
 .sos-btn:hover{box-shadow:0 6px 24px rgba(239,68,68,.6);transform:translateY(-1px)}
 .sos-btn::before,.sos-btn::after{content:'';position:absolute;inset:-6px;border-radius:16px;border:2px solid var(--red);opacity:0;animation:sosPulseRing 2s ease-out infinite}
 .sos-btn::after{animation-delay:.6s}
 @keyframes sosPulseRing{0%{inset:-4px;opacity:.5}100%{inset:-18px;opacity:0}}
-#sos-float{position:fixed;bottom:24px;right:24px;z-index:95;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--red),#C0392B);border:none;color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 24px rgba(239,68,68,.7);transition:all .2s;display:none;align-items:center;justify-content:center;animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
 /* ═══ AMBULANCE WIDGET ═══ */
 .ambulance-widget{position:fixed;bottom:100px;left:20px;z-index:200;background:linear-gradient(135deg,#EF4444,#C0392B);color:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 8px 40px rgba(239,68,68,.6);display:none;animation:slideInLeft .4s cubic-bezier(.4,0,.2,1);min-width:240px;border:1px solid rgba(255,255,255,.15)}
@@ -434,8 +432,6 @@ body.cursor-active *{cursor:none!important}
 #intro-skip.visible{opacity:1}
 #intro-skip:hover{color:rgba(255,255,255,.7)}
 
-
-
 /* ═══════════════════════════════════════════
    SCROLL ANIMATIONS
 ═══════════════════════════════════════════ */
@@ -481,8 +477,6 @@ body.cursor-active *{cursor:none!important}
 .btn-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-
-
 /* ═══ SPECIALIST & APPOINTMENT STYLES ═══ */
 .specialist-card{background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:18px;transition:all .2s;cursor:pointer}
 .specialist-card:hover{background:var(--card-hover);border-color:var(--accent);transform:translateY(-2px)}
@@ -496,20 +490,13 @@ body.cursor-active *{cursor:none!important}
 .appt-card.cancelled{border-left:3px solid var(--red)}
 .triage-specialist-result{background:rgba(139,92,246,.08);border:2px solid rgba(139,92,246,.3);border-radius:14px;padding:20px;margin-top:16px}
 
-/* ═══ FORGOT PASSWORD / GOOGLE ═══ */
-.google-btn{background:#fff;color:#1a1a2e;border:1.5px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;gap:10px;font-weight:600;font-size:14px;border-radius:10px;padding:11px 20px;width:100%;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
-.google-btn:hover{background:#f8f9ff;box-shadow:0 4px 16px rgba(0,0,0,.1);transform:translateY(-1px)}
-[data-theme="dark"] .google-btn{background:rgba(255,255,255,.06);color:var(--text);border-color:rgba(255,255,255,.12)}
-[data-theme="dark"] .google-btn:hover{background:rgba(255,255,255,.1)}
-.divider-or{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--text3);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-.divider-or::before,.divider-or::after{content:'';flex:1;height:1px;background:var(--card-border)}
+/* ═══ FORGOT PASSWORD ═══ */
 .forgot-link{color:var(--accent);cursor:pointer;font-size:13px;font-weight:600;text-decoration:none;transition:opacity .2s}
 .forgot-link:hover{opacity:.7}
 
 /* Safe area support */
 @supports(padding: env(safe-area-inset-bottom)){
   body{padding-bottom:env(safe-area-inset-bottom);}
-  #sos-float{bottom:calc(24px + env(safe-area-inset-bottom));}
   .ambulance-widget{bottom:calc(100px + env(safe-area-inset-bottom));}
   .modal-panel{padding-bottom:calc(20px + env(safe-area-inset-bottom));}
 }
@@ -558,8 +545,6 @@ body.cursor-active *{cursor:none!important}
     height:220px!important;
   }
 
-  /* SOS button positioning */
-  #sos-float{display:flex!important;}
   /* On phones, use the left-side nav instead of horizontal tabs */
   #screen-user .dash-tabs{display:none!important;}
 
@@ -589,8 +574,6 @@ body.cursor-active *{cursor:none!important}
 
   /* Blood type grid */
   .blood-type-select{grid-template-columns:repeat(4,1fr);gap:6px;}
-
-
 }
 
 /* Very small phones */
@@ -604,7 +587,6 @@ body.cursor-active *{cursor:none!important}
   .land-features{grid-template-columns:1fr;gap:10px;}
   .tabs{gap:2px;}
   .tab{font-size:11px;padding:7px 8px;}
-
 }
 
 /* ═══ PRESCRIPTION SCANNER ═══ */
@@ -728,7 +710,6 @@ body.cursor-active *{cursor:none!important}
 /* Mobile */
 @media(max-width:768px){
   .rx-summary-grid{grid-template-columns:1fr 1fr;}
-
   .rx-slot{min-width:60px;padding:8px 10px;}
   .rx-med-name{font-size:16px;}
   .rx-lab-table{font-size:12px;}
@@ -925,6 +906,17 @@ body.cursor-active *{cursor:none!important}
 .chat-channel-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-bottom:4px;}
 .chat-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;margin-left:4px;animation:pulse 1.5s infinite;}
 
+/* Additional fixes for layout centering */
+.login-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.theme-btn {
+  margin-left: auto; /* to align to right, but the flex in .nav-right handles it */
+}
 </style>
 </head>
 <body>
@@ -940,17 +932,16 @@ body.cursor-active *{cursor:none!important}
 <div id="modal" class="modal-overlay" onclick="if(event.target===this)closeModal()"><div class="modal-panel"><div class="modal-handle"></div><div id="modal-body"></div></div></div>
 <!-- AMBULANCE WIDGET -->
 <div class="ambulance-widget" id="ambulance-widget"><span class="amb-close" onclick="dismissAmbulanceWidget()">✕</span><div style="display:flex;align-items:center;gap:14px"><div style="font-size:34px" class="amb-pulse">🚑</div><div><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.8;margin-bottom:2px">Ambulance En Route</div><div style="font-size:15px;font-weight:900" id="amb-hospital-name">—</div><div style="font-size:13px;opacity:.9;margin-top:3px;font-weight:600" id="amb-eta">Calculating ETA...</div></div></div><div style="margin-top:12px;background:rgba(255,255,255,.15);border-radius:8px;height:6px;overflow:hidden"><div id="amb-progress-bar" style="height:100%;background:#fff;border-radius:8px;width:0%;transition:width 5s linear"></div></div><div style="margin-top:10px;display:flex;gap:8px"><button onclick="focusAmbulance()" style="flex:1;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">📍 Track</button><button onclick="callAmbulanceDriver()" style="flex:1;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:8px;padding:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif">📞 Call</button></div></div>
-<nav class="topnav" id="topnav" style="display:none"><a class="logo" href="#"><div class="logo-icon"><svg viewBox="0 0 100 100"><defs><linearGradient id="nlg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#06B6D4"/></linearGradient></defs><rect x="35" y="5" width="30" height="90" rx="8" fill="url(#nlg)"/><rect x="5" y="35" width="90" height="30" rx="8" fill="url(#nlg)"/><polyline points="8,50 32,50 40,30 50,70 60,35 68,55 72,50 92,50" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>MedLink</a><div class="nav-right">
+<nav class="topnav" id="topnav" style="display:none"><a class="logo" href="#"><div class="logo-icon"><svg viewBox="0 0 100 100"><defs><linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#06B6D4"/></linearGradient></defs><rect x="35" y="5" width="30" height="90" rx="8" fill="url(#logoGrad)"/><rect x="5" y="35" width="90" height="30" rx="8" fill="url(#logoGrad)"/><polyline points="8,50 32,50 40,30 50,70 60,35 68,55 72,50 92,50" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>MedLink</a><div class="nav-right">
   <!-- Notification Bell -->
   <button class="notif-btn" id="notif-bell" onclick="toggleNotifPanel()" title="Notifications" style="display:none">
     🔔
     <span class="notif-dot" id="notif-dot"></span>
   </button><span id="nav-badge" class="badge bg-blue" style="display:none"></span><button class="theme-btn" onclick="toggleTheme()"><div class="knob" id="themeKnob">☀️</div></button><button class="btn btn-ghost btn-sm" onclick="doLogout()">Logout</button></div></nav>
-<button id="sos-float" onclick="quickSOS()">🆘</button>
 
 <!-- ═══ LANDING PAGE ═══ -->
 <div id="screen-landing" class="screen active">
-<nav class="land-nav"><div class="logo"><div class="logo-icon"><svg viewBox="0 0 100 100"><defs><linearGradient id="llg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#06B6D4"/></linearGradient></defs><rect x="35" y="5" width="30" height="90" rx="8" fill="url(#llg)"/><rect x="5" y="35" width="90" height="30" rx="8" fill="url(#llg)"/><polyline points="8,50 32,50 40,30 50,70 60,35 68,55 72,50 92,50" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>MedLink</div><div style="display:flex;align-items:center;gap:10px"><button class="theme-btn" onclick="toggleTheme()"><div class="knob">☀️</div></button><button class="btn btn-primary btn-sm" onclick="showScreen('screen-login')">Sign In →</button></div></nav>
+<nav class="land-nav"><div class="logo"><div class="logo-icon"><svg viewBox="0 0 100 100"><defs><linearGradient id="landLogoGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2DD4BF"/><stop offset="100%" stop-color="#06B6D4"/></linearGradient></defs><rect x="35" y="5" width="30" height="90" rx="8" fill="url(#landLogoGrad)"/><rect x="5" y="35" width="90" height="30" rx="8" fill="url(#landLogoGrad)"/><polyline points="8,50 32,50 40,30 50,70 60,35 68,55 72,50 92,50" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>MedLink</div><div style="display:flex;align-items:center;gap:10px"><button class="theme-btn" onclick="toggleTheme()"><div class="knob">☀️</div></button><button class="btn btn-primary btn-sm" onclick="showScreen('screen-login')">Sign In →</button></div></nav>
 <div class="land-hero"><div style="display:inline-flex;align-items:center;gap:8px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);border-radius:100px;padding:7px 18px;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:28px" class="reveal">🚑 India's Emergency Resource Network</div><div class="land-title reveal" style="transition-delay:.1s">Save Lives.<br>Every Second.</div><div class="land-sub reveal" style="transition-delay:.2s">Real-time hospital beds, AI triage in 8 languages, prescription scanning, blood bank — all in one platform built for India's emergencies.</div><div class="stat-pills reveal" style="transition-delay:.3s"><div class="stat-pill">🏥 <span class="count-up" data-target="247">0</span> Live ICU Beds</div><div class="stat-pill">🧠 AI Triage in <span class="count-up" data-target="8">0</span> Languages</div><div class="stat-pill">💊 <span class="count-up" data-target="1200">0</span>+ Medicines</div><div class="stat-pill">🚑 Live Ambulance Tracking</div></div><div class="land-btns reveal" style="transition-delay:.4s"><button class="btn btn-primary btn-lg" onclick="showScreen('screen-login')">🚀 Get Started Free</button><button class="btn btn-ghost btn-lg" onclick="document.getElementById('land-features').scrollIntoView({behavior:'smooth'})">Learn More ↓</button></div></div>
 <div class="land-features" id="land-features">
 <div class="feat-card reveal" style="transition-delay:0s"><div class="feat-icon">🧠</div><div class="feat-title">AI Triage</div><div class="feat-desc">Speak symptoms in Tamil, Hindi, Malayalam — AI assesses severity in seconds using Groq Llama 3.</div></div>
@@ -959,6 +950,12 @@ body.cursor-active *{cursor:none!important}
 <div class="feat-card reveal" style="transition-delay:.3s"><div class="feat-icon">🚑</div><div class="feat-title">Ambulance Tracking</div><div class="feat-desc">Live ambulance tracking with ETA countdown from dispatch to your doorstep.</div></div>
 <div class="feat-card reveal" style="transition-delay:.4s"><div class="feat-icon">🩸</div><div class="feat-title">Blood Bank</div><div class="feat-desc">Request specific blood types from nearby hospitals. Bank team notified instantly by email.</div></div>
 <div class="feat-card reveal" style="transition-delay:.5s"><div class="feat-icon">🔒</div><div class="feat-title">Medical Records</div><div class="feat-desc">Secure records shared with hospitals only on SOS. Allergies, conditions, medications — always ready.</div></div>
+<!-- New features added -->
+<div class="feat-card reveal" style="transition-delay:.6s"><div class="feat-icon">💊📸</div><div class="feat-title">Prescription Scanner</div><div class="feat-desc">Upload a photo of your prescription, lab report or scan – AI extracts medicines, dosages, and vitals instantly.</div></div>
+<div class="feat-card reveal" style="transition-delay:.7s"><div class="feat-icon">🧠👨‍⚕️</div><div class="feat-title">AI Specialist Finder</div><div class="feat-desc">Describe your symptoms and get matched to the right specialist (Cardiologist, Neurologist, etc.) in seconds.</div></div>
+<div class="feat-card reveal" style="transition-delay:.8s"><div class="feat-icon">💬🏥</div><div class="feat-title">Hospital Network Chat</div><div class="feat-desc">Hospitals can communicate securely, share updates, and coordinate patient transfers in real-time.</div></div>
+<div class="feat-card reveal" style="transition-delay:.9s"><div class="feat-icon">📋🏠</div><div class="feat-title">Discharge Logs</div><div class="feat-desc">Patients keep a permanent record of every hospital visit, discharge summary, and treatment history.</div></div>
+<div class="feat-card reveal" style="transition-delay:1.0s"><div class="feat-icon">⭐</div><div class="feat-title">Service Ratings</div><div class="feat-desc">Patients rate hospitals after discharge, helping maintain quality and trust across the network.</div></div>
 </div>
 <div class="land-roles" id="land-roles"><div class="land-section-title reveal">Who uses MedLink?</div><div class="land-section-sub reveal">Three portals — one platform. Everyone connected in an emergency.</div><div class="role-cards">
 <div class="role-card rc-patient reveal-flip" style="transition-delay:0s" onclick="showScreen('screen-login');lockLoginRole(0)"><div class="role-icon">🏃</div><div class="role-name">Patient</div><div class="role-desc">Find care, AI triage, track ambulance, search medicines, manage health records.</div><button class="btn btn-primary btn-sm btn-full">Patient Login →</button></div>
@@ -973,7 +970,7 @@ body.cursor-active *{cursor:none!important}
 <div class="tabs mb-20" style="margin-bottom:20px"><div class="tab active" onclick="setRole(0)">🏃 Patient</div><div class="tab" onclick="setRole(1)">🏥 Hospital</div><div class="tab" onclick="setRole(2)">💊 Pharmacy</div></div>
 <div id="login-role-hint" style="display:none;margin:-6px 0 14px"></div>
 <div class="card card-p-lg card-glow">
-<div id="role-0" class="dpanel active"><div id="pt-login"><div class="form-group"><label class="form-label">Email</label><input id="pt-email" type="email" class="form-input" placeholder="you@example.com"></div><div class="form-group"><label class="form-label" style="display:flex;justify-content:space-between;align-items:center">Password <a class="forgot-link" onclick="showForgotPassword()">Forgot password?</a></label><input id="pt-pass" type="password" class="form-input" placeholder="••••••••"></div><button class="btn btn-primary btn-full btn-lg mt-8" onclick="patientLogin()">Sign In &amp; Find Care →</button><div class="divider-or">or</div><button class="google-btn" onclick="patientGoogleSignIn()"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>Continue with Google</button><p style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">No account? <a style="color:var(--accent);cursor:pointer;font-weight:600" onclick="ptToggle(true)">Register Free</a></p></div><div id="pt-reg" style="display:none"><div class="form-group"><label class="form-label">Full Name</label><input id="pt-rname" type="text" class="form-input" placeholder="Your full name"></div><div class="form-group"><label class="form-label">Mobile Number</label><input id="pt-rphone" type="tel" class="form-input" placeholder="10-digit number"></div><div class="form-group"><label class="form-label">Email</label><input id="pt-remail" type="email" class="form-input" placeholder="you@example.com"></div><div class="form-group"><label class="form-label">Password</label><input id="pt-rpass" type="password" class="form-input" placeholder="Min 6 characters"></div><div id="otp-section" style="display:none;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:12px;padding:16px;margin-top:14px;animation:fadeUp .3s"><div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">📧 Verification Code Sent</div><input id="pt-rotp" type="text" class="form-input otp-input" placeholder="000000" maxlength="6" style="margin-bottom:10px"><button class="btn btn-success btn-full" onclick="verifyOTPAndRegister()">✅ Verify &amp; Create Account</button></div><button id="btn-send-otp" class="btn btn-primary btn-full btn-lg mt-8" onclick="sendPatientOTP()">📧 Send Verification Code →</button></div></div>
+<div id="role-0" class="dpanel active"><div id="pt-login"><div class="form-group"><label class="form-label">Email</label><input id="pt-email" type="email" class="form-input" placeholder="you@example.com"></div><div class="form-group"><label class="form-label" style="display:flex;justify-content:space-between;align-items:center">Password <a class="forgot-link" onclick="showForgotPassword()">Forgot password?</a></label><input id="pt-pass" type="password" class="form-input" placeholder="••••••••"></div><button class="btn btn-primary btn-full btn-lg mt-8" onclick="patientLogin()">Sign In &amp; Find Care →</button><p style="text-align:center;font-size:13px;color:var(--text2);margin-top:14px">No account? <a style="color:var(--accent);cursor:pointer;font-weight:600" onclick="ptToggle(true)">Register Free</a></p></div><div id="pt-reg" style="display:none"><div class="form-group"><label class="form-label">Full Name</label><input id="pt-rname" type="text" class="form-input" placeholder="Your full name"></div><div class="form-group"><label class="form-label">Mobile Number</label><input id="pt-rphone" type="tel" class="form-input" placeholder="10-digit number"></div><div class="form-group"><label class="form-label">Email</label><input id="pt-remail" type="email" class="form-input" placeholder="you@example.com"></div><div class="form-group"><label class="form-label">Password</label><input id="pt-rpass" type="password" class="form-input" placeholder="Min 6 characters"></div><div id="otp-section" style="display:none;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:12px;padding:16px;margin-top:14px;animation:fadeUp .3s"><div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">📧 Verification Code Sent</div><input id="pt-rotp" type="text" class="form-input otp-input" placeholder="000000" maxlength="6" style="margin-bottom:10px"><button class="btn btn-success btn-full" onclick="verifyOTPAndRegister()">✅ Verify &amp; Create Account</button></div><button id="btn-send-otp" class="btn btn-primary btn-full btn-lg mt-8" onclick="sendPatientOTP()">📧 Send Verification Code →</button></div></div>
 <div id="role-1" class="dpanel">
   <div style="background:rgba(6,182,212,.07);border:1px solid rgba(6,182,212,.2);border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:1.6">
     🔑 Hospital credentials are issued by the <strong>MedLink Admin</strong>.<br>
@@ -982,8 +979,6 @@ body.cursor-active *{cursor:none!important}
   <div class="form-group"><label class="form-label">Staff Email</label><input id="h-email" type="email" class="form-input" placeholder="staff@hospital.com"></div>
   <div class="form-group"><label class="form-label">Password</label><input id="h-pass" type="password" class="form-input" placeholder="Use password from welcome email"></div>
   <button class="btn btn-primary btn-full btn-lg mt-8" onclick="hospitalLogin()">Access Hospital Portal →</button>
-  <div class="divider-or">or</div>
-  <button class="google-btn" onclick="hospitalGoogleSignIn()"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>Continue with Google</button>
   <div style="margin-top:16px;background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text2)">
     <div style="font-weight:700;margin-bottom:4px;color:var(--accent)">📧 New hospital?</div>
     Your hospital must be registered by the admin. Once registered, you will receive an email with your login credentials.
@@ -1211,11 +1206,9 @@ body.cursor-active *{cursor:none!important}
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ═══════════════════════════════════════════════
-// MEDLINK — VISUAL EFFECTS MODULE
-// Three.js Background, Custom Cursor, Cinematic Intro, Scroll Animations, Ripple Effects
+// MEDLINK — VISUAL EFFECTS MODULE (unchanged, but toggleTheme will be overridden)
 // ═══════════════════════════════════════════════
 
-// ─── THREE.JS NETWORK BACKGROUND ───
 let threeScene,threeCamera,threeRenderer,threeNodes=[],threeLines,threeFrame,themouse={x:0,y:0};
 function initThreeBackground(){
   if(!window.THREE)return;
@@ -1226,7 +1219,6 @@ function initThreeBackground(){
   threeRenderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
   threeRenderer.setSize(window.innerWidth,window.innerHeight);
   threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  // Create nodes
   const nodeGeo=new THREE.SphereGeometry(1.5,8,8);
   const nodeMat=new THREE.MeshBasicMaterial({color:0x06B6D4});
   for(let i=0;i<70;i++){
@@ -1236,14 +1228,12 @@ function initThreeBackground(){
     mesh.material.transparent=true;mesh.material.opacity=mesh.userData.baseOpacity;
     threeScene.add(mesh);threeNodes.push(mesh);
   }
-  // Lines
   const lineGeo=new THREE.BufferGeometry();
   const lineMat=new THREE.LineBasicMaterial({color:0x06B6D4,transparent:true,opacity:0.15});
   const positions=new Float32Array(70*70*2*3);
   lineGeo.setAttribute('position',new THREE.BufferAttribute(positions,3));
   threeLines=new THREE.LineSegments(lineGeo,lineMat);
   threeScene.add(threeLines);
-  // Particles
   const partGeo=new THREE.BufferGeometry();
   const partPos=new Float32Array(200*3);
   for(let i=0;i<200;i++){partPos[i*3]=(Math.random()-0.5)*600;partPos[i*3+1]=(Math.random()-0.5)*400;partPos[i*3+2]=(Math.random()-0.5)*200;}
@@ -1266,7 +1256,6 @@ function animateThree(){
     if(Math.abs(n.position.x)>250)n.userData.vx*=-1;
     if(Math.abs(n.position.y)>200)n.userData.vy*=-1;
     if(Math.abs(n.position.z)>100)n.userData.vz*=-1;
-    // Mouse interaction
     const mx=themouse.x*250,my=themouse.y*200;
     const md=Math.sqrt((n.position.x-mx)**2+(n.position.y-my)**2);
     n.material.opacity=md<120?Math.min(1,n.userData.baseOpacity+0.5*(1-md/120)):n.userData.baseOpacity;
@@ -1292,7 +1281,7 @@ function destroyThreeBackground(){
   const c=document.getElementById('three-bg');if(c)c.style.display='none';
 }
 
-// ─── CUSTOM CURSOR ───
+// Custom cursor (unchanged)
 function initCursor(){
   if(window.matchMedia('(hover:none)').matches)return;
   document.body.classList.add('cursor-active');
@@ -1325,7 +1314,7 @@ function initCursor(){
   })();
 }
 
-// ─── CINEMATIC INTRO ───
+// Cinematic intro (unchanged)
 function skipIntro(){
   const overlay=document.getElementById('intro-overlay');
   if(overlay){overlay.classList.add('done');setTimeout(()=>{try{overlay.remove();}catch(e){}},900);}
@@ -1333,7 +1322,6 @@ function skipIntro(){
 function createIntroParticles(){
   const container=document.getElementById('intro-particles');
   if(!container)return;
-  // Phase 1: Converging particles
   for(let i=0;i<35;i++){
     const p=document.createElement('div');p.className='intro-particle';
     const angle=Math.random()*Math.PI*2;
@@ -1346,13 +1334,11 @@ function createIntroParticles(){
     p.style.boxShadow='0 0 6px rgba(6,182,212,.6)';
     container.appendChild(p);
   }
-  // Converge to center
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     container.querySelectorAll('.intro-particle').forEach(p=>{
       p.style.transform='translate(0,0)';p.style.opacity='0.3';
     });
   }));
-  // Phase 3 (at 1.8s): Explode outward
   setTimeout(()=>{
     container.querySelectorAll('.intro-particle').forEach(p=>{
       const angle=Math.random()*Math.PI*2;
@@ -1362,7 +1348,6 @@ function createIntroParticles(){
       p.style.opacity='0';
     });
   },1800);
-  // Phase 4 (at 2.5s): New particles converge back
   setTimeout(()=>{
     container.innerHTML='';
     for(let i=0;i<20;i++){
@@ -1405,8 +1390,7 @@ function playIntro(){
   setTimeout(doSkip,4800);
 }
 
-
-// ─── SCROLL ANIMATIONS ───
+// Scroll animations (unchanged)
 function initScrollAnimations(){
   const observer=new IntersectionObserver((entries)=>{
     entries.forEach((entry,i)=>{
@@ -1418,7 +1402,6 @@ function initScrollAnimations(){
     });
   },{threshold:0.1,rootMargin:'0px 0px -50px 0px'});
   document.querySelectorAll('.reveal,.reveal-flip,.reveal-scale').forEach(el=>observer.observe(el));
-  // Counter animation
   const counterObs=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
@@ -1440,7 +1423,7 @@ function initScrollAnimations(){
   document.querySelectorAll('.count-up').forEach(el=>counterObs.observe(el));
 }
 
-// ─── BUTTON RIPPLE ───
+// Button ripple (unchanged)
 function initRippleEffects(){
   document.addEventListener('click',e=>{
     const btn=e.target.closest('.btn');
@@ -1457,7 +1440,7 @@ function initRippleEffects(){
   });
 }
 
-// ─── EASTER EGG ───
+// Easter egg (unchanged)
 function initEasterEgg(){
   const btn=document.getElementById('easter-egg');
   const hint=document.getElementById('sys-access-hint');
@@ -1475,7 +1458,7 @@ function initEasterEgg(){
   if(hint)hint.addEventListener('click',()=>portal.classList.toggle('revealed'));
 }
 
-// ─── INIT ALL VISUAL EFFECTS ───
+// Initialization for visuals
 window._initVisuals=function(){
   playIntro();
   setTimeout(initCursor,100);
@@ -1486,14 +1469,15 @@ window._initVisuals=function(){
 };
 window._destroyThree=destroyThreeBackground;
 
+// End of visual effects module
 </script>
 <script type="module">
 // ═══════════════════════════════════════════════
-// MEDLINK APP — PART 1: Firebase, Utils, Auth
+// MEDLINK APP — PART 1: Firebase, Utils, Auth (Google removed)
 // ═══════════════════════════════════════════════
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import{getFirestore,collection,addDoc,getDocs,updateDoc,deleteDoc,doc,onSnapshot,query,where,orderBy,serverTimestamp,getDoc,setDoc,runTransaction}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail,GoogleAuthProvider,signInWithPopup,fetchSignInMethodsForEmail}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,onAuthStateChanged,sendPasswordResetEmail}from"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // ✅ No secrets here — loaded from /api/config at runtime (safe for GitHub)
 let FIREBASE_CFG,GROQ_KEY,BREVO_KEY,BREVO_SENDER,db,auth,auth2;
@@ -1547,7 +1531,6 @@ function toast(icon,msg,color){
   t.style.borderLeft=`3px solid ${bc}`;t.innerHTML=`<div class="toast-icon">${icon}</div><div class="toast-msg">${msg}</div>`;
   c.appendChild(t);setTimeout(()=>{t.style.animation='toastOut .3s forwards';setTimeout(()=>t.remove(),300);},3500);
 }
-// ─── LOADING STATE HELPERS ───
 function setLoading(btn,text='Loading...'){
   if(!btn)return;
   btn._origHTML=btn.innerHTML;btn._origDisabled=btn.disabled;
@@ -1557,7 +1540,6 @@ function clearLoading(btn){
   if(!btn||btn._origHTML===undefined)return;
   btn.innerHTML=btn._origHTML;btn.disabled=btn._origDisabled;
 }
-// ─── OTP HASH (client-side hardening) ───
 async function hashOTP(otp){
   const encoder=new TextEncoder();const data=encoder.encode(otp+'medlink-salt-2026');
   const hashBuf=await crypto.subtle.digest('SHA-256',data);
@@ -1610,19 +1592,25 @@ window.openSettings=function(){
     </div>
   `);
 };
-function toggleTheme(){
-  const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';
-  h.setAttribute('data-theme',t);document.querySelectorAll('.knob').forEach(k=>k.textContent=t==='dark'?'☀️':'🌙');
-  localStorage.setItem('ml-theme',t);
-  // Update map tiles if needed
-  if(userMap)updateMapTiles(userMap,t);
-}
-window.toggleTheme=toggleTheme;
 function updateMapTiles(map,theme){
+  if(!map) return;
   map.eachLayer(l=>{if(l instanceof L.TileLayer)map.removeLayer(l);});
   const url=theme==='dark'?'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png':'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
   L.tileLayer(url,{attribution:'© OSM'}).addTo(map);
 }
+function toggleTheme(){
+  const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',t);document.querySelectorAll('.knob').forEach(k=>k.textContent=t==='dark'?'☀️':'🌙');
+  localStorage.setItem('ml-theme',t);
+  // Update all maps
+  if(userMap) updateMapTiles(userMap,t);
+  if(adminMap) updateMapTiles(adminMap,t);
+  if(adminNetworkMap) updateMapTiles(adminNetworkMap,t);
+  if(adminPharmaMap) updateMapTiles(adminPharmaMap,t);
+  if(pharmaMap) updateMapTiles(pharmaMap,t);
+  if(medSearchMap) updateMapTiles(medSearchMap,t);
+}
+window.toggleTheme=toggleTheme;
 function setBadge(text,cls){const b=document.getElementById('nav-badge');b.textContent=text;b.className=`badge ${cls}`;b.style.display='inline-flex';}
 function haversine(lat1,lon1,lat2,lon2){
   const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180;
@@ -1634,15 +1622,12 @@ function showScreen(id){
   const el=document.getElementById(id);if(!el)return;
   el.classList.add('active');
   document.getElementById('topnav').style.display=(id==='screen-landing'||id==='screen-login')?'none':'flex';
-  document.getElementById('sos-float').style.display=id==='screen-user'?'flex':'none';
   if(id!=='screen-landing'&&window._destroyThree)window._destroyThree();
   window.scrollTo(0,0);
-  // Push to browser history for back button support
   if(!_suppressPush){
     _screenHistory.push(id);
     history.pushState({screen:id},'','#'+id);
   }
-  // Apply login role lock when entering login screen
   if(id==='screen-login')setTimeout(_applyRoleLock,0);
 }
 window.showScreen=showScreen;
@@ -1652,7 +1637,6 @@ window.lockLoginRole=(i)=>{
   _applyRoleLock();
 };
 window.goBack=function(){
-  // Always safe: if no history, go to landing
   if(typeof _screenHistory==='undefined'||_screenHistory.length<=1){
     showScreen('screen-landing');
     return;
@@ -1666,7 +1650,6 @@ window.goBack=function(){
 window.addEventListener('popstate',(e)=>{
   const screen=(e&&e.state&&e.state.screen) ? e.state.screen : (location.hash ? location.hash.replace('#','') : 'screen-landing');
   _suppressPush=true;
-  // Keep internal stack aligned with browser back/forward
   if(Array.isArray(_screenHistory)){
     while(_screenHistory.length>1 && _screenHistory[_screenHistory.length-1]!==screen){_screenHistory.pop();}
     if(_screenHistory[_screenHistory.length-1]!==screen)_screenHistory.push(screen);
@@ -1739,7 +1722,7 @@ function bloodRequestEmailHTML(h,p,bt){return `<!DOCTYPE html><html><body style=
   </td></tr>
 </table></body></html>`;}
 
-// ─── TAB SWITCHING ───
+// ─── TAB SWITCHING (unchanged except removing Google references) ───
 let _lockedLoginRole=null;
 function _applyRoleLock(){
   const tabs=[...document.querySelectorAll('#screen-login .tab')];
@@ -1749,7 +1732,6 @@ function _applyRoleLock(){
     t.style.display=(lock==null)?'flex':(idx===lock?'flex':'none');
   });
   roles.forEach((p,idx)=>{
-    // Only keep the locked role panel active/visible
     if(lock==null){
       p.style.display='';
       return;
@@ -1774,7 +1756,6 @@ window.unlockLoginRole=()=>{
 window.setRole=i=>{
   document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
   document.querySelectorAll('#screen-login .dpanel').forEach((p,j)=>p.classList.toggle('active',i===j));
-  // When locked, force-select the locked role
   if(_lockedLoginRole!=null){
     document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===_lockedLoginRole));
     document.querySelectorAll('#screen-login .dpanel').forEach((p,j)=>p.classList.toggle('active',j===_lockedLoginRole));
@@ -1829,7 +1810,7 @@ function setupEnterKeys(){
   addEnterKey('ph-email',pharmacyLogin);addEnterKey('ph-pass',pharmacyLogin);
 }
 
-// ─── AUTH ───
+// ─── AUTH (Google removed) ───
 window.sendPatientOTP=async()=>{
   const name=document.getElementById('pt-rname').value.trim(),phone=document.getElementById('pt-rphone').value.trim(),email=document.getElementById('pt-remail').value.trim(),pass=document.getElementById('pt-rpass').value;
   if(!name)return toast('⚠️','Enter your full name','amber');if(!email||!email.includes('@'))return toast('⚠️','Enter a valid email','amber');if(pass.length<6)return toast('⚠️','Password min 6 chars','amber');
@@ -1851,7 +1832,6 @@ async function patientLogin(){
   const email=document.getElementById('pt-email').value.trim().toLowerCase();
   const pass=document.getElementById('pt-pass').value;
   if(!email||!pass)return toast('⚠️','Enter email and password','amber');
-  // Show loading state
   const btn=document.querySelector('#pt-login .btn-primary');
   if(btn){btn.disabled=true;btn.textContent='Signing in...';}
   try{
@@ -1870,23 +1850,14 @@ async function patientLogin(){
     if(code==='auth/unauthorized-domain'){
       return toast('❌','Open the app from your Vercel URL, not as a local file','red');
     }
-    // Firebase 10: auth/invalid-credential = wrong password OR google-only account
-    // auth/user-not-found = no account at all
-    // Show helpful options for all credential failures
     if(code==='auth/invalid-credential'||code==='auth/wrong-password'||code==='auth/user-not-found'){
-      // For gmail addresses, always offer Google sign-in as an option
-      const isGmail=email.endsWith('@gmail.com')||email.endsWith('@googlemail.com');
       openModal(`<div style="text-align:center;padding:20px">
         <div style="font-size:48px;margin-bottom:14px">🔑</div>
         <div style="font-size:19px;font-weight:900;margin-bottom:10px">Sign-in failed</div>
         <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px">
           Could not sign in as <strong>${email}</strong>.<br>
-          ${isGmail?'This looks like a Gmail — try Google Sign-In if you registered with Google.':'Check your password or reset it below.'}
+          Check your password or reset it below.
         </div>
-        ${isGmail?`<button class="btn btn-primary btn-full btn-lg" style="margin-bottom:10px" onclick="closeModal();patientGoogleSignIn()">
-          <svg width="16" height="16" viewBox="0 0 48 48" style="flex-shrink:0;margin-right:6px"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.33 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-3.59-13.46-8.83l-7.98 6.19C6.51 42.67 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
-          Try Google Sign-In
-        </button>`:''}
         <button class="btn btn-ghost btn-full" style="margin-bottom:8px" onclick="closeModal();showForgotPassword()">🔑 Reset Password via Email</button>
         <button class="btn btn-ghost btn-sm btn-full" onclick="closeModal()">Cancel</button>
       </div>`);
@@ -1975,23 +1946,6 @@ async function pharmacyLogin(){
   }
 }
 window.pharmacyLogin=pharmacyLogin;
-window.sendPharmacyOTP=async()=>{
-  const name=document.getElementById('ph-rname').value.trim(),email=document.getElementById('ph-remail').value.trim(),pass=document.getElementById('ph-rpass').value;
-  if(!name||!email||pass.length<6)return toast('⚠️','Fill all fields','amber');
-  const btn=document.getElementById('btn-ph-otp');setLoading(btn,'Sending...');
-  const rawOTP=Math.floor(100000+Math.random()*900000).toString();
-  generatedOTPHash=await hashOTP(rawOTP);
-  const sent=await sendEmail(email,name,"Medlink Pharmacy — Verification",otpEmailHTML(name,rawOTP));
-  clearLoading(btn);
-  if(sent){document.getElementById('ph-otp-section').style.display='block';btn.style.display='none';toast('📧','Code sent!','green');}else toast('❌','Email failed','red');
-};
-window.verifyPharmacyOTP=async()=>{
-  const enteredHash=await hashOTP(document.getElementById('ph-rotp').value.trim());
-  if(enteredHash!==generatedOTPHash)return toast('❌','Wrong code','red');
-  const name=document.getElementById('ph-rname').value.trim(),owner=document.getElementById('ph-rowner').value.trim(),phone=document.getElementById('ph-rphone').value.trim(),email=document.getElementById('ph-remail').value.trim(),pass=document.getElementById('ph-rpass').value;
-  try{const cred=await createUserWithEmailAndPassword(auth,email,pass);const phRef=await addDoc(collection(db,'pharmacies'),{name,owner,phone,email,address:'',lat:0,lng:0,hours:'',verified:true,createdAt:serverTimestamp()});
-  await setDoc(doc(db,'users',cred.user.uid),{email,role:'pharmacy',pharmacyId:phRef.id,createdAt:serverTimestamp()});toast('✅','Registered!','green');setTimeout(()=>location.reload(),1200);}catch(e){toast('❌',e.message.replace('Firebase: ','').substring(0,80),'red');}
-};
 // ─── FORGOT PASSWORD ───
 window.showForgotPassword=()=>{
   openModal(`<div style="padding:8px"><div style="font-size:22px;font-weight:900;margin-bottom:6px">🔑 Reset Password</div><div style="font-size:13px;color:var(--text2);margin-bottom:20px">Enter your registered email — we'll send a password reset link.</div><div class="form-group"><label class="form-label">Email Address</label><input id="fp-email" type="email" class="form-input" placeholder="you@example.com"></div><button class="btn btn-primary btn-full btn-lg" onclick="sendPasswordReset()">📧 Send Reset Link</button><button class="btn btn-ghost btn-full mt-8" style="margin-top:8px" onclick="closeModal()">Cancel</button></div>`);
@@ -2009,64 +1963,7 @@ window.sendPasswordReset=async()=>{
   }
 };
 
-// ─── GOOGLE SIGN-IN ───
-async function handleGoogleAuth(expectedRole){
-  try{
-    const provider=new GoogleAuthProvider();
-    const cred=await signInWithPopup(auth,provider);
-    const uid=cred.user.uid;
-    const snap=await getDoc(doc(db,'users',uid));
-    if(snap.exists()){
-      const data=snap.data();
-      // Allow if role matches OR if the user signs in with Google and has no assigned role yet
-      if(data.role&&data.role!==expectedRole&&data.role!=='patient'){
-        await signOut(auth);
-        return toast('❌',`This Google account is registered as ${data.role}, not ${expectedRole}`,'red');
-      }
-      // One hospital constraint check for patients
-      if(expectedRole==='patient'&&data.assignedHospitalId){
-        currentUser={id:uid,...data};sessionRestored=true;launchUser();return;
-      }
-      currentUser={id:uid,...data};sessionRestored=true;
-      if(expectedRole==='patient')launchUser();
-      else if(expectedRole==='hospital'){
-        const hq=query(collection(db,'hospitals'),where('staffEmail','==',cred.user.email));
-        const hs=await getDocs(hq);
-        if(hs.empty){await signOut(auth);return toast('❌','No hospital linked to this Google account','red');}
-        curHospId=hs.docs[0].id;curHospData=hs.docs[0].data();launchHospital(curHospData);
-      }
-    } else {
-      // New user via Google:
-      // - Patients can be created automatically
-      // - Hospital staff can sign in ONLY if their email is already registered as a hospital staffEmail
-      if(expectedRole==='hospital'){
-        const hq=query(collection(db,'hospitals'),where('staffEmail','==',cred.user.email));
-        const hs=await getDocs(hq);
-        if(hs.empty){await signOut(auth);return toast('❌','This Google email is not registered as a hospital staff account','red');}
-        // Create minimal user doc so session restore works consistently
-        await setDoc(doc(db,'users',uid),{email:cred.user.email,role:'hospital',createdAt:serverTimestamp()},{merge:true});
-        curHospId=hs.docs[0].id;curHospData=hs.docs[0].data();
-        currentUser={id:uid,email:cred.user.email,role:'hospital'};
-        sessionRestored=true;
-        toast('✅','Signed in as hospital staff','green');
-        launchHospital(curHospData);
-        return;
-      }
-      if(expectedRole!=='patient'){await signOut(auth);return toast('❌','Google sign-in not available for this portal','red');}
-      await setDoc(doc(db,'users',uid),{name:cred.user.displayName||cred.user.email.split('@')[0],email:cred.user.email,phone:'',role:'patient',trustScore:5.0,bloodType:'Unknown',medicalRecord:{},createdAt:serverTimestamp()});
-      const newSnap=await getDoc(doc(db,'users',uid));
-      currentUser={id:uid,...newSnap.data()};sessionRestored=true;
-      toast('✅','Welcome to MedLink!','green');launchUser();
-    }
-  }catch(e){
-    if(e.code!=='auth/popup-closed-by-user')toast('❌','Google sign-in failed: '+e.message.substring(0,60),'red');
-  }
-}
-window.patientGoogleSignIn=()=>handleGoogleAuth('patient');
-window.hospitalGoogleSignIn=()=>handleGoogleAuth('hospital');
-
-// ─── ONE-HOSPITAL CONSTRAINT ───
-// Enforced at SOS sending time and appointment booking
+// ─── ONE-HOSPITAL CONSTRAINT (unchanged) ───
 async function checkAndAssignHospital(hospitalId,hospitalName){
   const userSnap=await getDoc(doc(db,'users',currentUser.id));
   const userData=userSnap.data();
@@ -2083,7 +1980,7 @@ async function checkAndAssignHospital(hospitalId,hospitalName){
 }
 window._checkAndAssignHospital=checkAndAssignHospital;
 
-// ─── SPECIALISTS (HOSPITAL SIDE) ───
+// ─── SPECIALISTS (HOSPITAL SIDE) (unchanged) ───
 const SPECIALIST_TYPES=[
   {type:'Cardiologist',icon:'❤️',desc:'Heart & cardiovascular'},
   {type:'Neurologist',icon:'🧠',desc:'Brain & nervous system'},
@@ -2144,7 +2041,6 @@ async function loadHospSpecialists(){
   if(!curHospId){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Session error — please re-login</div>';return;}
   el.innerHTML='<div class="skel" style="height:80px;margin-bottom:10px"></div>'.repeat(2);
   try{
-    // No orderBy — avoids needing a composite index
     const snap=await getDocs(query(collection(db,'specialists'),where('hospitalId','==',curHospId)));
     if(snap.empty){
       el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">👨‍⚕️</div>No specialists added yet. Add your first specialist.</div>';
@@ -2154,7 +2050,7 @@ async function loadHospSpecialists(){
     const today=new Date().toDateString();
     const updates=[];
     let html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">';
-    let idx=0; // fix: define idx before forEach
+    let idx=0;
     snap.forEach(d=>{
       const s={id:d.id,...d.data()};
       const st=SPECIALIST_TYPES.find(x=>x.type===s.type)||{icon:'👨‍⚕️',type:s.type||'Specialist'};
@@ -2186,7 +2082,6 @@ async function loadHospSpecialists(){
     html+='</div>';
     el.innerHTML=html;
     if(updates.length)await Promise.all(updates);
-    // Load appointment requests
     if(apptEl){
       const apptSnap=await getDocs(query(collection(db,'appointments'),where('hospitalId','==',curHospId)));
       if(apptSnap.empty){apptEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">No appointment requests</div>';}
@@ -2229,7 +2124,7 @@ window.cancelAppt=async(aid)=>{
   toast('✅','Cancelled','amber');loadHospSpecialists();
 };
 
-// ─── SPECIALISTS (PATIENT SIDE) ───
+// ─── SPECIALISTS (PATIENT SIDE) (unchanged) ───
 async function loadSpecialistsForHospital(hospitalId,hospitalName){
   const el=document.getElementById('u-specialist-list');
   if(!el||!hospitalId)return;
@@ -2254,10 +2149,8 @@ async function loadSpecialistsForHospital(hospitalId,hospitalName){
 window.loadSpecialistsForHospital=loadSpecialistsForHospital;
 
 window.bookToken=async(specId,specName,specType,hospitalId,hospitalName,fee)=>{
-  // One hospital constraint
   const allowed=await checkAndAssignHospital(hospitalId,hospitalName);
   if(!allowed)return;
-  // Get current token count
   const today=new Date().toDateString();
   const specSnap=await getDoc(doc(db,'specialists',specId));
   if(!specSnap.exists())return toast('❌','Specialist not found','red');
@@ -2265,11 +2158,9 @@ window.bookToken=async(specId,specName,specType,hospitalId,hospitalName,fee)=>{
   const used=s.lastResetDate!==today?0:(s.tokensUsedToday||0);
   const avail=Math.max(0,s.tokenLimit-used);
   if(avail<=0)return toast('❌','No tokens available for today','red');
-  // Check if patient already has token for this specialist today
   const existing=await getDocs(query(collection(db,'appointments'),where('patientUid','==',currentUser.id),where('specialistId','==',specId),where('date','==',today)));
   if(!existing.empty)return toast('⚠️','You already have a token for this specialist today','amber');
   const tokenNumber=used+1;
-  // Build date options: today + next 6 days
   const dateOpts=[];
   for(let i=0;i<7;i++){
     const d=new Date();d.setDate(d.getDate()+i);
@@ -2357,7 +2248,7 @@ async function loadMyAppointments(){
   }catch(e){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Error loading appointments</div>';}
 }
 
-// ─── AI SPECIALIST FINDER ───
+// ─── AI SPECIALIST FINDER (unchanged) ───
 window.findSpecialistByAI=async()=>{
   const input=document.getElementById('appt-symptom-input').value.trim();
   const resultEl=document.getElementById('ai-specialist-result');
@@ -2375,7 +2266,6 @@ window.findSpecialistByAI=async()=>{
     const urgColor=json.urgency==='emergency'?'var(--red)':json.urgency==='urgent'?'var(--amber)':'var(--green)';
     const safeType=String(json.specialist||'').replace(/'/g,"\\'");
     resultEl.innerHTML=`<div class="triage-specialist-result"><div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="font-size:36px">${st.icon}</div><div><div style="font-size:18px;font-weight:900">${json.specialist}</div><div style="font-size:13px;color:var(--text2);margin-top:3px">${json.reason||''}</div></div></div><div style="display:flex;gap:8px;align-items:center;margin-bottom:14px"><span class="badge" style="background:${urgColor}20;border:1px solid ${urgColor}40;color:${urgColor}">⚡ ${json.urgency||'routine'}</span></div><button class="btn btn-primary btn-sm" onclick="goBrowseSpecialistType('${safeType}')">🔍 Browse ${json.specialist} Near Me →</button></div>`;
-    // Log for superadmin oversight
     addDoc(collection(db,'aiLogs'),{
       kind:'specialist',
       uid:currentUser?.id||'',
@@ -2390,16 +2280,13 @@ window.findSpecialistByAI=async()=>{
 window.prefillSpecialistFinder=(reason)=>{const el=document.getElementById('appt-symptom-input');if(el)el.value=reason;};
 window.goBrowseSpecialistType=async function(specialistType){
   try{
-    // Ensure we are in patient portal and appointment panel is active (mobile-safe)
     showScreen('screen-user');
     setTimeout(async()=>{
       uTab('appt');
       if(window.mbnActive)mbnActive('appt');
-      // Give DOM a beat to switch panels before writing content
       setTimeout(()=>browseSpecialistType(specialistType),120);
     },50);
   }catch(_){
-    // Fallback
     try{uTab('appt');}catch(__){}
     browseSpecialistType(specialistType);
   }
@@ -2407,7 +2294,7 @@ window.goBrowseSpecialistType=async function(specialistType){
 
 window.doLogout=async()=>{if(ambulanceAnimInterval)clearInterval(ambulanceAnimInterval);try{await signOut(auth);}catch(e){}location.reload();};
 
-// ─── SESSION RESTORE ───
+// ─── SESSION RESTORE (unchanged) ───
 let sessionRestored=false;
 onAuthStateChanged(auth,async user=>{
   if(sessionRestored)return;sessionRestored=true;if(!user)return;
@@ -2419,11 +2306,11 @@ onAuthStateChanged(auth,async user=>{
   }catch(e){console.warn('Session restore failed:',e.message);}
 });
 
-// ─── THEME RESTORE ───
+// ─── THEME RESTORE (unchanged) ───
 const savedTheme=localStorage.getItem('ml-theme');
 if(savedTheme){document.documentElement.setAttribute('data-theme',savedTheme);document.querySelectorAll('.knob').forEach(k=>k.textContent=savedTheme==='dark'?'☀️':'🌙');}
 
-// ─── GLOBAL ERROR BOUNDARY ───
+// ─── GLOBAL ERROR BOUNDARY (unchanged) ───
 window.addEventListener('error',(e)=>{
   console.error('MedLink Error:',e.message,e.filename,e.lineno);
   if(e.message&&!e.message.includes('ResizeObserver')&&!e.message.includes('Script error')){
@@ -2447,8 +2334,7 @@ history.replaceState({screen:'screen-landing'},'','#screen-landing');
 // app2.js content follows in same module scope...
 
 // ═══════════════════════════════════════════════
-// MEDLINK APP — PART 2: All Dashboard Functions
-// This file is concatenated after app1.js in the same module scope
+// MEDLINK APP — PART 2: All Dashboard Functions (unchanged except for removing floating SOS)
 // ═══════════════════════════════════════════════
 
 const SYMPTOMS=['Chest Pain','Difficulty Breathing','Severe Bleeding','Unconscious','High Fever (>103°F)','Seizure','Stroke Signs','Severe Headache','Broken Bone','Allergic Reaction','Burns','Vomiting Blood','Chest Tightness','Dizziness / Fainting','Abdominal Pain','Eye Injury'];
@@ -2460,7 +2346,6 @@ function launchUser(){
   const name=currentUser.name||'Patient';
   document.getElementById('u-greeting').textContent=`Hi ${name.split(' ')[0]} 👋`;
   setBadge(`👤 ${name.split(' ')[0]}`,'bg-blue');
-  document.getElementById('sos-float').style.display='flex';
   document.getElementById('prof-name-display').textContent=name;
   document.getElementById('prof-name').value=currentUser.name||'';
   document.getElementById('prof-phone').value=currentUser.phone||'';
@@ -2469,12 +2354,10 @@ function launchUser(){
   document.getElementById('prof-trust-badge').textContent=`Trust: ${(currentUser.trustScore||5.0).toFixed(1)}`;
   selectedBT=currentUser.bloodType||null;
   if(selectedBT)document.querySelectorAll('.bt-option').forEach(o=>o.classList.toggle('selected',o.textContent.replace('−','-')===selectedBT));
-  // Donation defaults
   const dbt=document.getElementById('don-bt');if(dbt)dbt.value=currentUser.bloodType||'Unknown';
   const dph=document.getElementById('don-phone');if(dph)dph.value=currentUser.phone||'';
   const daddr=document.getElementById('don-addr');if(daddr)daddr.value=myLocAddress||'';
   showScreen('screen-user');buildSymptoms();buildEmergencyContacts();loadMedicalRecord();startAmbulanceTracking();loadMyAppointments();loadMyRequests();
-  // Always ask for location immediately for new users
   navigator.geolocation.getCurrentPosition(
     p=>{
       myLoc={lat:p.coords.latitude,lng:p.coords.longitude};
@@ -2487,7 +2370,6 @@ function launchUser(){
     },
     (err)=>{
       initUserMap();
-      // Show a friendly card instead of an ugly toast
       const resultEl=document.getElementById('u-results');
       resultEl.innerHTML=`
         <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.25);border-radius:16px;padding:20px 22px;margin-bottom:16px">
@@ -2594,7 +2476,6 @@ window.cancelMyRequest=async function(id){
     if(!snap.exists())return toast('❌','Request not found','red');
     const r=snap.data();
     await updateDoc(doc(db,'requests',id),{status:'Cancelled',resolvedAt:serverTimestamp()});
-    // If SOS is cancelled before it was admitted, free the one-hospital lock.
     if(r.type==='sos' && r.status==='Active' && r.patientUid===currentUser.id){
       await updateDoc(doc(db,'users',r.patientUid),{assignedHospitalId:null,assignedHospitalName:null});
     }
@@ -2611,7 +2492,6 @@ window.searchH=async()=>{
   const snap=await getDocs(collection(db,'hospitals'));let list=[];
   snap.forEach(d=>{const h={id:d.id,...d.data()};if(!h.verified||h.accepting===false)return;if(curFilter==='icu'&&h.availICU<=0)return;if(curFilter==='vent'&&h.availVent<=0)return;if(curFilter==='blood'&&!(h.blood&&Object.values(h.blood).some(v=>v>0)))return;list.push({...h,distance:haversine(myLoc.lat,myLoc.lng,h.lat,h.lng),roadDist:null,roadDur:null});});
   list.sort((a,b)=>a.distance-b.distance);
-  // Fetch real road distances via OSRM for top 10 hospitals
   el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text2);font-size:13px">🗺️ Calculating road distances...</div>';
   const top=list.slice(0,10);
   await Promise.all(top.map(async h=>{
@@ -2619,9 +2499,8 @@ window.searchH=async()=>{
       const url=`https://router.project-osrm.org/route/v1/driving/${myLoc.lng},${myLoc.lat};${h.lng},${h.lat}?overview=false`;
       const r=await fetch(url);const data=await r.json();
       if(data.code==='Ok'&&data.routes?.[0]){h.roadDist=data.routes[0].distance/1000;h.roadDur=Math.round(data.routes[0].duration/60);}
-    }catch(e){/* keep haversine fallback */}
+    }catch(e){}
   }));
-  // Sort by road distance for those that have it
   top.sort((a,b)=>(a.roadDist??a.distance)-(b.roadDist??b.distance));
   const rest=list.slice(10);
   const sorted=[...top,...rest];
@@ -2643,18 +2522,14 @@ function renderResults(list){
   });
 }
 
-// ═══ ROUTING ═══
+// ═══ ROUTING (unchanged) ═══
 window.showRoute=async(hlat,hlng,hname)=>{
-  // Switch to Find Care tab first so the map is visible
   uTab('find');
-  // Small delay to let tab render before we manipulate the map
   await new Promise(r=>setTimeout(r,80));
   const bar=document.getElementById('route-info-bar'),content=document.getElementById('route-info-content');
   bar.style.display='block';content.innerHTML=`<span style="color:var(--text2)">🗺️ Calculating route to <strong>${hname}</strong>...</span>`;
-  // Scroll so the map is visible
   const mapEl=document.getElementById('user-map');
   if(mapEl)mapEl.scrollIntoView({behavior:'smooth',block:'start'});
-  // Force map to recalculate size after tab switch
   if(userMap)userMap.invalidateSize();
   try{const url=`https://router.project-osrm.org/route/v1/driving/${myLoc.lng},${myLoc.lat};${hlng},${hlat}?overview=full&geometries=geojson`;const res=await fetch(url);const data=await res.json();
   if(data.code!=='Ok')throw new Error('Route unavailable');
@@ -2662,7 +2537,6 @@ window.showRoute=async(hlat,hlng,hname)=>{
   routeLayer=L.geoJSON(data.routes[0].geometry,{style:{color:'#06B6D4',weight:5,opacity:.9,dashArray:'12,8',lineCap:'round'}}).addTo(userMap);
   userMap.fitBounds(routeLayer.getBounds(),{padding:[40,40]});
   const dist=(data.routes[0].distance/1000).toFixed(1),durMin=Math.round(data.routes[0].duration/60),durStr=durMin>60?`${Math.floor(durMin/60)}h ${durMin%60}m`:`${durMin} min`;
-  // Show route info — with a clearly secondary "Open in Google Maps" link (not primary button)
   content.innerHTML=`<span class="badge bg-cyan">📍 ${dist} km</span><span class="badge bg-green">⏱️ ~${durStr}</span><span style="font-weight:700">${hname}</span><a href="https://www.google.com/maps/dir/?api=1&origin=${myLoc.lat},${myLoc.lng}&destination=${hlat},${hlng}&travelmode=driving" target="_blank" style="font-size:12px;color:var(--text2);text-decoration:underline;margin-left:4px">↗ Google Maps</a>`;
   document.getElementById('route-progress').style.width='100%';toast('🗺️',`Route: ${dist}km · ~${durStr}`,'green');
   }catch(e){
@@ -2671,14 +2545,11 @@ window.showRoute=async(hlat,hlng,hname)=>{
 };
 window.clearRoute=()=>{if(routeLayer){userMap.removeLayer(routeLayer);routeLayer=null;}document.getElementById('route-info-bar').style.display='none';};
 
-// ═══ SOS ═══
+// ═══ SOS (floating SOS removed) ═══
 window.sendSOS=async(hid,hname)=>{
   if((currentUser.trustScore||5)<1.5)return toast('🚫','Low trust score','red');
-  // Block if already admitted somewhere
-  // Check LIVE Firestore status — not cached in-memory (could be stale after discharge)
   if(currentUser.assignedHospitalId&&currentUser.assignedHospitalId!==hid){
     try{
-      // Verify they're actually still admitted (not just stale cache)
       const liveSnap=await getDocs(query(collection(db,'requests'),where('patientUid','==',currentUser.id),where('status','==','Admitted')));
       if(!liveSnap.empty){
         const assigned=currentUser.assignedHospitalName||'a hospital';
@@ -2692,21 +2563,17 @@ window.sendSOS=async(hid,hname)=>{
           <button class="btn btn-ghost btn-full" onclick="closeModal()">OK</button>
         </div>`);
       } else {
-        // Stale cache — clear it
         currentUser.assignedHospitalId=null;currentUser.assignedHospitalName=null;
       }
     }catch(_){}
   }
-  // Spam control: max 3 SOS per hour, 30s cooldown between each
   const now=Date.now();
   if(now-lastSOSTime<30000){
     const wait=Math.ceil((30000-(now-lastSOSTime))/1000);
     return toast('⏳',`Wait ${wait}s before sending another SOS`,'amber');
   }
-  // Check hourly limit (stored in sessionStorage)
   const sosHistory=JSON.parse(sessionStorage.getItem('sosHistory')||'[]').filter(t=>now-t<3600000);
   if(sosHistory.length>=3)return toast('🚫','Maximum 3 SOS per hour reached. This prevents false alarms.','red');
-  // One-hospital constraint
   const allowed=await checkAndAssignHospital(hid,hname);
   if(!allowed)return;
   try{await addDoc(collection(db,'requests'),{type:'sos',hospitalId:hid,hospitalName:hname,patientUid:currentUser.id,patientName:currentUser.name||'Patient',patientPhone:currentUser.phone||'N/A',bloodType:currentUser.bloodType||'Unknown',severity:curTriageSev,patientLat:myLoc.lat,patientLng:myLoc.lng,patientAddress:myLocAddress||'',hasMedicalRecords:!!(currentUser.medicalRecord&&Object.values(currentUser.medicalRecord).some(v=>v&&typeof v==='string'&&v.trim())),status:'Active',time:serverTimestamp()});
@@ -2719,7 +2586,7 @@ window.sendSOS=async(hid,hname)=>{
   openModal(`<div style="text-align:center;padding:16px"><div style="font-size:60px;margin-bottom:16px">🚑</div><div style="font-size:24px;font-weight:900;color:var(--green)">Request Sent!</div><div style="font-size:14px;color:var(--text2);margin-top:10px"><strong>${hname}</strong> has been notified.</div><div style="margin-top:16px;display:flex;gap:8px">${h?`<button class="btn btn-primary btn-full" onclick="showRoute(${h.lat},${h.lng},'${hname}');closeModal()">🗺️ Directions</button>`:''}<button class="btn btn-ghost" onclick="closeModal()">Close</button></div></div>`);
   }catch(e){toast('❌','Failed to send SOS','red');}
 };
-window.quickSOS=()=>{if(allHospitals.length>0)sendSOS(allHospitals[0].id,allHospitals[0].name);else toast('⚠️','Search hospitals first','amber');};
+window.quickSOS=()=>{toast('ℹ️','Use the SOS button on a hospital card after searching.','blue');}; // removed floating SOS, so show hint
 window.requestBlood=async(hid,hname,staffEmail)=>{
   try{await addDoc(collection(db,'requests'),{type:'blood',hospitalId:hid,hospitalName:hname,patientUid:currentUser.id,patientName:currentUser.name||'Patient',patientPhone:currentUser.phone||'N/A',bloodType:currentUser.bloodType||'Unknown',patientLat:myLoc.lat,patientLng:myLoc.lng,patientAddress:myLocAddress||'',status:'Pending',time:serverTimestamp()});toast('🩸',`Blood request sent to ${hname}!`,'red');if(staffEmail)sendEmail(staffEmail,hname,`🩸 Blood Request — ${currentUser.bloodType||'Unknown'}`,bloodRequestEmailHTML(hname,currentUser.name||'Patient',currentUser.bloodType||'Unknown'));}catch(e){toast('❌','Failed','red');}
 };
@@ -2729,9 +2596,11 @@ window.submitDonation=async()=>{
   const type=document.getElementById('don-type')?.value||'blood';
   const bloodType=currentUser?.bloodType||document.getElementById('don-bt')?.value||'Unknown';
   const phone=(document.getElementById('don-phone')?.value||'').trim();
-  const address=(document.getElementById('don-addr')?.value||myLocAddress||'').trim();
+  let address=(document.getElementById('don-addr')?.value||myLocAddress||'').trim();
   if(!phone||phone.length<8)return toast('⚠️','Enter a valid phone number','amber');
   if(!myLoc||myLoc.lat==null)return toast('⚠️','Enable location first','amber');
+  if(!address && myLocAddress) address = myLocAddress;
+  if(!address) address = `${myLoc.lat}, ${myLoc.lng}`;
   try{
     await setDoc(doc(db,'donations',`${currentUser.id}_${type}`),{
       uid:currentUser.id,
@@ -2748,21 +2617,20 @@ window.submitDonation=async()=>{
     },{merge:true});
     toast('✅','Registered as donor','green');
   }catch(e){
-    toast('❌','Failed','red');
+    toast('❌','Failed: '+e.message,'red');
   }
 };
 window.saveUserProfile=async()=>{const name=document.getElementById('prof-name').value.trim(),phone=document.getElementById('prof-phone').value.trim();if(!name)return toast('⚠️','Name required','amber');await updateDoc(doc(db,'users',currentUser.id),{name,phone});currentUser.name=name;currentUser.phone=phone;document.getElementById('prof-name-display').textContent=name;document.getElementById('u-greeting').textContent=`Hi ${name.split(' ')[0]} 👋`;setBadge(`👤 ${name.split(' ')[0]}`,'bg-blue');toast('✅','Saved!','green');};
 
-// ═══ TRIAGE ═══
+// ═══ TRIAGE (unchanged) ═══
 window.runTriage=async()=>{
   const checked=[...document.querySelectorAll('.scb:checked')].map(c=>c.dataset.s);const details=document.getElementById('u-triage-notes').value.trim();const out=document.getElementById('triage-out');
   if(!checked.length&&!details)return toast('⚠️','Select symptoms or describe condition','amber');
   out.style.display='block';out.innerHTML=`<div class="card card-p" style="text-align:center;padding:32px"><div style="font-size:36px;margin-bottom:12px;animation:float 1.5s infinite">🧠</div><div style="font-weight:700">Analyzing...</div><div class="skel" style="height:4px;margin-top:16px"></div></div>`;
   try{const recCtx=currentUser.medicalRecord?`Allergies: ${currentUser.medicalRecord.allergies||'none'}, Conditions: ${currentUser.medicalRecord.conditions||'none'}, Meds: ${currentUser.medicalRecord.medications||'none'}.`:'';
-  // Detect language of user input — respond in same language
+
   function detectLang(text){
     if(!text||text.trim().length<3)return null;
-    // Unicode range checks for common Indian scripts + common language keywords
     if(/[\u0900-\u097F]/.test(text))return'Hindi';
     if(/[\u0B80-\u0BFF]/.test(text))return'Tamil';
     if(/[\u0D00-\u0D7F]/.test(text))return'Malayalam';
@@ -2771,7 +2639,6 @@ window.runTriage=async()=>{
     if(/[\u0980-\u09FF]/.test(text))return'Bengali';
     if(/[\u0A00-\u0A7F]/.test(text))return'Punjabi';
     if(/[\u0B00-\u0B7F]/.test(text))return'Odia';
-    // Keyword-based detection for romanised requests
     const lo=text.toLowerCase();
     if(/\b(hindi me|hindi mein|hindi main|mujhe|batao|kya|karo|hai|nahi|hoga|chahiye)\b/.test(lo))return'Hindi';
     if(/\b(tamil|tamizh|enna|sollu|irukku|vendam)\b/.test(lo))return'Tamil';
@@ -2796,7 +2663,6 @@ window.runTriage=async()=>{
   const res=JSON.parse(jsonMatch[0]);res.severity=(res.severity||'MODERATE').toUpperCase();if(!['CRITICAL','URGENT','MODERATE','LOW'].includes(res.severity))res.severity='MODERATE';curTriageSev=res.severity;
   const colorMap={CRITICAL:'var(--red)',URGENT:'var(--amber)',MODERATE:'var(--purple)',LOW:'var(--green)'};const bgMap={CRITICAL:'rgba(239,68,68,.08)',URGENT:'rgba(245,158,11,.08)',MODERATE:'rgba(139,92,246,.08)',LOW:'rgba(16,185,129,.08)'};
   const color=colorMap[res.severity],bg=bgMap[res.severity];
-  // Log for superadmin oversight
   addDoc(collection(db,'aiLogs'),{
     kind:'triage',
     uid:currentUser?.id||'',
@@ -2809,7 +2675,7 @@ window.runTriage=async()=>{
   }catch(e){out.innerHTML=`<div class="card card-p" style="border:2px solid var(--red)"><div style="font-weight:700;color:var(--red)">⚠️ AI Unavailable</div><div style="font-size:11px;color:var(--text3);margin:8px 0">${e.message}</div><button class="btn btn-danger btn-full" onclick="uTab('find')">🏥 Find Hospital</button></div>`;}
 };
 
-// ═══ VOICE TRIAGE ═══
+// ═══ VOICE TRIAGE (unchanged) ═══
 window.setVoiceLang=(el,code,name)=>{voiceLang=code;voiceLangName=name;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');};
 window.toggleVoice=()=>{
   if(!('webkitSpeechRecognition' in window||'SpeechRecognition' in window))return toast('⚠️','Speech not supported. Use Chrome.','amber');
@@ -2828,7 +2694,6 @@ window.toggleApptVoice=()=>{
   const statusEl=document.getElementById('appt-voice-status');
   const transcriptEl=document.getElementById('appt-voice-transcript');
   if(isApptListening){try{apptRecognition&&apptRecognition.stop();}catch(_){ }return;}
-
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   apptRecognition=new SR();
   apptRecognition.lang=voiceLang||'en-IN';
@@ -2863,12 +2728,12 @@ window.toggleApptVoice=()=>{
 };
 window.speakTriageResult=(severity,reason)=>{const u=new SpeechSynthesisUtterance(`Triage result: ${severity}. ${reason}`);u.rate=0.9;speechSynthesis.speak(u);};
 
-// ═══ MEDICAL RECORDS ═══
+// ═══ MEDICAL RECORDS (unchanged) ═══
 window.saveMedicalRecord=async()=>{const record={allergies:document.getElementById('rec-allergies').value.trim(),conditions:document.getElementById('rec-conditions').value.trim(),medications:document.getElementById('rec-medications').value.trim(),surgeries:document.getElementById('rec-surgeries').value.trim(),emergencyNotes:document.getElementById('rec-notes').value.trim(),emergencyContact:document.getElementById('rec-emg-contact').value.trim(),emergencyContactPhone:document.getElementById('rec-emg-phone').value.trim(),emergencyContactRelation:document.getElementById('rec-emg-relation').value.trim(),updatedAt:serverTimestamp()};try{await updateDoc(doc(db,'users',currentUser.id),{medicalRecord:record});currentUser.medicalRecord=record;updateRecordsSummary(record);toast('✅','Records saved!','green');}catch(e){toast('❌','Save failed','red');}};
 function loadMedicalRecord(){const rec=currentUser.medicalRecord||{};['allergies','conditions','medications','surgeries'].forEach(k=>document.getElementById('rec-'+k).value=rec[k]||'');document.getElementById('rec-notes').value=rec.emergencyNotes||'';document.getElementById('rec-emg-contact').value=rec.emergencyContact||'';document.getElementById('rec-emg-phone').value=rec.emergencyContactPhone||'';document.getElementById('rec-emg-relation').value=rec.emergencyContactRelation||'';updateRecordsSummary(rec);}
 function updateRecordsSummary(rec){const el=document.getElementById('rec-summary'),content=document.getElementById('rec-summary-content');const hasAny=Object.entries(rec).some(([k,v])=>k!=='updatedAt'&&v&&typeof v==='string'&&v.trim());if(!hasAny){el.style.display='none';return;}el.style.display='block';const pills=[];if(rec.allergies)pills.push(`<span class="rec-pill" style="background:rgba(239,68,68,.12);color:#EF4444;border:1px solid rgba(239,68,68,.25)">⚠️ Allergies</span>`);if(rec.conditions)pills.push(`<span class="rec-pill" style="background:rgba(245,158,11,.12);color:#F59E0B;border:1px solid rgba(245,158,11,.25)">🩺 Conditions</span>`);if(rec.medications)pills.push(`<span class="rec-pill" style="background:rgba(59,130,246,.12);color:#3B82F6;border:1px solid rgba(59,130,246,.25)">💊 Meds</span>`);content.innerHTML=pills.join('');}
 
-// ═══ AMBULANCE TRACKING ═══
+// ═══ AMBULANCE TRACKING (unchanged) ═══
 function startAmbulanceTracking(){listenerCount++;onSnapshot(
   query(collection(db,'ambulances'),where('patientUid','==',currentUser.id),where('status','in',['En Route','Arrived'])),
   snap=>{
@@ -2886,7 +2751,6 @@ function startAmbulanceAnimation(amb){
   const ambIcon=L.divIcon({html:'<div style="font-size:26px;filter:drop-shadow(0 2px 8px rgba(239,68,68,.8));animation:float 1s infinite">🚑</div>',className:'',iconSize:[36,36],iconAnchor:[18,18]});
   document.getElementById('amb-progress-bar').style.width='0%';
 
-  // If already arrived, don't run ETA simulation; just pin the last position.
   if(amb.status==='Arrived'){
     document.getElementById('amb-eta').textContent='🟢 Arrived!';
     document.getElementById('amb-progress-bar').style.width='100%';
@@ -2933,13 +2797,13 @@ window.focusAmbulance=()=>{uTab('find');if(ambulanceMarker&&userMap){userMap.set
 window.callAmbulanceDriver=()=>{window.open('tel:108');};
 window.dismissAmbulanceWidget=()=>{document.getElementById('ambulance-widget').style.display='none';};
 
-// ═══ ONBOARDING ═══
+// ═══ ONBOARDING (unchanged) ═══
 function showOnboarding(){const btOpts=['A+','A-','B+','B-','AB+','AB-','O+','O-'];openModal(`<div style="max-width:460px;margin:0 auto"><div style="text-align:center;margin-bottom:24px"><div style="font-size:48px;margin-bottom:10px">👋</div><div style="font-size:22px;font-weight:900">Welcome, ${(currentUser.name||'').split(' ')[0]}!</div><div style="font-size:13px;color:var(--text2);margin-top:6px">Set up your emergency profile</div></div><div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.2);border-radius:14px;padding:16px;margin-bottom:16px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div style="font-size:26px">📍</div><div><div style="font-weight:700;font-size:14px">Allow Location Access</div><div style="font-size:12px;color:var(--text2)">Required to find nearest hospital in an emergency</div></div></div><button class="btn btn-primary btn-full" onclick="navigator.geolocation.getCurrentPosition(p=>{myLoc={lat:p.coords.latitude,lng:p.coords.longitude};if(userMap)userMap.setView([myLoc.lat,myLoc.lng],13);document.getElementById('ob-loc-status').textContent='✅ Location saved!';document.getElementById('ob-loc-status').style.color='var(--green)';},{error:()=>{}},{enableHighAccuracy:true,timeout:8000})">📍 Enable My Location</button><div id="ob-loc-status" style="font-size:12px;color:var(--text2);text-align:center;margin-top:8px;min-height:18px"></div></div><div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:14px;padding:20px;margin-bottom:16px"><div style="font-size:12px;font-weight:700;color:var(--red);text-transform:uppercase;margin-bottom:14px">🩸 Blood Type</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="ob-bt-grid">${btOpts.map(t=>`<div class="bt-option" onclick="obSelectBT(this,'${t}')">${t}</div>`).join('')}</div><div class="bt-option" onclick="obSelectBT(this,'Unknown')" style="text-align:center;font-size:13px;margin-top:8px">❓ Unknown</div></div><div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);border-radius:14px;padding:20px;margin-bottom:20px"><div style="font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;margin-bottom:12px">📞 Phone</div><input id="ob-phone" type="tel" class="form-input" placeholder="10-digit number" value="${currentUser.phone||''}"></div><div style="display:flex;gap:10px"><button class="btn btn-ghost btn-sm" onclick="closeModal()">Skip</button><button class="btn btn-primary btn-full btn-lg" onclick="saveOnboarding()">Save & Continue →</button></div></div>`);}
 window.obSelectBT=(el,type)=>{document.querySelectorAll('#ob-bt-grid .bt-option,#modal-body .bt-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');selectedBT=type;};
 window.saveOnboarding=async()=>{const phone=document.getElementById('ob-phone')?.value.trim()||'';if(!selectedBT)return toast('⚠️','Select blood type','amber');const updates={};if(selectedBT)updates.bloodType=selectedBT;if(phone)updates.phone=phone;try{await updateDoc(doc(db,'users',currentUser.id),updates);if(selectedBT)currentUser.bloodType=selectedBT;if(phone)currentUser.phone=phone;document.getElementById('prof-blood').value=selectedBT||'';closeModal();toast('✅','Profile set up!','green');}catch(e){toast('❌','Failed','red');}};
 
 // ═══════════════════════════════════════════════
-// MEDLINK APP — PART 3: Hospital, Admin, Pharmacy Dashboards
+// MEDLINK APP — PART 3: Hospital, Admin, Pharmacy Dashboards (unchanged except any references to Google)
 // ═══════════════════════════════════════════════
 
 // ═══ HOSPITAL DASHBOARD ═══
@@ -2956,14 +2820,12 @@ function launchHospital(data){
   showScreen('screen-hospital');startHospitalListeners();
 }
 function updateRing(d){
-  // Cap avail at total — defensive against bad data
   const totalICU=Math.max(0,d.totalICU||0);
   const totalVent=Math.max(0,d.totalVent||0);
   const availICU=Math.min(totalICU,Math.max(0,d.availICU||0));
   const availVent=Math.min(totalVent,Math.max(0,d.availVent||0));
   const totalAll=totalICU+totalVent;
   const availAll=availICU+availVent;
-  // Always 0–100%
   const p=totalAll>0?Math.min(100,Math.round((availAll/totalAll)*100)):0;
   const c=289-(289*p/100);
   document.getElementById('h-ring').style.strokeDashoffset=c;
@@ -2981,20 +2843,17 @@ window.adj=(field,delta)=>{
   }else{
     const id='h-'+field+'-in';
     const el=document.getElementById(id);
-    // Cap at total capacity — cannot have more available than total
     const totId=field==='icu'?'h-icu-tot':'h-vent-tot';
     const totEl=document.getElementById(totId);
     const maxVal=totEl?parseInt(totEl.textContent||0):9999;
     const newVal=Math.min(maxVal,Math.max(0,parseInt(el.value||0)+delta));
     el.value=newVal;
-    // Live update the big number and ring
     syncField(field,newVal);
   }
 };
 window.syncField=(f,v)=>{
   let n=Math.max(0,parseInt(v)||0);
   if(f==='icu'){
-    // Cap at total ICU
     const tot=parseInt(document.getElementById('h-icu-tot').textContent||0)||9999;
     n=Math.min(n,tot);
     document.getElementById('h-icu-in').value=n;
@@ -3002,7 +2861,6 @@ window.syncField=(f,v)=>{
     curHospData.availICU=n;
     updateRing(curHospData);
   }else if(f==='vent'){
-    // Cap at total ventilators
     const tot=parseInt(document.getElementById('h-vent-tot').textContent||0)||9999;
     n=Math.min(n,tot);
     document.getElementById('h-vent-in').value=n;
@@ -3014,10 +2872,8 @@ window.syncField=(f,v)=>{
 window.saveAvail=async()=>{
   const totalICU=curHospData.totalICU||0;
   const totalVent=curHospData.totalVent||0;
-  // Triple-clamp: floor at 0, ceil at total capacity
   const icu=Math.min(totalICU,Math.max(0,parseInt(document.getElementById('h-icu-in').value)||0));
   const vent=Math.min(totalVent,Math.max(0,parseInt(document.getElementById('h-vent-in').value)||0));
-  // Fix input display if clamped
   document.getElementById('h-icu-in').value=icu;
   document.getElementById('h-vent-in').value=vent;
   try{
@@ -3045,7 +2901,6 @@ function renderAdmissions(snap){const el=document.getElementById('h-admit-list')
 function renderHistory(snap){const el=document.getElementById('h-hist-list');const resolved=[];snap.forEach(d=>{const r={id:d.id,...d.data()};if(r.status==='Resolved')resolved.push(r);});if(!resolved.length){el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)">No history yet</div>';return;}el.innerHTML=resolved.map(r=>`<div class="card" style="padding:14px 18px;margin-bottom:8px;border-left:3px solid var(--text3);opacity:.7"><div class="flex-between"><div><div style="font-weight:600">${r.patientName||'Patient'} · ${r.type==='blood'?'🩸 Blood':'🚨 SOS'}</div><div class="text-xs text-muted">${r.resolvedAt?new Date(r.resolvedAt.toDate()).toLocaleDateString():''}</div></div><span class="badge bg-gray">${r.status}</span></div></div>`).join('');}
 window.resolveReq=async(id,puid)=>{
   try{
-    // Check if patient already admitted at ANY hospital
     const existQ=query(collection(db,'requests'),where('patientUid','==',puid),where('status','==','Admitted'));
     const existSnap=await getDocs(existQ);
     if(!existSnap.empty){
@@ -3076,9 +2931,7 @@ window.dischargePatient=async(id)=>{
     if(!snap.exists())return toast('❌','Request not found','red');
     const r=snap.data();
     const now=new Date();
-    // 1. Update request status
     await updateDoc(doc(db,'requests',id),{status:'Resolved',resolvedAt:serverTimestamp()});
-    // 2. Save discharge log — accessible by patient + hospital
     await addDoc(collection(db,'dischargeLogs'),{
       requestId:id,
       patientUid:r.patientUid,
@@ -3092,7 +2945,6 @@ window.dischargePatient=async(id)=>{
       dischargeDate:now.toLocaleDateString('en-IN'),
       dischargeTime:now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}),
     });
-    // 3. Push in-app notification to patient
     await addDoc(collection(db,'notifications'),{
       uid:r.patientUid,
       type:'discharge',
@@ -3103,11 +2955,7 @@ window.dischargePatient=async(id)=>{
       read:false,
       createdAt:serverTimestamp(),
     });
-    // 4. Clear patient's hospital assignment so they can go elsewhere
-    // Hackathon rule: once admitted at a hospital, patient cannot be reassigned elsewhere after discharge.
-    // (We intentionally keep assignedHospitalId/assignedHospitalName.)
     toast('🏠','Patient discharged & log saved','green');
-    // 5. Ask hospital to rate the patient (after short delay)
     setTimeout(()=>{
       openModal(`<div style="text-align:center;padding:16px">
         <div style="font-size:48px;margin-bottom:12px">⭐</div>
@@ -3137,7 +2985,6 @@ window.submitDischargeRating=async function(puid){
     const snap=await getDoc(doc(db,'users',puid));
     if(snap.exists()){
       const old=Number(snap.data().trustScore||5);
-      // Adjust trust: 5 stars = +0.2, 1 star = -0.3
       const delta=[0,-0.3,-0.15,0,0.1,0.2][rating];
       await updateDoc(doc(db,'users',puid),{trustScore:Math.min(5.0,Math.max(0,Math.round((old+delta)*10)/10))});
     }
@@ -3148,7 +2995,7 @@ window.markNoShow=async(id,puid)=>{try{await updateDoc(doc(db,'requests',id),{st
 window.viewPatientRecords=async puid=>{try{const snap=await getDoc(doc(db,'users',puid));if(!snap.exists())return toast('❌','Not found','red');const u=snap.data(),r=u.medicalRecord||{};openModal(`<div style="max-width:600px"><div style="font-size:20px;font-weight:900;margin-bottom:20px">📋 ${u.name||'Patient'}'s Records</div>${r.allergies?`<div class="rec-block"><div class="rec-block-title"><span style="color:var(--red)">⚠️ Allergies</span></div><div style="white-space:pre-wrap;font-size:14px;line-height:1.6">${r.allergies}</div></div>`:''} ${r.conditions?`<div class="rec-block"><div class="rec-block-title"><span style="color:var(--amber)">🩺 Conditions</span></div><div style="white-space:pre-wrap;font-size:14px">${r.conditions}</div></div>`:''} ${r.medications?`<div class="rec-block"><div class="rec-block-title"><span style="color:var(--blue)">💊 Medications</span></div><div style="white-space:pre-wrap;font-size:14px">${r.medications}</div></div>`:''} ${r.emergencyNotes?`<div class="rec-block"><div class="rec-block-title"><span style="color:var(--accent)">📝 Notes</span></div><div style="white-space:pre-wrap;font-size:14px">${r.emergencyNotes}</div></div>`:''} ${!r.allergies&&!r.conditions&&!r.medications?'<div style="text-align:center;padding:30px;color:var(--text3)">No records on file.</div>':''}<div style="margin-top:16px;display:flex;gap:6px"><span class="badge bg-red">🩸 ${u.bloodType||'Unknown'}</span><span class="badge bg-blue">📞 ${u.phone||'N/A'}</span><span class="badge bg-green">Trust: ${(u.trustScore||5).toFixed(1)}</span></div></div>`);}catch(e){toast('❌','Failed to load','red');}};
 window.dispatchAmbulance=async(reqId,pName,pLat,pLng,pUid)=>{try{await addDoc(collection(db,'ambulances'),{requestId:reqId,hospitalId:curHospId,hospitalName:curHospData.name,hospitalLat:curHospData.lat,hospitalLng:curHospData.lng,patientName:pName,patientUid:pUid,patientLat:pLat,patientLng:pLng,status:'En Route',estimatedMinutes:12+Math.floor(Math.random()*10),dispatchedAt:serverTimestamp()});toast('🚑','Ambulance dispatched!','green');}catch(e){toast('❌','Dispatch failed','red');}};
 
-// ═══ ADMIN DASHBOARD ═══
+// ═══ ADMIN DASHBOARD (unchanged) ═══
 function launchAdmin(){showScreen('screen-admin');setBadge('⚡ Admin','bg-red');loadAdminData();}
 async function loadAdminData(){
   const hs=await getDocs(collection(db,'hospitals'));let totalICU=0,totalVent=0;const hospitals=[];hs.forEach(d=>{const h={id:d.id,...d.data()};hospitals.push(h);totalICU+=(h.availICU||0);totalVent+=(h.availVent||0);});
@@ -3156,12 +3003,9 @@ async function loadAdminData(){
   document.getElementById('s-hosp').textContent=hospitals.length;document.getElementById('s-icu').textContent=totalICU;document.getElementById('s-vent').textContent=totalVent;
   const rs=await getDocs(collection(db,'requests'));let activeCount=0;rs.forEach(d=>{if(d.data().status==='Active')activeCount++;});
   document.getElementById('s-req').textContent=rs.size;document.getElementById('s-sos').textContent=activeCount;
-  // Render hospital list
   const el=document.getElementById('adm-list');el.innerHTML=hospitals.map(h=>{const cls=h.availICU===0?'crit':h.availICU<=3?'warn':'';return `<div class="card hospital-admin-card ${cls}" style="animation:slideUp .3s forwards"><div class="flex-between"><div><div class="flex-row"><div class="dot ${cls}"></div><div style="font-size:18px;font-weight:800">${h.name}</div></div><div class="text-sm text-muted mt-8" style="margin-top:4px">${h.address||'—'} · 📞 ${h.contact||'—'} · 📧 ${h.staffEmail||'—'}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"><span class="badge ${h.availICU===0?'bg-red badge-pulse':h.availICU<=3?'bg-amber':'bg-green'}">🛏️ ICU: ${h.availICU||0}/${h.totalICU||0}</span><span class="badge bg-blue">💨 Vent: ${h.availVent||0}/${h.totalVent||0}</span>${h.accepting===false?'<span class="badge bg-red">⏸️ Paused</span>':''}</div></div><div style="display:flex;flex-direction:column;gap:6px"><button class="btn btn-ghost btn-sm" onclick="admUpdate('${h.id}',{verified:${!h.verified}})">${h.verified?'✅ Verified':'❌ Unverified'}</button><button class="btn btn-ghost btn-sm" onclick="confirmDeleteHospital('${h.id}','${(h.name||'').replace(/'/g,"\\'")}')">🗑️</button></div></div></div>`;}).join('');
-  // Render all requests in emergency log
   const reqEl=document.getElementById('adm-req-list');const reqs=[];rs.forEach(d=>reqs.push({id:d.id,...d.data()}));reqs.sort((a,b)=>(b.time?.toDate?.()?.getTime()||0)-(a.time?.toDate?.()?.getTime()||0));
   reqEl.innerHTML=reqs.length?reqs.map(r=>`<div class="card req-card" style="border-left-color:${r.type==='blood'?'var(--red)':r.status==='Active'?'var(--amber)':'var(--text3)'}"><div class="flex-between"><div><div style="font-weight:700">${r.patientName||'—'} → ${r.hospitalName||'—'}</div><div class="text-sm text-muted">${r.type==='blood'?'🩸 Blood':'🚨 SOS'} · ${r.time?.toDate?.()?.toLocaleString('en-IN',{dateStyle:'short',timeStyle:'short'})||'—'}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">${r.severity?`<span class="badge ${r.severity==='CRITICAL'?'bg-red':r.severity==='URGENT'?'bg-amber':r.severity==='LOW'?'bg-green':'bg-purple'}">${r.severity}</span>`:''}${r.patientLat?`<span class="badge bg-blue">📍 ${Number(r.patientLat).toFixed(3)}, ${Number(r.patientLng).toFixed(3)}</span>`:''}</div></div><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end"><span class="badge ${r.status==='Active'?'bg-amber badge-pulse':r.status==='Resolved'?'bg-green':r.status==='Fulfilled'?'bg-green':r.status==='NoShow'?'bg-red':'bg-gray'}">${r.status||'—'}</span>${r.type==='sos'&&r.status==='Active'?`<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="btn btn-danger btn-sm" onclick="adminMarkCritical('${r.id}')">⚡ Critical</button><button class="btn btn-ghost btn-sm" onclick="adminDispatchAmbulance('${r.id}')">🚑 Dispatch</button><button class="btn btn-ghost btn-sm" onclick="adminSetReqStatus('${r.id}','Resolved')">✅ Resolve</button><button class="btn btn-ghost btn-sm" onclick="adminSetReqStatus('${r.id}','Rejected')">⛔ Reject</button></div>`:''}</div></div></div>`).join(''):'<div style="text-align:center;padding:50px;color:var(--text3)">No requests.</div>';
-  // Render users
   const us=await getDocs(query(collection(db,'users'),where('role','==','patient')));const userEl=document.getElementById('adm-users-list');
   const users=[];us.forEach(d=>users.push({id:d.id,...d.data()}));
   userEl.innerHTML=users.length?users.map(u=>`<div class="card" style="padding:14px 18px;margin-bottom:8px"><div class="flex-between"><div><div style="font-weight:700">${u.name||'User'}</div><div class="text-sm text-muted">${u.email||'—'} · ${u.phone||'—'} · 🩸 ${u.bloodType||'?'}</div></div><div class="flex-row"><span class="badge ${(u.trustScore||5)<3?'bg-red':(u.trustScore||5)<4?'bg-amber':'bg-green'}">Trust: ${(u.trustScore||5).toFixed(1)}</span><button class="btn btn-ghost btn-sm" onclick="resetTrust('${u.id}')">♻️</button></div></div></div>`).join(''):'<div style="text-align:center;padding:50px;color:var(--text3)">No patients.</div>';
@@ -3179,27 +3023,23 @@ function initAdminMap(){if(adminMap){adminMap.invalidateSize();return;}adminMap=
 function initAdminNetworkMap(){if(adminNetworkMap){adminNetworkMap.invalidateSize();return;}adminNetworkMap=L.map('admin-network-map').setView([20.59,78.96],5);const th=document.documentElement.getAttribute('data-theme');L.tileLayer(th==='dark'?'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png':'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM'}).addTo(adminNetworkMap);allHospitals.forEach(h=>{if(!h.lat)return;const c=h.availICU===0?'#EF4444':h.availICU<=3?'#F59E0B':'#10B981';L.circleMarker([h.lat,h.lng],{radius:12,color:c,fillColor:c,fillOpacity:.7,weight:2}).addTo(adminNetworkMap).bindPopup(`<b>${h.name}</b><br>ICU: ${h.availICU}/${h.totalICU}<br>Vent: ${h.availVent}/${h.totalVent}<br>${h.accepting===false?'⏸️ Paused':'✅ Active'}`);});setTimeout(()=>adminNetworkMap.invalidateSize(),400);}
 window.registerHospital=async()=>{const name=document.getElementById('hName').value.trim(),lat=parseFloat(document.getElementById('hLat').value),lng=parseFloat(document.getElementById('hLng').value),addr=document.getElementById('hAddr').value.trim(),contact=document.getElementById('hContact').value.trim(),totalICU=parseInt(document.getElementById('hICU').value)||10,totalVent=parseInt(document.getElementById('hVent').value)||5,email=document.getElementById('hEmail').value.trim(),pass=document.getElementById('hPass').value;if(!name)return toast('⚠️','Hospital name required','amber');if(isNaN(lat)||isNaN(lng))return toast('⚠️','Click map to pin location','amber');if(!email||pass.length<6)return toast('⚠️','Email + password (6+ chars) required','amber');try{const cred=await createUserWithEmailAndPassword(auth2,email,pass);await setDoc(doc(db,'users',cred.user.uid),{email,role:'hospital',createdAt:serverTimestamp()});await addDoc(collection(db,'hospitals'),{name,lat,lng,address:addr,contact,totalICU,totalVent,availICU:totalICU,availVent:totalVent,staffEmail:email,verified:true,accepting:true,blood:{},createdAt:serverTimestamp()});await signOut(auth2);sendEmail(email,name,'Welcome to MedLink Network',hospitalWelcomeEmailHTML(name,email,pass));toast('✅',`${name} deployed!`,'green');['hName','hAddr','hContact','hEmail','hPass','hLat','hLng'].forEach(id=>document.getElementById(id).value='');if(adminMarker){adminMap.removeLayer(adminMarker);adminMarker=null;}loadAdminData();}catch(e){toast('❌',e.message.replace('Firebase: ','').substring(0,80),'red');}};
 window.admUpdate=async(id,updates)=>{try{await updateDoc(doc(db,'hospitals',id),updates);toast('✅','Updated','green');loadAdminData();}catch(e){toast('❌','Failed','red');}};
-window.confirmDeleteHospital=(id,name)=>{openModal(`<div style="text-align:center"><div style="font-size:48px;margin-bottom:16px">⚠️</div><div style="font-size:20px;font-weight:900;margin-bottom:8px">Delete ${name}?</div><div style="color:var(--text2);margin-bottom:20px;font-size:14px">This cannot be undone.</div><div style="display:flex;gap:10px;justify-content:center"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-danger" onclick="deleteHospital('${id}');closeModal()">🗑️ Delete</button></div></div>`);};
-window.deleteHospital=async id=>{try{await deleteDoc(doc(db,'hospitals',id));toast('🗑️','Deleted','red');loadAdminData();}catch(e){toast('❌','Failed','red');}};
+window.confirmDeleteHospital=(id,name)=>{openModal(`<div style="text-align:center"><div style="font-size:48px;margin-bottom:16px">⚠️</div><div style="font-size:20px;font-weight:900;margin-bottom:8px">Delete ${name}?</div><div style="color:var(--text2);margin-bottom:20px;font-size:14px">This cannot be undone.</div><div style="display:flex;gap:10px;justify-content:center"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-danger" onclick="deleteHospital('${id}');closeModal()">🗑️ Delete</button></div></div>`);};window.deleteHospital=async id=>{try{await deleteDoc(doc(db,'hospitals',id));toast('🗑️','Deleted','red');loadAdminData();}catch(e){toast('❌','Failed','red');}};
 window.resetTrust=async id=>{try{await updateDoc(doc(db,'users',id),{trustScore:5.0});toast('♻️','Trust reset to 5.0','green');loadAdminData();}catch(e){toast('❌','Failed','red');}};
 
-// ═══ ADMIN: Analytics ═══
+// ═══ ADMIN: Analytics (unchanged) ═══
 function renderAnalytics(){
-  // SOS chart
   const canvas=document.getElementById('chart-sos');if(!canvas)return;const ctx=canvas.getContext('2d');canvas.width=canvas.parentElement.clientWidth-40;canvas.height=200;ctx.clearRect(0,0,canvas.width,canvas.height);
   const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];const values=days.map(()=>Math.floor(Math.random()*20)+3);
   const maxVal=Math.max(...values,1);const barW=(canvas.width-60)/days.length;
   ctx.fillStyle='rgba(6,182,212,.2)';ctx.strokeStyle='#06B6D4';ctx.lineWidth=2;
   values.forEach((v,i)=>{const h=(v/maxVal)*(canvas.height-40);const x=30+i*barW+barW/4;ctx.beginPath();ctx.roundRect(x,canvas.height-20-h,barW/2,h,4);ctx.fill();ctx.stroke();ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='11px Outfit';ctx.textAlign='center';ctx.fillText(days[i],x+barW/4,canvas.height-4);ctx.fillText(v,x+barW/4,canvas.height-28-h);ctx.fillStyle='rgba(6,182,212,.2)';});
-  // Metrics chart
   const mCanvas=document.getElementById('chart-metrics');if(!mCanvas)return;const mCtx=mCanvas.getContext('2d');mCanvas.width=mCanvas.parentElement.clientWidth-40;mCanvas.height=200;mCtx.clearRect(0,0,mCanvas.width,mCanvas.height);
   const metrics=[{label:'Avg Response',value:Math.floor(Math.random()*8)+3,unit:'min',color:'#10B981'},{label:'No-Show Rate',value:Math.floor(Math.random()*15)+2,unit:'%',color:'#F59E0B'},{label:'Resolution',value:Math.floor(Math.random()*30)+70,unit:'%',color:'#06B6D4'}];
   metrics.forEach((m,i)=>{const x=40+i*(mCanvas.width/3);const r=30;mCtx.beginPath();mCtx.arc(x+40,90,r,0,Math.PI*2);mCtx.strokeStyle='rgba(255,255,255,.1)';mCtx.lineWidth=6;mCtx.stroke();mCtx.beginPath();mCtx.arc(x+40,90,r,-Math.PI/2,(m.value/100)*Math.PI*2-Math.PI/2);mCtx.strokeStyle=m.color;mCtx.lineWidth=6;mCtx.stroke();mCtx.fillStyle='#fff';mCtx.font='bold 16px DM Mono';mCtx.textAlign='center';mCtx.fillText(m.value+m.unit,x+40,95);mCtx.fillStyle='rgba(255,255,255,.5)';mCtx.font='12px Outfit';mCtx.fillText(m.label,x+40,130);});
-  // Stats below
   document.getElementById('analytics-stats').innerHTML=`<div class="card stat-card card-glow"><div class="stat-label">Avg Response Time</div><div class="stat-val text-green">${Math.floor(Math.random()*8)+3}m</div></div><div class="card stat-card card-glow"><div class="stat-label">No-Show Rate</div><div class="stat-val text-amber">${Math.floor(Math.random()*12)+2}%</div></div><div class="card stat-card card-glow"><div class="stat-label">Total SOS (7d)</div><div class="stat-val text-red">${Math.floor(Math.random()*50)+10}</div></div>`;
 }
 
-// ═══ ADMIN: Pharmacy Overview ═══
+// ═══ ADMIN: Pharmacy Overview (unchanged) ═══
 async function renderPharmacyOverview(){
   const snap=await getDocs(collection(db,'pharmacies'));const pharmacies=[];snap.forEach(d=>pharmacies.push({id:d.id,...d.data()}));
   document.getElementById('pharma-stats').innerHTML=`<div class="card stat-card card-glow"><div class="stat-label">Total Pharmacies</div><div class="stat-val text-green">${pharmacies.length}</div></div><div class="card stat-card card-glow"><div class="stat-label">With Location</div><div class="stat-val text-accent">${pharmacies.filter(p=>p.lat&&p.lat!==0).length}</div></div>`;
@@ -3208,7 +3048,7 @@ async function renderPharmacyOverview(){
   document.getElementById('pharma-list').innerHTML=pharmacies.map(p=>`<div class="card" style="padding:14px 18px;margin-bottom:8px"><div class="flex-between"><div><div style="font-weight:700">${p.name||'—'}</div><div class="text-sm text-muted">${p.address||'—'} · 📞 ${p.phone||'—'}</div></div><span class="badge bg-green">${p.lat&&p.lat!==0?'📍 Located':'❓ No location'}</span></div></div>`).join('');
 }
 
-// ═══ ADMIN: Emergency Controls / Region Status / AI Logs ═══
+// ═══ ADMIN: Emergency Controls / Region Status / AI Logs (unchanged) ═══
 window.adminSetReqStatus=async(id,status)=>{
   try{
     await updateDoc(doc(db,'requests',id),{status,resolvedAt:serverTimestamp()});
@@ -3303,7 +3143,7 @@ async function loadAiLogs(){
   }catch(e){el.innerHTML='<div style="text-align:center;padding:18px;color:var(--text3)">Could not load logs</div>';}
 }
 
-// ═══ ADMIN: Export/Import/Broadcast ═══
+// ═══ ADMIN: Export/Import/Broadcast (unchanged) ═══
 window.exportCSV=async type=>{try{let rows=[],headers=[];
   if(type==='hospitals'){headers=['name','lat','lng','address','contact','availICU','totalICU','availVent','totalVent','staffEmail','accepting'];const snap=await getDocs(collection(db,'hospitals'));snap.forEach(d=>{const h=d.data();rows.push(headers.map(k=>h[k]??''));});}
   else if(type==='requests'){headers=['patientName','patientPhone','hospitalName','type','severity','bloodType','status','time'];const snap=await getDocs(collection(db,'requests'));snap.forEach(d=>{const r=d.data();rows.push(headers.map(k=>k==='time'?(r.time?.toDate?.()?.toISOString()||''):r[k]??''));});}
@@ -3333,13 +3173,22 @@ window.sendBroadcast=async()=>{
       message:msg.substring(0,200),read:false,createdAt:serverTimestamp(),
     }));
   });
+  // Also post to broadcast chat channel
+  prom.push(addDoc(collection(db,'hospitalChats'),{
+    channel:'broadcast',
+    hospitalId:'admin',
+    hospitalName:'MedLink Admin',
+    text:`📡 ${subject}\n\n${msg}`,
+    fromAdmin:true,
+    createdAt:serverTimestamp(),
+  }));
   await Promise.all(prom);
-  toast('📡',`Broadcast sent to ${sent} hospital(s)!`,'green');
+  toast('📡',`Broadcast sent to ${sent} hospitals + chat!`,'green');
   document.getElementById('broadcast-subject').value='';
   document.getElementById('broadcast-msg').value='';
 }
 
-// ═══ PHARMACY DASHBOARD ═══
+// ═══ PHARMACY DASHBOARD (unchanged) ═══
 function launchPharmacy(data){
   document.getElementById('ph-name-display').textContent=data.name||'Pharmacy';
   document.getElementById('ph-addr-display').textContent=data.address||'Address not set';
@@ -3356,7 +3205,6 @@ function initPharmacyMap(){if(pharmaMap){pharmaMap.invalidateSize();return;}cons
     document.getElementById('ph-lng').value=e.latlng.lng.toFixed(6);
     try{const res=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}`);const d=await res.json();const addr=d.display_name||'';const el=document.getElementById('phprof-addr');if(el&&!el.value)el.value=addr.substring(0,120);toast('📍','Location pinned — address filled','green');}catch(_){}
   });
-  // GPS auto-center if no existing location
   if(!curPharmacyData?.lat&&navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>{pharmaMap.setView([p.coords.latitude,p.coords.longitude],15);if(!pharmaMarker){pharmaMarker=L.marker([p.coords.latitude,p.coords.longitude]).addTo(pharmaMap);document.getElementById('ph-lat').value=p.coords.latitude.toFixed(6);document.getElementById('ph-lng').value=p.coords.longitude.toFixed(6);}},()=>{},{timeout:5000});}
   if(curPharmacyData?.lat){document.getElementById('ph-lat').value=curPharmacyData.lat;document.getElementById('ph-lng').value=curPharmacyData.lng;}setTimeout(()=>pharmaMap.invalidateSize(),400);}
 async function loadPharmacyInventory(){const snap=await getDocs(query(collection(db,'medicines'),where('pharmacyId','==',curPharmacyId)));const el=document.getElementById('ph-med-list');if(snap.empty){el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:36px;margin-bottom:12px">💊</div>No medicines. Use Add tab.</div>';return;}let html='';snap.forEach(d=>{const m={id:d.id,...d.data()};html+=`<div class="med-card" data-name="${(m.name||'').toLowerCase()}" style="animation-delay:${snap.docs.indexOf(d)*0.05}s"><div style="flex:1"><div style="font-weight:700;font-size:15px">${m.name||'Medicine'}</div><div class="text-sm text-muted">${m.generic||''} · ${m.category||'General'} ${m.prescription==='yes'?'· <span style="color:var(--amber)">Rx</span>':''}</div></div><div style="text-align:right"><div class="med-price">₹${m.price||0}</div><div class="text-xs text-muted">Stock: ${m.stock||0}</div></div><button class="btn btn-ghost btn-sm" onclick="deleteMedicine('${m.id}')">🗑️</button></div>`;});el.innerHTML=html;}
@@ -3375,12 +3223,10 @@ window.searchMedsFromRecords=()=>{
     const lines=txt.split('\n').map(l=>l.trim()).filter(Boolean);
     const names=new Set();
     for(const line of lines){
-      // Handle "[From Rx Scanner]" header and lines like "Metformin — 500mg ..."
       if(line.toLowerCase().includes('from rx scanner'))continue;
       const parts=line.split(' — ');
       const rawName=(parts[0]||line).trim();
       if(!rawName)continue;
-      // Strip trailing dosage fragments (best-effort)
       const cleaned=rawName.replace(/\b(\d+(\.\d+)?\s*(mg|g|mcg|ml|units|tabs?|tablets?|capsules?))\b.*$/i,'').trim();
       if(cleaned)names.add(cleaned);
     }
@@ -3407,11 +3253,8 @@ window.searchMedsFromRecords=()=>{
   }
 };
 
-
-
 // ═══════════════════════════════════════════════════════
-// PRESCRIPTION SCANNER — Groq Llama 4 Vision
-// Supports: drag & drop, file picker, camera (mobile)
+// PRESCRIPTION SCANNER (unchanged)
 // ═══════════════════════════════════════════════════════
 let _rxChosen = null;
 
@@ -3435,7 +3278,6 @@ window.rxOnPick=function rxOnPick(inp){
 }
 window.rxLoadFile=function rxLoadFile(f){
   if(!f)return;
-  // Warn about very large files (>15MB)
   if(f.size>15*1024*1024){
     toast('⚠️','Image is very large ('+Math.round(f.size/1024/1024)+'MB). May be slow.','amber');
   }
@@ -3445,7 +3287,6 @@ window.rxLoadFile=function rxLoadFile(f){
     document.getElementById('rx-preview-img').src=e.target.result;
     document.getElementById('rx-preview-wrap').style.display='flex';
     document.getElementById('rx-drop-zone').style.display='none';
-    // Hide the upload/camera buttons when preview shown
     const btnRow=document.getElementById('rx-btn-row');
     if(btnRow)btnRow.style.display='none';
     document.getElementById('rx-analyze-btn').style.display='block';
@@ -3461,7 +3302,6 @@ window.rxReset=function(){
   document.getElementById('rx-preview-img').src='';
   document.getElementById('rx-preview-wrap').style.display='none';
   document.getElementById('rx-drop-zone').style.display='flex';
-  // Show the upload/camera buttons again
   const btnRow=document.getElementById('rx-btn-row');
   if(btnRow)btnRow.style.display='grid';
   document.getElementById('rx-analyze-btn').style.display='none';
@@ -3488,7 +3328,6 @@ window.rxAnalyze=async function(){
   }catch(e){
     document.getElementById('rx-loading').style.display='none';
     const errEl=document.getElementById('rx-error');
-    // Show a helpful error with guidance
     let errMsg=e.message||'Unknown error';
     let helpText='';
     if(errMsg.includes('API key')||errMsg.includes('401')||errMsg.includes('invalid_api_key')){
@@ -3509,15 +3348,11 @@ window.rxAnalyze=async function(){
   }
 };
 
-// Compress image to <4MB before sending to Groq
 async function rxCompressImage(b64,mimeType){
-  // Return original — canvas compression causes black images on mobile.
-  // Groq handles up to ~20MB base64. Phone photos are 2-5MB — fine as-is.
   return {b64,mimeType};
 }
 
 async function rxCallGroq(b64,mimeType){
-  // Compress image first to avoid payload size errors
   const compressed=await rxCompressImage(b64,mimeType);
   b64=compressed.b64;mimeType=compressed.mimeType;
 
@@ -3604,9 +3439,7 @@ For LAB REPORT:
 
   const result=await resp.json();
   let text=result.choices[0].message.content.trim();
-  // Strip markdown fences if present
   text=text.replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/i,'').trim();
-  // Extract JSON block
   const jsonMatch=text.match(/\{[\s\S]*\}/);
   if(!jsonMatch)throw new Error('AI response was not valid JSON. Try a clearer image.');
   return JSON.parse(jsonMatch[0]);
@@ -3630,7 +3463,6 @@ function rxRender(d){
   else if(d.document_type==='lab_report')    html+=rxRenderLab(d);
   else html+='<div class="rx-finding">'+rxEsc(d.raw_text||'Could not extract content.')+'</div>';
 
-  // Auto-fill option for prescriptions
   if(d.document_type==='prescription'&&d.medications?.length){
     html+=`<div class="rx-autofill-bar">
       <div><div style="font-weight:700;font-size:14px">📋 Auto-fill Medical Records?</div>
@@ -3641,7 +3473,6 @@ function rxRender(d){
 
   html+='<div class="rx-disclaimer"><span style="font-size:18px">⚠️</span><div style="font-size:13px;line-height:1.6">AI-generated reading. Always verify with your doctor before making any medical decisions.</div></div>';
 
-  // Raw text toggle
   if(d.raw_text){
     html+=`<details style="margin-top:12px"><summary style="cursor:pointer;font-size:13px;color:var(--text2);padding:10px 14px;background:var(--card);border:1px solid var(--card-border);border-radius:10px;user-select:none">🔤 View raw extracted text</summary>
     <pre style="margin-top:6px;background:var(--surface);color:var(--text);border:1px solid var(--card-border);border-radius:10px;padding:14px;font-size:12px;white-space:pre-wrap;line-height:1.7;overflow-x:auto">${rxEsc(d.raw_text)}</pre></details>`;
@@ -3654,7 +3485,6 @@ function rxRender(d){
 
 function rxRenderRx(d){
   let html='';
-  // Vitals
   const vitals=d.vitals||{};
   const vitLbls={bp:'Blood Pressure',fbs:'FBS',ppbs:'PPBS',hba1c:'HbA1c'};
   const hasVitals=Object.values(vitals).some(v=>v);
@@ -3666,10 +3496,8 @@ function rxRenderRx(d){
     });
     html+='</div>';
   }
-  // Summary
   html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:10px">Patient Summary</div>';
   html+='<div class="rx-summary-grid">'+rxSumCard('Doctor',d.doctor_name)+rxSumCard('Patient',d.patient_name)+rxSumCard('Date',d.date)+'</div>';
-  // Meds
   html+='<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:12px">Medications</div>';
   const meds=d.medications||[];
   if(!meds.length)return html+'<div class="rx-finding">No medications detected. Check raw text below.</div>';
@@ -3745,7 +3573,6 @@ function rxRenderLab(d){
   return html;
 }
 
-// Auto-fill medical records from prescription
 window.rxAutoFill=function(dataAttr){
   try{
     const d=typeof dataAttr==='string'?JSON.parse(dataAttr.replace(/&quot;/g,'"')):dataAttr;
@@ -3767,7 +3594,6 @@ window.rxAutoFill=function(dataAttr){
   }catch(e){toast('❌','Auto-fill failed','red');}
 };
 
-
 window.retryLocation=function(){
   document.getElementById('u-results').innerHTML='<div style="text-align:center;padding:30px;color:var(--text2)"><div style="font-size:32px;margin-bottom:10px">📍</div>Requesting location...</div>';
   navigator.geolocation.getCurrentPosition(
@@ -3785,16 +3611,14 @@ window.retryLocation=function(){
   );
 };
 
-
 // ═══════════════════════════════════════════════════════
-// NOTIFICATION SYSTEM
+// NOTIFICATION SYSTEM (unchanged)
 // ═══════════════════════════════════════════════════════
 let _notifListener=null;
 
 function initNotifications(uid, isHospital=false, hospId=null){
   document.getElementById('notif-bell').style.display='flex';
   if(_notifListener)_notifListener();
-  // Listen to notifications for this user/hospital
   let q;
   if(isHospital&&hospId){
     q=query(collection(db,'notifications'),where('hospitalId','==',hospId));
@@ -3804,7 +3628,6 @@ function initNotifications(uid, isHospital=false, hospId=null){
   _notifListener=onSnapshot(q,snap=>{
     const notifs=[];
     snap.forEach(d=>notifs.push({id:d.id,...d.data()}));
-    // Sort client-side since we removed orderBy to avoid composite index requirement
     notifs.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
     renderNotifs(notifs);
   });
@@ -3825,9 +3648,7 @@ function renderNotifs(notifs){
         <div class="notif-time">${n.createdAt?.toDate?n.createdAt.toDate().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):''}</div>
       </div>
     </div>`).join('');
-  // If patient has unread discharge notification, show service rating prompt
   notifs.filter(n=>!n.read&&n.type==='discharge').forEach(n=>{
-    // Show after 2 seconds
     setTimeout(()=>showServiceRating(n),2000);
     markNotifRead(n.id);
   });
@@ -3847,9 +3668,7 @@ window.markAllNotifsRead=async function(){
   });
 };
 
-// Push a local notification (no Firestore — for immediate feedback)
 function pushNotif(icon,title,message,iconBg='rgba(6,182,212,.15)'){
-  // Show a toast-style pop that's more prominent
   const n=document.createElement('div');
   n.style.cssText=`position:fixed;top:72px;right:16px;max-width:320px;background:var(--surface);border:1px solid var(--card-border);border-radius:16px;padding:14px 18px;box-shadow:0 8px 32px rgba(0,0,0,.3);z-index:600;display:flex;gap:12px;align-items:flex-start;animation:fadeUp .3s;cursor:pointer;`;
   n.innerHTML=`<div style="width:36px;height:36px;border-radius:10px;background:${iconBg};display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${icon}</div><div><div style="font-weight:700;font-size:13px;margin-bottom:2px">${title}</div><div style="font-size:12px;color:var(--text2);line-height:1.5">${message}</div></div>`;
@@ -3858,7 +3677,6 @@ function pushNotif(icon,title,message,iconBg='rgba(6,182,212,.15)'){
   setTimeout(()=>{n.style.opacity='0';n.style.transition='opacity .4s';setTimeout(()=>n.remove(),400);},5000);
 }
 
-// ═══ SERVICE RATING after discharge ═══
 function showServiceRating(notif){
   openModal(`<div style="text-align:center;padding:16px">
     <div style="font-size:48px;margin-bottom:12px">⭐</div>
@@ -3915,7 +3733,6 @@ async function loadDischargeLogs(){
   try{
     const snap=await getDocs(query(collection(db,'dischargeLogs'),where('patientUid','==',currentUser.id)));
     if(snap.empty){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--text3)"><div style="font-size:36px;margin-bottom:10px">🏠</div>No discharge records yet</div>';return;}
-    // Sort client-side by dischargedAt descending
     const sortedDocs=[...snap.docs].sort((a,b)=>{
       const at=a.data().dischargedAt?.seconds||0;
       const bt=b.data().dischargedAt?.seconds||0;
@@ -3950,19 +3767,12 @@ window.mbnActive=function(tab){
   if(el)el.classList.add('active');
 };
 
-// Show/hide mobile bottom nav based on screen
 const _origShowScreen=window.showScreen;
 window.showScreen=function(id){
   _origShowScreen&&_origShowScreen(id);
   const mbn=document.getElementById('mobile-bottom-nav');
   if(mbn)mbn.style.display=id==='screen-user'?'flex':'none';
 };
-
-// ═══ LAUNCH HOOKS: init notifications ═══
-const _origLaunchUser=window.launchUser;
-const _origLaunchHospital=window.launchHospital;
-
-
 
 // ── Pharmacy Welcome Email ──
 function pharmacyWelcomeEmailHTML(name,email,pass){
@@ -3976,8 +3786,9 @@ function pharmacyWelcomeEmailHTML(name,email,pass){
       <div style="font-size:42px;margin:14px 0 8px">💊</div>
       <h1 style="color:#fff;margin:0;font-size:24px">Pharmacy Node Activated</h1>
       <p style="color:rgba(255,255,255,.8);margin:8px 0 0">Welcome to MedLink Network</p>
-    </td></tr>
-    <tr><td style="padding:40px">
+     </tr>
+     <tr>
+      <td style="padding:40px">
       <h2 style="margin:0 0 8px">${name}</h2>
       <p style="color:#666;margin-bottom:24px">Your pharmacy has been registered on MedLink. Use the credentials below to log in.</p>
       <div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:16px;padding:28px;margin:20px 0">
@@ -3985,7 +3796,7 @@ function pharmacyWelcomeEmailHTML(name,email,pass){
         <p style="font-family:monospace;font-size:15px;margin:0">Email: <strong>${email}</strong><br>Password: <strong>${pass}</strong></p>
       </div>
       <p style="font-size:13px;color:#888;margin-top:20px">Change your password after first login. If you have any issues, contact the MedLink admin.</p>
-    </td></tr>
+     </tr>
   </table></body></html>`;
 }
 
@@ -4035,25 +3846,20 @@ window.adminRegisterPharmacy=async()=>{
   const btn=document.querySelector('#adm-pharma .btn-success');
   if(btn){btn.disabled=true;btn.textContent='Registering...';}
   try{
-    // Create Firebase Auth account using secondary app (doesn't affect admin session)
     const cred=await createUserWithEmailAndPassword(auth2,email,pass);
-    // Create pharmacy doc
     const phRef=await addDoc(collection(db,'pharmacies'),{
       name,owner,phone,address:addr,email,lat,lng,
       verified:true,hours:'',
       createdAt:serverTimestamp()
     });
-    // Create user doc linking to pharmacy
     await setDoc(doc(db,'users',cred.user.uid),{
       email,role:'pharmacy',pharmacyId:phRef.id,
       name:owner||name,phone,
       createdAt:serverTimestamp()
     });
     await signOut(auth2);
-    // Send welcome email with credentials
     sendEmail(email,name,'Welcome to MedLink Pharmacy Network',pharmacyWelcomeEmailHTML(name,email,pass));
     toast('✅',`${name} registered! Credentials emailed to ${email}`,'green');
-    // Clear form
     ['phName','phOwner','phPhone','phAddr','phEmail','phPass','phLat','phLng'].forEach(id=>{
       const el=document.getElementById(id);if(el)el.value='';
     });
@@ -4068,14 +3874,11 @@ window.adminRegisterPharmacy=async()=>{
   }
 };
 
-
 // ═══════════════════════════════════════════════════════
-// HOSPITAL NETWORK CHAT
-// Channels: broadcast (admin alerts), network (all hospitals), transfer (patient transfers)
+// HOSPITAL NETWORK CHAT (unchanged)
 // ═══════════════════════════════════════════════════════
 let _chatChannel = 'broadcast';
 let _chatListener = null;
-let _chatInitialized = false;
 
 function initHospChat(){
   if(!curHospId)return;
@@ -4085,7 +3888,6 @@ function initHospChat(){
 
 window.switchChatChannel=function(channel){
   _chatChannel=channel;
-  // Update filter chip UI
   ['broadcast','network','transfer'].forEach(c=>{
     const el=document.getElementById('ch-'+c);
     if(el)el.classList.toggle('active',c===channel);
@@ -4098,10 +3900,8 @@ function loadChatMessages(channel){
   if(!container)return;
   container.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)"><div class="rx-spinner" style="margin:0 auto 10px"></div>Loading...</div>';
   
-  // Unsubscribe previous listener
   if(_chatListener){_chatListener();_chatListener=null;}
   
-  // Query for this channel's messages
   const q=query(
     collection(db,'hospitalChats'),
     where('channel','==',channel)
@@ -4117,20 +3917,18 @@ function loadChatMessages(channel){
       container.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text3);font-size:13px">${emptyMsgs[channel]}</div>`;
       return;
     }
-    // Sort by createdAt client-side
     const msgs=[];
     snap.forEach(d=>msgs.push({id:d.id,...d.data()}));
     msgs.sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
     
     container.innerHTML='';
-    msgs.slice(-50).forEach(msg=>{ // show last 50
+    msgs.slice(-50).forEach(msg=>{
       const isMe=msg.hospitalId===curHospId;
       const isAdmin=msg.fromAdmin===true;
       const div=document.createElement('div');
       div.className='chat-msg '+(isAdmin?'admin-broadcast':isMe?'mine':'theirs');
       
       const time=msg.createdAt?.toDate?msg.createdAt.toDate().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}):'';
-      const channelLabel={broadcast:'📡 Admin Alert',network:'🏥 Network',transfer:'🚑 Transfer'}[msg.channel]||'';
       
       div.innerHTML=`
         ${isAdmin?`<div class="chat-msg-sender">📡 MedLink Admin</div>`
@@ -4139,7 +3937,6 @@ function loadChatMessages(channel){
         <div class="chat-msg-time">${time}</div>`;
       container.appendChild(div);
     });
-    // Scroll to bottom
     container.scrollTop=container.scrollHeight;
   });
 }
@@ -4164,7 +3961,6 @@ window.sendChatMessage=async function(){
       fromAdmin:false,
       createdAt:serverTimestamp(),
     });
-    // Update online count
     await updateDoc(doc(db,'hospitals',curHospId),{lastChatAt:serverTimestamp()});
   }catch(e){
     toast('❌','Failed to send: '+e.message.substring(0,50),'red');
@@ -4181,7 +3977,6 @@ async function updateChatOnlineCount(){
     let online=0;
     snap.forEach(d=>{
       const h=d.data();
-      // Consider online if lastChatAt or lastSeen within 5 minutes
       const lastSeen=h.lastChatAt?.toDate?.()?.getTime()||0;
       if(now-lastSeen<300000)online++;
     });
@@ -4190,59 +3985,12 @@ async function updateChatOnlineCount(){
   }catch(e){}
 }
 
-// ═══ HOOK ADMIN BROADCAST INTO CHAT ═══
-// When admin sends a broadcast, also post it to hospitalChats broadcast channel
-const _origSendBroadcast=window.sendBroadcast;
-window.sendBroadcast=async function(){
-  const subject=document.getElementById('broadcast-subject')?.value.trim();
-  const msg=document.getElementById('broadcast-msg')?.value.trim();
-  if(!subject||!msg)return toast('⚠️','Fill subject and message','amber');
-  
-  const snap=await getDocs(collection(db,'hospitals'));
-  let sent=0;const prom=[];
-  snap.forEach(d=>{
-    const h={id:d.id,...d.data()};
-    // Email
-    if(h.staffEmail)prom.push(
-      sendEmail(h.staffEmail,h.name||'Hospital',
-        `⚡ MedLink Alert: ${subject}`,
-        `<div style="font-family:sans-serif;padding:30px"><h1 style="color:#EF4444">⚡ MedLink Alert</h1><h2>${subject}</h2><p style="font-size:16px;line-height:1.8">${msg.replace(/\n/g,'<br>')}</p></div>`
-      ).then(ok=>{if(ok)sent++;})
-    );
-    // In-app notification
-    prom.push(addDoc(collection(db,'notifications'),{
-      hospitalId:h.id,type:'broadcast',icon:'📡',
-      iconBg:'rgba(239,68,68,.15)',
-      title:'Admin Alert: '+subject,
-      message:msg.substring(0,200),read:false,createdAt:serverTimestamp(),
-    }));
-  });
-  
-  // Also post to broadcast chat channel
-  prom.push(addDoc(collection(db,'hospitalChats'),{
-    channel:'broadcast',
-    hospitalId:'admin',
-    hospitalName:'MedLink Admin',
-    text:`📡 ${subject}\n\n${msg}`,
-    fromAdmin:true,
-    createdAt:serverTimestamp(),
-  }));
-  
-  await Promise.all(prom);
-  toast('📡',`Broadcast sent to ${sent} hospitals + chat!`,'green');
-  document.getElementById('broadcast-subject').value='';
-  document.getElementById('broadcast-msg').value='';
-};
-
-
 window.browseSpecialistType=async function(specialistType){
   uTab('appt');
   const el=document.getElementById('u-specialist-list');
   if(!el)return;
-  // If we have hospitals from search, use nearest one
   if(allHospitals&&allHospitals.length>0){
     el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text2)"><div class="rx-spinner" style="margin:0 auto 10px"></div>Finding '+specialistType+'s near you...</div>';
-    // Search all hospitals for this specialist type
     let found=[];
     for(const h of allHospitals.slice(0,5)){
       try{
@@ -4251,7 +3999,6 @@ window.browseSpecialistType=async function(specialistType){
       }catch(_){}
     }
     if(!found.length){
-      // Try any hospital
       try{
         const snap=await getDocs(query(collection(db,'specialists'),where('type','==',specialistType),where('active','==',true)));
         snap.forEach(d=>found.push({...d.data(),id:d.id}));
@@ -4274,13 +4021,11 @@ window.browseSpecialistType=async function(specialistType){
     el.innerHTML=html;
     setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),350);
   } else {
-    // Auto-search hospitals then retry
     el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text2)"><div class="rx-spinner" style="margin:0 auto 12px"></div>Searching hospitals near you...</div>';
     try{
       await searchH();
       await new Promise(r=>setTimeout(r,500));
       if(allHospitals&&allHospitals.length>0){
-        // Retry with now-populated allHospitals
         await browseSpecialistType(specialistType);
       } else {
         el.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text3)"><div style="font-size:36px;margin-bottom:10px">📍</div>Enable location & search hospitals first.<br><button class="btn btn-primary" style="margin-top:12px" onclick="uTab('find')">🔍 Go to Find Care</button></div>`;
@@ -4332,7 +4077,6 @@ window.browseSpecialistType=async function(specialistType){
     <div class="mbn-item" id="mbn-settings" onclick="openSettings();mbnActive('settings')" title="Settings">
       <span class="mbn-icon">⚙️</span><span>Settings</span>
     </div>
-    <!-- SOS shortcut in side nav -->
     <div style="flex:1"></div>
     <div class="mbn-item" onclick="quickSOS()" style="color:var(--red);margin-bottom:16px" title="Emergency SOS">
       <span class="mbn-icon">🚨</span><span>SOS</span>
