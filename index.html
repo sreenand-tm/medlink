@@ -1012,12 +1012,31 @@ body.cursor-active *{cursor:none!important}
 <div id="screen-admin" class="screen" style="padding:76px 20px 30px"><div style="max-width:1100px;margin:0 auto">
 <div class="page-header"><div class="page-title">⚡ Network Control Center</div><div class="page-sub">Real-time hospital resource management &amp; system oversight</div></div>
 <div class="stats-grid"><div class="card stat-card card-glow"><div class="stat-label">Total Hospitals</div><div class="stat-val text-accent" id="s-hosp">—</div><div class="stat-note">On network</div></div><div class="card stat-card card-glow"><div class="stat-label">ICU Available</div><div class="stat-val text-green" id="s-icu">—</div><div class="stat-note">Across all hospitals</div></div><div class="card stat-card card-glow"><div class="stat-label">Ventilators</div><div class="stat-val" style="color:var(--blue)" id="s-vent">—</div><div class="stat-note">Available now</div></div><div class="card stat-card card-glow"><div class="stat-label">Total Requests</div><div class="stat-val text-red" id="s-req">—</div><div class="stat-note">All time</div></div><div class="card stat-card card-glow"><div class="stat-label">Active SOS</div><div class="stat-val text-amber" id="s-sos">—</div><div class="stat-note">Awaiting response</div></div></div>
-<div class="dash-tabs"><div class="dtab active" onclick="aTab('net')">🏥 Network</div><div class="dtab" onclick="aTab('reg')">➕ Register</div><div class="dtab" onclick="aTab('log')">🚨 Emergency</div><div class="dtab" onclick="aTab('users')">👥 Patients</div><div class="dtab" onclick="aTab('map')">🗺️ Map</div><div class="dtab" onclick="aTab('analytics')">📊 Analytics</div><div class="dtab" onclick="aTab('pharma')">💊 Pharmacies</div><div class="dtab" onclick="aTab('system')">⚙️ System</div></div>
+<div class="dash-tabs"><div class="dtab active" onclick="aTab('net')">🏥 Network</div><div class="dtab" onclick="aTab('reg')">➕ Register</div><div class="dtab" onclick="aTab('log')">🚨 Emergency</div><div class="dtab" onclick="aTab('users')">👥 Patients</div><div class="dtab" onclick="aTab('donors')">🤝 Donors</div><div class="dtab" onclick="aTab('map')">🗺️ Map</div><div class="dtab" onclick="aTab('analytics')">📊 Analytics</div><div class="dtab" onclick="aTab('pharma')">💊 Pharmacies</div><div class="dtab" onclick="aTab('system')">⚙️ System</div></div>
 <div id="adm-net" class="dpanel active"><div id="adm-list"><div class="card card-p skel" style="height:90px;margin-bottom:12px"></div><div class="card card-p skel" style="height:90px;margin-bottom:12px"></div></div></div>
 <div id="adm-reg" class="dpanel"><div class="grid-2" style="gap:24px"><div><div class="section-title">📍 Pin Hospital Location</div><div class="form-group"><input id="hName" type="text" class="form-input" placeholder="Hospital Name *"></div><div id="admin-map" style="margin-bottom:10px;height:280px;border-radius:12px;border:1px solid var(--card-border)"></div><p style="font-size:12px;color:var(--text3);margin-bottom:10px">Click the map to pin location.</p><div class="grid-2"><div><label class="form-label">Latitude</label><input id="hLat" type="text" class="form-input" readonly placeholder="Click map"></div><div><label class="form-label">Longitude</label><input id="hLng" type="text" class="form-input" readonly placeholder="Click map"></div></div></div><div><div class="section-title">🔧 Hospital Configuration</div><div class="form-group"><label class="form-label">Full Address</label><input id="hAddr" type="text" class="form-input" placeholder="Full address with city"></div><div class="form-group"><label class="form-label">Emergency Contact</label><input id="hContact" type="text" class="form-input" placeholder="Phone number"></div><div class="grid-2"><div class="form-group"><label class="form-label">Total ICU Beds</label><input id="hICU" type="number" class="form-input" value="10"></div><div class="form-group"><label class="form-label">Total Ventilators</label><input id="hVent" type="number" class="form-input" value="5"></div></div><div style="background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);border-radius:12px;padding:16px;margin-bottom:16px"><div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:10px;text-transform:uppercase;letter-spacing:.4px">🔑 Staff Login Credentials</div><div class="form-group"><label class="form-label">Staff Email</label><input id="hEmail" type="email" class="form-input" placeholder="staff@hospital.com"></div><div class="form-group mb-0"><label class="form-label">Password</label><input id="hPass" type="password" class="form-input" placeholder="Min 6 characters"></div></div><button class="btn btn-success btn-full btn-lg" onclick="registerHospital()">✅ Deploy Node &amp; Email Credentials</button></div></div></div>
 <div id="adm-log" class="dpanel"><div class="section-title">🚨 All Emergency Requests</div><div id="adm-req-list"><div style="text-align:center;padding:50px;color:var(--text3)">Loading...</div></div></div>
 <div id="adm-users" class="dpanel"><div class="section-title">👥 Registered Patients</div><div id="adm-users-list"><div style="text-align:center;padding:50px;color:var(--text3)">Loading...</div></div></div>
-<div id="adm-map" class="dpanel"><div class="section-title">🗺️ Network Map — Live Hospital Status</div><div id="admin-network-map" class="admin-full-map"></div></div>
+<div id="adm-donors" class="dpanel">
+  <div class="flex-between mb-16" style="margin-bottom:16px">
+    <div class="section-title" style="margin-bottom:0">🤝 Registered Donors</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <select id="adm-donor-filter-type" class="form-input" style="width:160px;padding:8px 12px" onchange="loadAdminDonors()">
+        <option value="">All Types</option>
+        <option value="blood">🩸 Blood</option>
+        <option value="platelets">🧪 Platelets</option>
+      </select>
+      <select id="adm-donor-filter-bt" class="form-input" style="width:130px;padding:8px 12px" onchange="loadAdminDonors()">
+        <option value="">All Groups</option>
+        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="loadAdminDonors()">🔄 Refresh</button>
+    </div>
+  </div>
+  <div id="adm-donor-stats" class="stats-grid" style="margin-bottom:16px"></div>
+  <div id="adm-donors-list"><div style="text-align:center;padding:50px;color:var(--text3)">Loading donors...</div></div>
+</div><div class="section-title">🗺️ Network Map — Live Hospital Status</div><div id="admin-network-map" class="admin-full-map"></div></div>
 <div id="adm-analytics" class="dpanel"><div class="section-title">📊 Analytics Dashboard</div><div class="grid-2"><div class="chart-container"><div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px">🚨 SOS Requests (Last 7 Days)</div><canvas id="chart-sos"></canvas></div><div class="chart-container"><div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:12px">📊 Response Metrics</div><canvas id="chart-metrics"></canvas></div></div><div class="stats-grid" id="analytics-stats"></div></div>
 <div id="adm-pharma" class="dpanel">
   <div class="section-title">💊 Pharmacy Network</div>
@@ -1063,9 +1082,28 @@ body.cursor-active *{cursor:none!important}
 <!-- ═══ HOSPITAL SCREEN ═══ -->
 <div id="screen-hospital" class="screen" style="padding:76px 20px 30px"><div style="max-width:950px;margin:0 auto">
 <div style="background:linear-gradient(135deg,rgba(6,182,212,.1),rgba(59,130,246,.1));border:1px solid rgba(6,182,212,.2);border-radius:var(--radius);padding:24px;margin-bottom:24px"><div class="flex-between"><div><div class="flex-row mb-16" style="margin-bottom:8px"><div class="verified">✓ VERIFIED NODE</div><div class="dot" id="hosp-dot"></div></div><div style="font-size:24px;font-weight:900;letter-spacing:-.5px" id="hosp-name">Hospital</div><div style="font-size:13px;color:var(--text2);margin-top:3px" id="hosp-addr">—</div></div><div style="text-align:right"><div class="text-xs text-muted">Emergency Contact</div><div style="font-size:17px;font-weight:700;color:var(--accent);margin-top:3px" id="hosp-contact">—</div></div></div></div>
-<div class="dash-tabs"><div class="dtab active" onclick="hTab('avail')">📊 Availability</div><div class="dtab" onclick="hTab('blood')">🩸 Blood Bank</div><div class="dtab" onclick="hTab('req')">🚨 Requests</div><div class="dtab" onclick="hTab('admit')">🛏️ Admissions</div><div class="dtab" onclick="hTab('spec')">👨‍⚕️ Specialists</div><div class="dtab" onclick="hTab('hist')">📋 History</div><div class="dtab" onclick="hTab('chat')" id="htab-chat">💬 Network Chat</div><div class="dtab" onclick="hTab('hprof')">👤 Profile</div></div>
+<div class="dash-tabs"><div class="dtab active" onclick="hTab('avail')">📊 Availability</div><div class="dtab" onclick="hTab('blood')">🩸 Blood Bank</div><div class="dtab" onclick="hTab('donors')">🤝 Donors</div><div class="dtab" onclick="hTab('req')">🚨 Requests</div><div class="dtab" onclick="hTab('admit')">🛏️ Admissions</div><div class="dtab" onclick="hTab('spec')">👨‍⚕️ Specialists</div><div class="dtab" onclick="hTab('hist')">📋 History</div><div class="dtab" onclick="hTab('chat')" id="htab-chat">💬 Network Chat</div><div class="dtab" onclick="hTab('hprof')">👤 Profile</div></div>
 <div id="h-avail" class="dpanel active"><div class="grid-3" style="margin-bottom:16px"><div class="avail-block"><div class="avail-label">🛏️ ICU Beds Available</div><div class="avail-num text-accent" id="h-icu-big">0</div><div class="text-xs text-muted">of <span id="h-icu-tot">0</span> total</div><div class="flex-row" style="margin-top:12px"><button class="cnt-btn" onclick="adj('icu',-1)">−</button><input type="number" id="h-icu-in" class="form-input" style="text-align:center;font-weight:800;font-family:'DM Mono',monospace;font-size:18px" value="0" oninput="syncField('icu',this.value)"><button class="cnt-btn" onclick="adj('icu',1)">+</button></div></div><div class="avail-block"><div class="avail-label">💨 Ventilators Available</div><div class="avail-num" style="color:var(--blue)" id="h-vent-big">0</div><div class="text-xs text-muted">of <span id="h-vent-tot">0</span> total</div><div class="flex-row" style="margin-top:12px"><button class="cnt-btn" onclick="adj('vent',-1)">−</button><input type="number" id="h-vent-in" class="form-input" style="text-align:center;font-weight:800;font-family:'DM Mono',monospace;font-size:18px" value="0" oninput="syncField('vent',this.value)"><button class="cnt-btn" onclick="adj('vent',1)">+</button></div></div><div class="avail-block flex-center" style="flex-direction:column;gap:10px"><div class="ring-wrap"><svg width="110" height="110" class="ring-svg"><circle class="ring-bg" cx="55" cy="55" r="46"/><circle id="h-ring" class="ring-fill" cx="55" cy="55" r="46" stroke="var(--accent)" stroke-dasharray="289" stroke-dashoffset="0"/></svg><div class="ring-inner"><div class="ring-pct" id="h-ring-pct">100%</div><div class="ring-sub">FREE</div></div></div><button class="btn btn-primary" onclick="saveAvail()">💾 Save Changes</button></div></div><div class="card flex-between" style="padding:16px 20px"><div><div style="font-weight:700">Accepting Emergency Patients</div><div class="text-sm text-muted mt-8" style="margin-top:4px">Toggle to pause or resume emergency intake</div></div><label class="toggle-wrap"><input type="checkbox" id="h-accepting" checked onchange="toggleAccept()"><span class="toggle-slider"><span class="tk"></span></span></label></div></div>
 <div id="h-blood" class="dpanel"><div class="flex-between mb-16" style="margin-bottom:16px"><div class="section-title" style="margin-bottom:0">🩸 Blood Bank Inventory</div><button class="btn btn-danger btn-sm" onclick="saveBlood()">💾 Save Blood Bank</button></div><div class="grid-4" id="blood-grid" style="margin-bottom:24px"></div><div class="sep"></div><div class="section-title mt-16" style="margin-top:16px">🔔 Incoming Blood Requests</div><div id="h-blood-req-list"><div style="text-align:center;padding:30px;color:var(--text3)">No blood requests yet</div></div></div>
+<div id="h-donors" class="dpanel">
+  <div class="flex-between mb-16" style="margin-bottom:16px">
+    <div class="section-title" style="margin-bottom:0">🤝 Available Donors Nearby</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <select id="h-donor-filter-bt" class="form-input" style="width:130px;padding:8px 12px" onchange="loadHospitalDonors()">
+        <option value="">All Groups</option>
+        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+      </select>
+      <select id="h-donor-filter-type" class="form-input" style="width:150px;padding:8px 12px" onchange="loadHospitalDonors()">
+        <option value="">All Types</option>
+        <option value="blood">🩸 Blood</option>
+        <option value="platelets">🧪 Platelets</option>
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="loadHospitalDonors()">🔄 Refresh</button>
+    </div>
+  </div>
+  <div id="h-donors-list"><div style="text-align:center;padding:50px;color:var(--text3)">Loading donors...</div></div>
+</div>
 <div id="h-req" class="dpanel"><div class="section-title">🚨 Incoming Emergency Requests</div><div id="h-req-list"><div style="text-align:center;padding:50px;color:var(--text3)">No requests yet</div></div></div>
 <div id="h-admit" class="dpanel"><div class="flex-between mb-16" style="margin-bottom:16px"><div class="section-title" style="margin-bottom:0">🛏️ Currently Admitted</div><div class="badge bg-blue" id="admit-count-badge">0 Admitted</div></div><div id="h-admit-list"><div style="text-align:center;padding:50px;color:var(--text3)">No patients currently admitted</div></div></div>
 <div id="h-spec" class="dpanel"><div class="flex-between mb-16" style="margin-bottom:16px"><div class="section-title" style="margin-bottom:0">👨‍⚕️ Specialists &amp; Appointments</div><button class="btn btn-primary btn-sm" onclick="openAddSpecialistModal()">+ Add Specialist</button></div><div id="h-spec-list"><div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:40px;margin-bottom:14px">👨‍⚕️</div>No specialists added yet. Add your first specialist.</div></div><div class="section-title" style="margin-top:24px">📅 Appointment Requests</div><div id="h-appt-list"><div style="text-align:center;padding:30px;color:var(--text3)">No appointment requests</div></div></div>
@@ -1786,23 +1824,25 @@ window.setRole=i=>{
 };
 window.aTab=n=>{
   if(n==='pharma')setTimeout(initAdminPharmaRegMap,200);
-  const map={net:0,reg:1,log:2,users:3,map:4,analytics:5,pharma:6,system:7};
-  const panels=['adm-net','adm-reg','adm-log','adm-users','adm-map','adm-analytics','adm-pharma','adm-system'];
+  const map={net:0,reg:1,log:2,users:3,donors:4,map:5,analytics:6,pharma:7,system:8};
+  const panels=['adm-net','adm-reg','adm-log','adm-users','adm-donors','adm-map','adm-analytics','adm-pharma','adm-system'];
   document.querySelectorAll('#screen-admin .dtab').forEach((t,i)=>t.classList.toggle('active',i===map[n]));
   panels.forEach((p,i)=>document.getElementById(p).classList.toggle('active',i===map[n]));
   if(n==='reg')setTimeout(initAdminMap,250);
   if(n==='map')setTimeout(initAdminNetworkMap,250);
   if(n==='analytics')setTimeout(renderAnalytics,250);
   if(n==='pharma')setTimeout(renderPharmacyOverview,250);
+  if(n==='donors')setTimeout(loadAdminDonors,100);
   if(n==='system'){setTimeout(loadRegionStatuses,200);setTimeout(loadAiLogs,250);}
 };
 window.hTab=n=>{
-  const map={avail:0,blood:1,req:2,admit:3,spec:4,hist:5,chat:6,hprof:7};
-  const panels=['h-avail','h-blood','h-req','h-admit','h-spec','h-hist','h-chat','h-hprof'];
+  const map={avail:0,blood:1,donors:2,req:3,admit:4,spec:5,hist:6,chat:7,hprof:8};
+  const panels=['h-avail','h-blood','h-donors','h-req','h-admit','h-spec','h-hist','h-chat','h-hprof'];
   document.querySelectorAll('#screen-hospital .dtab').forEach((t,i)=>t.classList.toggle('active',i===map[n]));
   panels.forEach((p,i)=>document.getElementById(p).classList.toggle('active',i===map[n]));
   if(n==='spec')loadHospSpecialists();
   if(n==='chat'){initHospChat();updateChatOnlineCount();}
+  if(n==='donors')loadHospitalDonors();
 };
 window.uTab=n=>{
   const map={find:0,triage:1,appt:2,blood:3,medicine:4,rx:5,records:6,uprof:7,emg:8};
@@ -2759,6 +2799,112 @@ window.submitDonation=async()=>{
     toast('❌','Failed','red');
   }
 };
+
+// ═══ DONOR REGISTRY — ADMIN & HOSPITAL VIEWS ═══
+function renderDonorCards(donors,containerId,isAdmin){
+  const el=document.getElementById(containerId);
+  if(!el)return;
+  if(!donors.length){el.innerHTML='<div style="text-align:center;padding:50px;color:var(--text3)"><div style="font-size:36px;margin-bottom:12px">🤝</div><div>No donors registered yet</div></div>';return;}
+  el.innerHTML=donors.map(d=>{
+    const typeLabel=d.type==='platelets'?'🧪 Platelets':'🩸 Blood';
+    const typeClass=d.type==='platelets'?'bg-purple':'bg-red';
+    const activeClass=d.active===false?'bg-gray':'bg-green';
+    const activeLabel=d.active===false?'Inactive':'Active';
+    const ts=d.updatedAt?.seconds?new Date(d.updatedAt.seconds*1000).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+    return `<div class="card card-p" style="margin-bottom:12px;border-left:3px solid ${d.type==='platelets'?'var(--purple)':'var(--red)'}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+        <div style="flex:1;min-width:200px">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--blue));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🤝</div>
+            <div>
+              <div style="font-size:16px;font-weight:800">${d.donorName||'Anonymous Donor'}</div>
+              <div style="font-size:12px;color:var(--text3)">Registered: ${ts}</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+            <span class="badge ${typeClass}">${typeLabel}</span>
+            <span class="badge bg-cyan" style="font-weight:800;font-size:13px">🩸 ${d.bloodType||'Unknown'}</span>
+            <span class="badge ${activeClass}">${activeLabel}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:13px">
+            <div style="color:var(--text2)">📞 Phone</div><div style="font-weight:700;font-family:'DM Mono',monospace">${d.phone||'N/A'}</div>
+            <div style="color:var(--text2)">📍 Address</div><div style="font-weight:600;color:var(--text)">${d.address||'Not provided'}</div>
+            ${d.lat&&d.lng?`<div style="color:var(--text2)">🗺️ Coords</div><div style="font-family:'DM Mono',monospace;font-size:11px">${d.lat.toFixed(4)}, ${d.lng.toFixed(4)}</div>`:''}
+            ${isAdmin&&d.uid?`<div style="color:var(--text2)">🆔 UID</div><div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3)">${d.uid.substring(0,16)}…</div>`:''}
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px;min-width:130px">
+          ${d.phone?`<a href="tel:${d.phone}" class="btn btn-primary btn-sm">📞 Call Donor</a>`:''}
+          ${d.phone?`<a href="https://wa.me/91${d.phone}?text=${encodeURIComponent('Hi, we are contacting you regarding blood/platelet donation at our hospital. Please call us back.')}" target="_blank" class="btn btn-success btn-sm">💬 WhatsApp</a>`:''}
+          ${d.lat&&d.lng?`<a href="https://www.google.com/maps?q=${d.lat},${d.lng}" target="_blank" class="btn btn-ghost btn-sm">🗺️ Map</a>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.loadAdminDonors=async()=>{
+  const el=document.getElementById('adm-donors-list');
+  const statsEl=document.getElementById('adm-donor-stats');
+  if(!el)return;
+  el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Loading donors…</div>';
+  try{
+    const filterType=document.getElementById('adm-donor-filter-type')?.value||'';
+    const filterBt=document.getElementById('adm-donor-filter-bt')?.value||'';
+    let q=collection(db,'donations');
+    const snap=await getDocs(q);
+    let donors=[];
+    snap.forEach(d=>donors.push({id:d.id,...d.data()}));
+    // Count stats
+    const total=donors.length;
+    const active=donors.filter(d=>d.active!==false).length;
+    const blood=donors.filter(d=>d.type==='blood').length;
+    const platelets=donors.filter(d=>d.type==='platelets').length;
+    if(statsEl){
+      statsEl.innerHTML=`
+        <div class="card stat-card"><div class="stat-label">Total Donors</div><div class="stat-val text-accent">${total}</div></div>
+        <div class="card stat-card"><div class="stat-label">Active</div><div class="stat-val text-green">${active}</div></div>
+        <div class="card stat-card"><div class="stat-label">Blood</div><div class="stat-val text-red">${blood}</div></div>
+        <div class="card stat-card"><div class="stat-label">Platelets</div><div class="stat-val" style="color:var(--purple)">${platelets}</div></div>`;
+    }
+    // Apply filters
+    if(filterType)donors=donors.filter(d=>d.type===filterType);
+    if(filterBt)donors=donors.filter(d=>d.bloodType===filterBt);
+    // Sort: active first, then by date
+    donors.sort((a,b)=>{
+      if((a.active!==false)&&(b.active===false))return -1;
+      if((a.active===false)&&(b.active!==false))return 1;
+      return (b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0);
+    });
+    renderDonorCards(donors,'adm-donors-list',true);
+  }catch(e){
+    console.error('loadAdminDonors:',e);
+    el.innerHTML='<div style="text-align:center;padding:30px;color:var(--red)">❌ Failed to load donors. Check Firestore rules.</div>';
+  }
+};
+
+window.loadHospitalDonors=async()=>{
+  const el=document.getElementById('h-donors-list');
+  if(!el)return;
+  el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text3)">Loading donors…</div>';
+  try{
+    const filterBt=document.getElementById('h-donor-filter-bt')?.value||'';
+    const filterType=document.getElementById('h-donor-filter-type')?.value||'';
+    const snap=await getDocs(collection(db,'donations'));
+    let donors=[];
+    snap.forEach(d=>donors.push({id:d.id,...d.data()}));
+    // Only show active donors
+    donors=donors.filter(d=>d.active!==false);
+    if(filterBt)donors=donors.filter(d=>d.bloodType===filterBt);
+    if(filterType)donors=donors.filter(d=>d.type===filterType);
+    donors.sort((a,b)=>(b.updatedAt?.seconds||0)-(a.updatedAt?.seconds||0));
+    renderDonorCards(donors,'h-donors-list',false);
+  }catch(e){
+    console.error('loadHospitalDonors:',e);
+    el.innerHTML='<div style="text-align:center;padding:30px;color:var(--red)">❌ Failed to load donors.</div>';
+  }
+};
+
 window.saveUserProfile=async()=>{const name=document.getElementById('prof-name').value.trim(),phone=document.getElementById('prof-phone').value.trim();if(!name)return toast('⚠️','Name required','amber');await updateDoc(doc(db,'users',currentUser.id),{name,phone});currentUser.name=name;currentUser.phone=phone;document.getElementById('prof-name-display').textContent=name;document.getElementById('u-greeting').textContent=`Hi ${name.split(' ')[0]} 👋`;setBadge(`👤 ${name.split(' ')[0]}`,'bg-blue');toast('✅','Saved!','green');};
 
 // ═══ TRIAGE ═══
