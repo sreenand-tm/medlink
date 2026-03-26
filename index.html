@@ -4712,7 +4712,8 @@
       </div>
       <div id="adm-map" class="dpanel">
         <div class="section-title">🗺️ Network Map — Live Hospital Status</div>
-        <div id="admin-network-map" style="height:450px;border-radius:12px;border:1px solid var(--card-border);margin-bottom:16px"></div>
+        <div id="admin-network-map"
+          style="height:450px;border-radius:12px;border:1px solid var(--card-border);margin-bottom:16px"></div>
       </div>
     </div>
     <div id="adm-analytics" class="dpanel">
@@ -4824,26 +4825,26 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="grid-2">
-      <div class="card card-p card-glow">
-        <div style="font-size:15px;font-weight:800;margin-bottom:14px">🗺️ Region Emergency Status</div>
-        <div class="form-group"><label class="form-label">Region (City/Area)</label><input id="region-name"
-            class="form-input" placeholder="e.g. Chennai Central"></div>
-        <div class="form-group"><label class="form-label">Status</label><select id="region-status" class="form-input">
-            <option value="green">🟢 Normal</option>
-            <option value="amber">🟠 Elevated</option>
-            <option value="red">🔴 Critical</option>
-          </select></div><button class="btn btn-primary btn-full" onclick="setRegionStatus()">Save Region
-          Status</button>
-        <div id="region-list" style="margin-top:12px"></div>
-      </div>
-      <div class="card card-p card-glow">
-        <div style="font-size:15px;font-weight:800;margin-bottom:14px">🧠 AI Logs</div>
-        <div style="font-size:13px;color:var(--text2);margin-bottom:10px">Latest AI triage + specialist routing
-          decisions</div>
-        <div id="ai-log-list">
-          <div style="text-align:center;padding:18px;color:var(--text3)">No logs yet</div>
+      <div class="grid-2" style="margin-top:20px">
+        <div class="card card-p card-glow">
+          <div style="font-size:15px;font-weight:800;margin-bottom:14px">🗺️ Region Emergency Status</div>
+          <div class="form-group"><label class="form-label">Region (City/Area)</label><input id="region-name"
+              class="form-input" placeholder="e.g. Chennai Central"></div>
+          <div class="form-group"><label class="form-label">Status</label><select id="region-status" class="form-input">
+              <option value="green">🟢 Normal</option>
+              <option value="amber">🟠 Elevated</option>
+              <option value="red">🔴 Critical</option>
+            </select></div><button class="btn btn-primary btn-full" onclick="setRegionStatus()">Save Region
+            Status</button>
+          <div id="region-list" style="margin-top:12px"></div>
+        </div>
+        <div class="card card-p card-glow">
+          <div style="font-size:15px;font-weight:800;margin-bottom:14px">🧠 AI Logs</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:10px">Latest AI triage + specialist routing
+            decisions</div>
+          <div id="ai-log-list" style="max-height:400px;overflow-y:auto">
+            <div style="text-align:center;padding:18px;color:var(--text3)">No logs yet</div>
+          </div>
         </div>
       </div>
     </div>
@@ -5247,7 +5248,8 @@
           </div>
           <div class="form-group" style="margin-top:12px">
             <label class="form-label">Or type your blood group</label>
-            <input id="bt-custom-input" type="text" class="form-input" placeholder="e.g. Bombay, Oh, Rh-null, or any custom type..." oninput="onCustomBT(this.value)">
+            <input id="bt-custom-input" type="text" class="form-input"
+              placeholder="e.g. Bombay, Oh, Rh-null, or any custom type..." oninput="onCustomBT(this.value)">
           </div>
           <button class="btn btn-primary btn-full" onclick="saveBloodType()">💾 Save Blood Type</button>
         </div>
@@ -5890,6 +5892,7 @@
       let adminMap = null, adminMarker = null, userMap = null, uMarkers = [];
       let myLoc = { lat: 10.85, lng: 76.27 };
       let myLocAddress = '';
+      let cachedRegions = [];
       let myLocMarker = null;
       let unsubHospReqs = null, unsubBloodReqs = null, unsubAdmissions = null, unsubAmbulance = null;
       let routeLayer = null, ambulanceMarker = null, ambulanceAnimInterval = null, currentAmbulanceData = null;
@@ -6872,7 +6875,7 @@
         const dbt = document.getElementById('don-bt'); if (dbt) dbt.value = currentUser.bloodType || 'Unknown';
         const dph = document.getElementById('don-phone'); if (dph) dph.value = currentUser.phone || '';
         const daddr = document.getElementById('don-addr'); if (daddr) daddr.value = myLocAddress || '';
-        showScreen('screen-user'); buildSymptoms(); buildEmergencyContacts(); loadMedicalRecord(); startAmbulanceTracking(); loadMyAppointments(); loadMyRequests();
+        showScreen('screen-user'); buildSymptoms(); buildEmergencyContacts(); loadMedicalRecord(); startAmbulanceTracking(); loadMyAppointments(); loadMyRequests(); fetchRegionStatuses();
         // Always ask for location immediately for new users
         navigator.geolocation.getCurrentPosition(
           p => {
@@ -6942,6 +6945,33 @@
         } catch (_) {
           return '';
         }
+      }
+      // ═══ REGION SEVERITY FOR PATIENTS ═══
+      async function fetchRegionStatuses() {
+        try {
+          const snap = await getDocs(collection(db, 'regions'));
+          cachedRegions = [];
+          snap.forEach(d => cachedRegions.push({ id: d.id, ...d.data() }));
+        } catch (_) { cachedRegions = []; }
+      }
+      function getRegionSeverityForSOS() {
+        if (!cachedRegions.length || !myLocAddress) return null;
+        const addr = myLocAddress.toLowerCase();
+        const match = cachedRegions.find(r => {
+          const rn = (r.name || r.id || '').toLowerCase();
+          return rn && addr.includes(rn);
+        });
+        if (!match) return null;
+        const colorMap = { red: '#EF4444', amber: '#F59E0B', green: '#10B981' };
+        const labelMap = { red: '🔴 CRITICAL', amber: '🟠 ELEVATED', green: '🟢 NORMAL' };
+        return { name: match.name || match.id, status: match.status || 'green', color: colorMap[match.status] || '#10B981', label: labelMap[match.status] || '🟢 NORMAL' };
+      }
+      function getRegionBadgeHTML() {
+        const r = getRegionSeverityForSOS();
+        if (!r) return '';
+        const bgMap = { red: 'rgba(239,68,68,.08)', amber: 'rgba(245,158,11,.08)', green: 'rgba(16,185,129,.08)' };
+        const borderMap = { red: 'rgba(239,68,68,.3)', amber: 'rgba(245,158,11,.3)', green: 'rgba(16,185,129,.3)' };
+        return `<div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:${bgMap[r.status]};border:1px solid ${borderMap[r.status]};border-radius:12px;margin-bottom:14px"><span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:${r.color};box-shadow:0 0 10px ${r.color}50;flex-shrink:0;animation:pulse 1.5s infinite"></span><div><div style="font-weight:700;font-size:13px;color:${r.color}">${r.label}</div><div style="font-size:12px;color:var(--text2)">Region: ${r.name}</div></div></div>`;
       }
       function buildSymptoms() { document.getElementById('symptom-grid').innerHTML = SYMPTOMS.map(s => `<label style="display:flex;align-items:center;gap:8px;padding:10px 13px;background:var(--card);border:1px solid var(--card-border);border-radius:10px;cursor:pointer;font-size:13px;font-weight:500;transition:.2s"><input type="checkbox" class="scb" data-s="${s}" style="accent-color:var(--accent)"> ${s}</label>`).join(''); }
       function buildEmergencyContacts() { document.getElementById('emg-contacts').innerHTML = [{ i: '🚑', n: 'National Ambulance', num: '108', c: 'rgba(239,68,68,.12)' }, { i: '🏥', n: 'Hospital Helpline', num: '1056', c: 'rgba(6,182,212,.12)' }, { i: '👮', n: 'Police', num: '100', c: 'rgba(59,130,246,.12)' }, { i: '🔥', n: 'Fire & Rescue', num: '101', c: 'rgba(245,158,11,.12)' }, { i: '🩺', n: 'Medical Helpline', num: '1800-180-1104', c: 'rgba(16,185,129,.12)' }, { i: '☎️', n: 'NDMA Helpline', num: '1078', c: 'rgba(139,92,246,.12)' }].map(c => `<div class="emg-contact" onclick="window.open('tel:${c.num}')"><div class="emg-icon" style="background:${c.c}">${c.i}</div><div style="flex:1"><div style="font-weight:600">${c.n}</div><div class="text-sm text-muted">${c.num}</div></div><div style="color:var(--accent);font-size:13px;font-weight:600">Call →</div></div>`).join(''); }
@@ -7034,7 +7064,8 @@
       function renderResults(list) {
         const el = document.getElementById('u-results');
         if (!list.length) { el.innerHTML = `<div style="text-align:center;padding:50px;color:var(--text3)">😔 No matching hospitals.</div>`; return; }
-        el.innerHTML = `<div style="font-size:18px;font-weight:800;margin-bottom:16px">${list.length} Hospital${list.length !== 1 ? 's' : ''} Found</div>`;
+        const regionBadge = getRegionBadgeHTML();
+        el.innerHTML = `${regionBadge}<div style="font-size:18px;font-weight:800;margin-bottom:16px">${list.length} Hospital${list.length !== 1 ? 's' : ''} Found</div>`;
         list.forEach((h, i) => {
           const cls = h.availICU === 0 ? 'bg-red badge-pulse' : h.availICU <= 3 ? 'bg-amber' : 'bg-green';
           const sigBars = `<span class="signal-bars">${[6, 11, 16].map(ht => `<span class="signal-bar${h.availICU >= (ht === 6 ? 1 : ht === 11 ? 3 : 5) ? (h.availICU <= 2 ? ' crit' : h.availICU <= 4 ? ' warn' : ' active') : ''}" style="height:${ht}px"></span>`).join('')}</span>`;
@@ -7117,7 +7148,9 @@
           toast('🚨', `Emergency sent to ${hname}!`, 'red');
           pushNotif('🚨', 'SOS Sent', `Emergency request sent to ${hname}. Stay calm — help is on the way.`, 'rgba(239,68,68,.15)');
           const h = allHospitals.find(x => x.id === hid);
-          openModal(`<div style="text-align:center;padding:16px"><div style="font-size:60px;margin-bottom:16px">🚑</div><div style="font-size:24px;font-weight:900;color:var(--green)">Request Sent!</div><div style="font-size:14px;color:var(--text2);margin-top:10px"><strong>${hname}</strong> has been notified.</div><div style="margin-top:16px;display:flex;gap:8px">${h ? `<button class="btn btn-primary btn-full" onclick="showRoute(${h.lat},${h.lng},'${hname}');closeModal()">🗺️ Directions</button>` : ''}<button class="btn btn-ghost" onclick="closeModal()">Close</button></div></div>`);
+          const _regionInfo = getRegionSeverityForSOS();
+          const _regionHTML = _regionInfo ? `<div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${_regionInfo.color};box-shadow:0 0 8px ${_regionInfo.color}60;animation:pulse 1.5s infinite"></span><span style="font-size:13px;font-weight:700;color:${_regionInfo.color}">Region: ${_regionInfo.name} — ${_regionInfo.label}</span></div>` : '';
+          openModal(`<div style="text-align:center;padding:16px"><div style="font-size:60px;margin-bottom:16px">🚑</div><div style="font-size:24px;font-weight:900;color:var(--green)">Request Sent!</div><div style="font-size:14px;color:var(--text2);margin-top:10px"><strong>${hname}</strong> has been notified.</div>${_regionHTML}<div style="margin-top:16px;display:flex;gap:8px">${h ? `<button class="btn btn-primary btn-full" onclick="showRoute(${h.lat},${h.lng},'${hname}');closeModal()">🗺️ Directions</button>` : ''}<button class="btn btn-ghost" onclick="closeModal()">Close</button></div></div>`);
         } catch (e) { toast('❌', 'Failed to send SOS', 'red'); }
       };
       window.quickSOS = () => { if (allHospitals.length > 0) sendSOS(allHospitals[0].id, allHospitals[0].name); else toast('⚠️', 'Search hospitals first', 'amber'); };
