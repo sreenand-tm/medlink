@@ -4710,8 +4710,10 @@
           <div style="text-align:center;padding:50px;color:var(--text3)">Loading donors...</div>
         </div>
       </div>
-      <div class="section-title">🗺️ Network Map — Live Hospital Status</div>
-      <div id="admin-network-map" class="admin-full-map"></div>
+      <div id="adm-map" class="dpanel">
+        <div class="section-title">🗺️ Network Map — Live Hospital Status</div>
+        <div id="admin-network-map" style="height:450px;border-radius:12px;border:1px solid var(--card-border);margin-bottom:16px"></div>
+      </div>
     </div>
     <div id="adm-analytics" class="dpanel">
       <div class="section-title">📊 Analytics Dashboard</div>
@@ -5242,7 +5244,12 @@
             <div class="bt-option" onclick="selectBT(this,'O-')">O−</div>
             <div class="bt-option" onclick="selectBT(this,'Unknown')" style="grid-column:span 4;font-size:13px">❓
               Unknown</div>
-          </div><button class="btn btn-primary btn-full" onclick="saveBloodType()">💾 Save Blood Type</button>
+          </div>
+          <div class="form-group" style="margin-top:12px">
+            <label class="form-label">Or type your blood group</label>
+            <input id="bt-custom-input" type="text" class="form-input" placeholder="e.g. Bombay, Oh, Rh-null, or any custom type..." oninput="onCustomBT(this.value)">
+          </div>
+          <button class="btn btn-primary btn-full" onclick="saveBloodType()">💾 Save Blood Type</button>
         </div>
         <div class="section-title">Request Blood from a Hospital</div>
         <div class="card card-p">
@@ -7117,8 +7124,19 @@
       window.requestBlood = async (hid, hname, staffEmail) => {
         try { await addDoc(collection(db, 'requests'), { type: 'blood', hospitalId: hid, hospitalName: hname, patientUid: currentUser.id, patientName: currentUser.name || 'Patient', patientPhone: currentUser.phone || 'N/A', bloodType: currentUser.bloodType || 'Unknown', patientLat: myLoc.lat, patientLng: myLoc.lng, patientAddress: myLocAddress || '', status: 'Pending', time: serverTimestamp() }); toast('🩸', `Blood request sent to ${hname}!`, 'red'); if (staffEmail) sendEmail(staffEmail, hname, `🩸 Blood Request — ${currentUser.bloodType || 'Unknown'}`, bloodRequestEmailHTML(hname, currentUser.name || 'Patient', currentUser.bloodType || 'Unknown')); } catch (e) { toast('❌', 'Failed', 'red'); }
       };
-      window.selectBT = (el, type) => { document.querySelectorAll('.bt-option').forEach(o => o.classList.remove('selected')); el.classList.add('selected'); selectedBT = type; };
-      window.saveBloodType = async () => { if (!selectedBT) return toast('⚠️', 'Select blood type', 'amber'); await updateDoc(doc(db, 'users', currentUser.id), { bloodType: selectedBT }); currentUser.bloodType = selectedBT; document.getElementById('prof-blood').value = selectedBT; toast('🩸', 'Saved: ' + selectedBT, 'green'); setTimeout(() => uTab('find'), 800); };
+      window.selectBT = (el, type) => { document.querySelectorAll('.bt-option').forEach(o => o.classList.remove('selected')); el.classList.add('selected'); selectedBT = type; const ci = document.getElementById('bt-custom-input'); if (ci) ci.value = ''; };
+      window.saveBloodType = async () => { if (!selectedBT) return toast('⚠️', 'Select or type a blood type', 'amber'); await updateDoc(doc(db, 'users', currentUser.id), { bloodType: selectedBT }); currentUser.bloodType = selectedBT; document.getElementById('prof-blood').value = selectedBT; const dbt = document.getElementById('don-bt'); if (dbt) dbt.value = selectedBT; toast('🩸', 'Saved: ' + selectedBT, 'green'); setTimeout(() => uTab('find'), 800); };
+      window.onCustomBT = (val) => { if (val.trim()) { document.querySelectorAll('.bt-option').forEach(o => o.classList.remove('selected')); selectedBT = val.trim(); } else { selectedBT = null; } };
+      window.openProfile = () => { uTab('uprof'); mbnActive('profile'); };
+      window.openSettings = () => {
+        const email = currentUser?.email || '';
+        openModal(`<div style="padding:12px"><div style="font-size:22px;font-weight:900;margin-bottom:20px">⚙️ Settings</div><div class="card" style="padding:16px;margin-bottom:12px;cursor:pointer" onclick="closeModal();changePasswordFromSettings()"><div style="display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:12px;background:rgba(6,182,212,.1);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🔑</div><div style="flex:1"><div style="font-weight:700;font-size:15px">Change Password</div><div style="font-size:12px;color:var(--text2);margin-top:2px">Send reset link to ${email}</div></div><div style="color:var(--text3)">→</div></div></div><div class="card" style="padding:16px;margin-bottom:12px;cursor:pointer" onclick="closeModal();toggleTheme()"><div style="display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:12px;background:rgba(139,92,246,.1);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🎨</div><div style="flex:1"><div style="font-weight:700;font-size:15px">Toggle Theme</div><div style="font-size:12px;color:var(--text2);margin-top:2px">Switch between dark and light mode</div></div><div style="color:var(--text3)">→</div></div></div><div class="card" style="padding:16px;margin-bottom:12px;cursor:pointer" onclick="closeModal();uTab('blood')"><div style="display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:12px;background:rgba(239,68,68,.1);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🩸</div><div style="flex:1"><div style="font-weight:700;font-size:15px">Blood Type & Donation</div><div style="font-size:12px;color:var(--text2);margin-top:2px">Update blood type or register as donor</div></div><div style="color:var(--text3)">→</div></div></div><div class="card" style="padding:16px;margin-bottom:12px;cursor:pointer" onclick="closeModal();uTab('records')"><div style="display:flex;align-items:center;gap:14px"><div style="width:44px;height:44px;border-radius:12px;background:rgba(59,130,246,.1);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">📋</div><div style="flex:1"><div style="font-weight:700;font-size:15px">Medical Records</div><div style="font-size:12px;color:var(--text2);margin-top:2px">Manage allergies, conditions, medications</div></div><div style="color:var(--text3)">→</div></div></div><div class="sep" style="margin:16px 0"></div><button class="btn btn-danger btn-full btn-lg" onclick="closeModal();doLogout()">🚪 Logout</button><button class="btn btn-ghost btn-full" style="margin-top:8px" onclick="closeModal()">Cancel</button></div>`);
+      };
+      window.changePasswordFromSettings = async () => {
+        const email = currentUser?.email || '';
+        if (!email) return toast('⚠️', 'No email on file', 'amber');
+        try { await sendPasswordResetEmail(auth, email); toast('📧', 'Password reset link sent to ' + email, 'green'); } catch (e) { toast('❌', 'Failed: ' + (e.message || '').replace('Firebase: ', '').substring(0, 60), 'red'); }
+      };
       window.submitDonation = async () => {
         const type = document.getElementById('don-type')?.value || 'blood';
         const bloodType = currentUser?.bloodType || document.getElementById('don-bt')?.value || 'Unknown';
@@ -8866,16 +8884,25 @@ For LAB REPORT:
       <div class="mbn-item" id="mbn-appt" onclick="uTab('appt');mbnActive('appt')" title="Appointments">
         <span class="mbn-icon">📅</span><span>Appts</span>
       </div>
+      <div class="mbn-item" id="mbn-blood" onclick="uTab('blood');mbnActive('blood')" title="Blood & Donate">
+        <span class="mbn-icon">🩸</span><span>Blood</span>
+      </div>
+      <div class="mbn-item" id="mbn-medicine" onclick="uTab('medicine');mbnActive('medicine')" title="Medicine">
+        <span class="mbn-icon">💊</span><span>Medicine</span>
+      </div>
       <div class="mbn-item" id="mbn-rx" onclick="uTab('rx');mbnActive('rx')" title="Rx Scanner">
-        <span class="mbn-icon">💊</span><span>Rx</span>
+        <span class="mbn-icon">📷</span><span>Rx Scan</span>
       </div>
       <div class="mbn-item" id="mbn-records" onclick="uTab('records');mbnActive('records')" title="Records">
         <span class="mbn-icon">📋</span><span>Records</span>
       </div>
-      <div class="mbn-item" id="mbn-profile" onclick="openProfile();mbnActive('profile')" title="Profile">
+      <div class="mbn-item" id="mbn-emg" onclick="uTab('emg');mbnActive('emg')" title="Emergency Contacts">
+        <span class="mbn-icon">📞</span><span>Emergency</span>
+      </div>
+      <div class="mbn-item" id="mbn-profile" onclick="openProfile()" title="Profile">
         <span class="mbn-icon">👤</span><span>Profile</span>
       </div>
-      <div class="mbn-item" id="mbn-settings" onclick="openSettings();mbnActive('settings')" title="Settings">
+      <div class="mbn-item" id="mbn-settings" onclick="openSettings()" title="Settings">
         <span class="mbn-icon">⚙️</span><span>Settings</span>
       </div>
       <!-- SOS shortcut in side nav -->
