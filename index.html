@@ -2089,7 +2089,7 @@
       top: 0;
       left: 40px;
       border-radius: 8px 8px 0 0;
-      animation: flyT 4.2s cubic-bezier(.23, 1, .32, 1) forwards
+      animation: flyT 7s cubic-bezier(.23, 1, .32, 1) forwards
     }
 
     .xp-b {
@@ -2098,7 +2098,7 @@
       top: 80px;
       left: 40px;
       border-radius: 0 0 8px 8px;
-      animation: flyB 4.2s cubic-bezier(.23, 1, .32, 1) forwards
+      animation: flyB 7s cubic-bezier(.23, 1, .32, 1) forwards
     }
 
     .xp-l {
@@ -2107,7 +2107,7 @@
       top: 40px;
       left: 0;
       border-radius: 8px 0 0 8px;
-      animation: flyL 4.2s cubic-bezier(.23, 1, .32, 1) forwards
+      animation: flyL 7s cubic-bezier(.23, 1, .32, 1) forwards
     }
 
     .xp-r {
@@ -2116,7 +2116,7 @@
       top: 40px;
       left: 80px;
       border-radius: 0 8px 8px 0;
-      animation: flyR 4.2s cubic-bezier(.23, 1, .32, 1) forwards
+      animation: flyR 7s cubic-bezier(.23, 1, .32, 1) forwards
     }
 
     .xp-c {
@@ -2125,7 +2125,7 @@
       top: 40px;
       left: 40px;
       border-radius: 0;
-      animation: flyC 4.2s cubic-bezier(.23, 1, .32, 1) forwards;
+      animation: flyC 7s cubic-bezier(.23, 1, .32, 1) forwards;
       overflow: visible;
       display: flex;
       align-items: center;
@@ -2433,7 +2433,7 @@
     .intro-ecg {
       stroke-dasharray: 120;
       stroke-dashoffset: 120;
-      animation: drawEcg .8s .9s ease-out forwards, fadeEcg .3s 1.8s ease forwards
+      animation: drawEcg .8s 1.5s ease-out forwards, fadeEcg .3s 3.0s ease forwards
     }
 
     @keyframes drawEcg {
@@ -2459,12 +2459,12 @@
       border: 2px solid rgba(6, 182, 212, .6);
       border-radius: 50%;
       opacity: 0;
-      animation: ringBurst .8s 2.5s cubic-bezier(0, .5, .3, 1) forwards;
+      animation: ringBurst .8s 4.2s cubic-bezier(0, .5, .3, 1) forwards;
       pointer-events: none
     }
 
     .intro-ring-2 {
-      animation-delay: 2.7s;
+      animation-delay: 4.5s;
       border-color: rgba(45, 212, 191, .4)
     }
 
@@ -2492,7 +2492,7 @@
       color: #fff;
       opacity: 0;
       margin-top: 30px;
-      animation: introTitleIn .6s 3.2s ease forwards
+      animation: introTitleIn .6s 5.3s ease forwards
     }
 
     @keyframes introTitleIn {
@@ -2517,7 +2517,7 @@
       font-weight: 600;
       opacity: 0;
       margin-top: 12px;
-      animation: introTitleIn .5s 3.6s ease forwards
+      animation: introTitleIn .5s 6.0s ease forwards
     }
 
     #intro-skip {
@@ -5774,7 +5774,7 @@
       const skip = document.getElementById('intro-skip');
       if (!overlay) return;
       createIntroParticles();
-      setTimeout(() => { if (skip) skip.classList.add('visible'); }, 1000);
+      setTimeout(() => { if (skip) skip.classList.add('visible'); }, 1500);
       const doSkip = () => {
         if (!overlay.classList.contains('done')) {
           overlay.classList.add('done');
@@ -5786,7 +5786,7 @@
       const keyHandler = () => { if (skip && skip.classList.contains('visible')) { doSkip(); document.removeEventListener('keydown', keyHandler); } };
       document.addEventListener('click', clickHandler);
       document.addEventListener('keydown', keyHandler);
-      setTimeout(doSkip, 4800);
+      setTimeout(doSkip, 8500);
     }
 
 
