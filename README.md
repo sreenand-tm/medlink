@@ -1,6 +1,6 @@
 # MedLink – India's Emergency Resource Network
 
-MedLink is a real-time emergency response platform that connects patients, hospitals, pharmacies, and administrators in a single, intelligent system. It provides live ICU bed tracking, AI-powered triage (voice & text), ambulance tracking, medicine finder, prescription scanning, blood bank coordination, specialist booking, and secure medical records — all built for India's emergency needs.
+MedLink is a real-time emergency response platform that connects patients, hospitals, pharmacies, and administrators in a single, unified intelligent system. It provides live ICU bed tracking, AI-powered triage (voice & text), ambulance tracking, medicine finder, prescription scanning, blood bank coordination, specialist booking, and secure medical records — all built for India's emergency needs.
 
 **Live Demo:** [medlink-rouge.vercel.app](https://medlink-rouge.vercel.app)
 
