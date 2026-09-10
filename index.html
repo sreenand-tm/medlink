@@ -8364,7 +8364,7 @@ For a PRESCRIPTION:
       "instructions": "e.g. after food"
     }
   ],
-  "raw_text": "all readable text from the document"
+  "raw_text": "key readable text only, max 150 characters"
 }
 
 CRITICAL — Indian prescription timing notation (M-A-N = Morning-Afternoon-Night):
@@ -8405,7 +8405,6 @@ For LAB REPORT:
             model: 'qwen/qwen3.6-27b',
             temperature: 0.1,
             max_tokens: 1000,
-            response_format: { type: "json_object" },
             messages: [{
               role: 'user', content: [
                 { type: 'image_url', image_url: { url: 'data:' + mimeType + ';base64,' + b64 } },
